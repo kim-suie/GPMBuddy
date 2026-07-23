@@ -1,3 +1,13 @@
-const app= require("./app");
+require("dotenv").config()
 
-app.listen(3000);    
+const app= require("./app");
+const getDBConnection = require("./config/database");
+
+const PORT = process.env.PORT || 3000;
+
+getDBConnection();
+
+app.listen(PORT, ()=>{
+    console.log("server started successfully");
+    console.log(`PORT = ${PORT}`);
+});    
