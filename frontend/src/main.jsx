@@ -1,10 +1,6 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { createRoot } from "react-dom/client"; 
+import App from "./app/App.jsx"; // CHANGED HERE: Changed extension from .tsx to .jsx
+import "./styles/index.css"; 
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+// CHANGED HERE: Removed the "!" operator from document.getElementById("root")
+createRoot(document.getElementById("root")).render(<App />);
