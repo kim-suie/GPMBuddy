@@ -473,9 +473,23 @@ export function Navbar({ onNavigate, currentPage }) {
 
           }
 
+          <button
+
+          className="
+          w-full
+          flex justify-between
+          p-3
+          "
+          >
+
+            Login
+
+          </button>
+
 
 
         </div>
+
 
       }
 
