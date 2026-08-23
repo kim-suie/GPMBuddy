@@ -22,7 +22,6 @@ function authenticate(req, res, next){
 
         const decoded = jwt.verify(token, jwtConfig.secret);
         req.user = decoded;
-        console.log(req.user);
         next();
 
     } 
