@@ -5,6 +5,7 @@ const morgan = require("morgan");
 
 const departmentRoutes = require("./routes/departmentRoutes");
 const authRoutes = require("./routes/authRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const errorHandler = require("./middleware/errorMiddlewares");
 
 
@@ -26,6 +27,7 @@ app.get("/", function (req, res){
 
 app.use("/api/department", departmentRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/chat", chatRoutes);
 
 app.use(errorHandler);
 
