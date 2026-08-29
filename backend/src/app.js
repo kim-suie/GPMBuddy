@@ -7,9 +7,13 @@ const departmentRoutes = require("./routes/departmentRoutes");
 const authRoutes = require("./routes/authRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const errorHandler = require("./middleware/errorMiddlewares");
-
-
 const app = express();
+
+const path = require("path");
+app.use(express.static(path.join(__dirname, "public")));
+app.get("/chat-test", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "chat-test.html"));
+});
 
 app.use(cors());
 app.use(helmet());
