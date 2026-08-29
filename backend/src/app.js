@@ -6,6 +6,9 @@ const morgan = require("morgan");
 const departmentRoutes = require("./routes/departmentRoutes");
 const authRoutes = require("./routes/authRoutes");
 const chatRoutes = require("./routes/chatRoutes");
+const facultyRoutes = require("./routes/facultyRoutes");
+const eventRoutes = require("./routes/eventRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
 const errorHandler = require("./middleware/errorMiddlewares");
 const app = express();
 
@@ -32,6 +35,9 @@ app.get("/", function (req, res){
 app.use("/api/department", departmentRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/faculty", facultyRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/uploads", uploadRoutes);
 
 app.use(errorHandler);
 

@@ -1,35 +1,27 @@
 
 const mongoose = require("mongoose");
 
-const facultySchema = new mongoose.Schema(
+const uploadSchema = new mongoose.Schema(
   {
-    name: {
+    fileName: {
       type: String,
       required: true,
       trim: true,
     },
 
-    department: {
+    fileUrl: {
       type: String,
       required: true,
       trim: true,
     },
 
-    designation: {
+    fileType: {
       type: String,
       required: true,
       trim: true,
     },
 
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
-    },
-
-    phone: {
+    uploadedBy: {
       type: String,
       required: true,
       trim: true,
@@ -40,4 +32,4 @@ const facultySchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Faculty", facultySchema);
+module.exports = mongoose.model("Upload", uploadSchema);

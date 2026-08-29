@@ -1,35 +1,32 @@
 
 const mongoose = require("mongoose");
 
-const facultySchema = new mongoose.Schema(
+const eventSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
       trim: true,
     },
 
-    department: {
+    description: {
       type: String,
       required: true,
       trim: true,
     },
 
-    designation: {
+    date: {
+      type: Date,
+      required: true,
+    },
+
+    time: {
       type: String,
       required: true,
       trim: true,
     },
 
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
-    },
-
-    phone: {
+    venue: {
       type: String,
       required: true,
       trim: true,
@@ -40,4 +37,4 @@ const facultySchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Faculty", facultySchema);
+module.exports = mongoose.model("Event", eventSchema);
