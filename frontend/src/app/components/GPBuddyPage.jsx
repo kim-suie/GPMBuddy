@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 
+
 import { askQuestion } from "../../services/chatbotsevice";
 
 const suggestedQuestions = [
