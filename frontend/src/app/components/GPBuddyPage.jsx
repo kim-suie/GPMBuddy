@@ -15,6 +15,8 @@ import {
   X,
 } from "lucide-react";
 
+import { askQuestion } from "../../services/chatbotsevice";
+
 const suggestedQuestions = [
   "How can I get admission?",
   "What branches are available?",
@@ -23,71 +25,6 @@ const suggestedQuestions = [
   "What hostel facilities are available?",
   "How can I contact the college?",
 ];
-
-const botResponses = {
-  admission:
-    "Admissions to GPMUZ are through the DCECE (Diploma Certificate Entrance Competitive Examination) conducted by BCECEB, Bihar. You need to pass Class 10 (Matric) with at least 35% marks. After the exam, counselling is done based on merit and preference. Visit bceceboard.bihar.gov.in for details.",
-
-  branch:
-    "GPMUZ offers 6 branches: Computer Science Engineering (CSE), Mechanical Engineering (ME), Civil Engineering (CE), Electrical Engineering (EE), Electronics Engineering (ECE), and Leather Technology (LT). All are 3-year diploma programmes affiliated with SBTE Bihar.",
-
-  placement:
-    "Our Placement Cell actively connects students with industry. Over 80% of our students receive placement support. We have partnerships with companies like Tata Motors, L&T, BHEL, Wipro, NTPC, and many others.",
-
-  library:
-    "The Central Library is located in the main academic block. It houses 7,000+ books, technical journals, and digital resources. Library hours are 8 AM to 6 PM on working days.",
-
-  hostel:
-    "GPMUZ has separate hostels for boys and girls. Facilities include furnished rooms, mess, 24/7 security, Wi-Fi connectivity, and recreational areas.",
-
-  contact:
-    "You can reach GPMUZ at Address: Government Polytechnic, Muzaffarpur, Bihar – 842002. Phone: +91-621-2240XXX. Email: principal@gpmuz.ac.in.",
-};
-
-
-function getBotReply(input) {
-  const lower = input.toLowerCase();
-
-  if (
-    lower.includes("admission") ||
-    lower.includes("get in") ||
-    lower.includes("apply")
-  )
-    return botResponses.admission;
-
-  if (
-    lower.includes("branch") ||
-    lower.includes("department") ||
-    lower.includes("course")
-  )
-    return botResponses.branch;
-
-  if (
-    lower.includes("placement") ||
-    lower.includes("job") ||
-    lower.includes("career")
-  )
-    return botResponses.placement;
-
-  if (lower.includes("library") || lower.includes("book"))
-    return botResponses.library;
-
-  if (
-    lower.includes("hostel") ||
-    lower.includes("accommodation")
-  )
-    return botResponses.hostel;
-
-  if (
-    lower.includes("contact") ||
-    lower.includes("address") ||
-    lower.includes("phone")
-  )
-    return botResponses.contact;
-
-
-  return "I'm GP Buddy, your AI assistant for Government Polytechnic Muzaffarpur! I can help you with admissions, departments, placements, facilities, and more. What would you like to know? 😊";
-}
 
 
 const getTime = () =>
@@ -125,7 +62,7 @@ export default function GPBuddyPage({ onNavigate }) {
   }, [messages, isTyping]);
 
 
-  const sendMessage = (text) => {
+  const sendMessage = async (text) => {
 
     if (!text.trim()) return;
 
@@ -147,26 +84,51 @@ export default function GPBuddyPage({ onNavigate }) {
     setInput("");
     setIsTyping(true);
 
+    try {
+      const response =  await askQuestion(text.trim());
 
-    setTimeout(() => {
+      if (!response || response.success !== true) {
+        throw new Error(
+          response?.message || "Failed to generate answer"
+        );
+      }
+
+      const answer = response?.data?.answer;
+
+      if (!answer) {
+      throw new Error("No answer received from chatbot");
+      }
 
       const botMsg = {
         id: Date.now() + 1,
         role: "bot",
-        text: getBotReply(text),
+        text: answer,
         time: getTime(),
       };
-
 
       setMessages((prev) => [
         ...prev,
         botMsg,
       ]);
 
+    } catch (error) {
+      console.error("GP Buddy error:", error);
 
+      const botMsg = {
+        id: Date.now() + 1,
+        role: "bot",
+        text: "Sorry, I couldn't process your question right now. Please try again.",
+        time: getTime(),
+      };
+
+      setMessages((prev) => [
+        ...prev,
+        botMsg,
+      ]);
+      
+    } finally {
       setIsTyping(false);
-
-    }, 1200);
+    }
   };
 
 

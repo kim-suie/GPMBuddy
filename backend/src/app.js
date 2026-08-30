@@ -14,19 +14,12 @@ const errorHandler = require("./middleware/errorMiddlewares");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", credentials: true, }));
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", function (req, res){
-    let response={
-        "username":"sahil",
-        "age": 17
-    }
-    res.send(req.admin);
-})
 
 app.use("/api/department", departmentRoutes);
 app.use("/api/auth", authRoutes);

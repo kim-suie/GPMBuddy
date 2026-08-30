@@ -3,7 +3,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const uploadControllers = require("../controllers/uploadController");
+const uploadControllers = require("../controllers/uploadControllers");
 
 const authenticate = require("../middleware/authenticateMiddlewares");
 
