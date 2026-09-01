@@ -10,27 +10,16 @@ const facultyRoutes = require("./routes/facultyRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const errorHandler = require("./middleware/errorMiddlewares");
+
+
 const app = express();
 
-const path = require("path");
-app.use(express.static(path.join(__dirname, "public")));
-app.get("/chat-test", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "chat-test.html"));
-});
-
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", credentials: true, }));
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", function (req, res){
-    let response={
-        "username":"sahil",
-        "age": 17
-    }
-    res.send(req.admin);
-})
 
 app.use("/api/department", departmentRoutes);
 app.use("/api/auth", authRoutes);

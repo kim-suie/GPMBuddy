@@ -10,5 +10,4 @@ getDBConnection();
 app.listen(PORT, ()=>{
     console.log("server started successfully");
     console.log(`PORT = ${PORT}`);
-    console.log(`URL : http://localhost:${PORT}/chat-test`)
 });    
