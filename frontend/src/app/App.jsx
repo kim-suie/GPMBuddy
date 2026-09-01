@@ -10,6 +10,7 @@ import  NoticesSection  from "./components/NoticesSection";
 import  Footer  from "./components/Footer"; 
 import  GPBuddyPage  from "./components/GPBuddyPage"; 
 import DepartmentPage from "./components/DepartmentPage"; 
+import Login from "./components/Login";
 
 export default function App() { 
   const [currentPage, setCurrentPage] = useState("home"); 
@@ -22,6 +23,10 @@ export default function App() {
 
   if (currentPage === "gpbuddy") { 
     return <GPBuddyPage onNavigate={handleNavigate} />; 
+  } 
+
+  if (currentPage === "login") { 
+    return <Login onNavigate={handleNavigate} />; 
   } 
 
   if (currentPage.startsWith("dept-")) { 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { ArrowLeft } from "lucide-react";
 
-const Login = () => {
+const Login = ({ onNavigate }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("admin");
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,7 @@ const Login = () => {
       {/* LEFT — Branding Panel */}
       <aside className="relative lg:w-1/2 min-h-[280px] lg:min-h-screen overflow-hidden bg-[#0a1f44] text-white">
         {/* Background pattern */}
+
         <div
           className="absolute inset-0 opacity-20"
           style={{
@@ -42,29 +44,44 @@ const Login = () => {
         />
 
         {/* Content */}
-        <div className="relative z-10 h-full flex flex-col justify-between p-8 sm:p-12 lg:p-16">
+        <div className="relative z-10 h-full flex flex-col justify-between p-8 sm:p-12 ">
           {/* Logo / Crest */}
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full border-2 border-[#c5a572] flex items-center justify-center bg-[#0a1f44]/60 backdrop-blur">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="w-7 h-7 text-[#c5a572]"
+          <div>
+            <div className="pb-8">
+
+              <button
+                onClick={() => onNavigate("home")}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[#4a6080]"
               >
-                <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
-                <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
-              </svg>
+                <ArrowLeft size={17} />
+                <span className="lg:hidden xl:block">
+                  Back to Site
+                </span>
+              </button>
+
             </div>
-            <div>
-              <h1 className="font-serif text-xl sm:text-2xl tracking-wide leading-tight">
-                Crestview University
-              </h1>
-              <p className="text-[#c5a572] text-xs sm:text-sm tracking-[0.25em] uppercase">
-                Est. 1887
-              </p>
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full border-2 border-[#c5a572] flex items-center justify-center bg-[#0a1f44]/60 backdrop-blur">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  className="w-7 h-7 text-[#c5a572]"
+                >
+                  <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
+                  <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
+                </svg>
+              </div>
+              <div>
+                <h1 className="font-serif text-xl sm:text-2xl tracking-wide leading-tight">
+                  Government Polytechnic Muzaffarpur
+                </h1>
+                <p className="text-[#c5a572] text-xs sm:text-sm tracking-[0.25em] uppercase">
+                  Est. 1924
+                </p>
+              </div>
             </div>
           </div>
 
@@ -85,7 +102,7 @@ const Login = () => {
             <p className="font-serif italic text-sm sm:text-base text-slate-200">
               "The roots of education are bitter, but the fruit is sweet."
             </p>
-            <p className="text-xs text-slate-400 mt-1">— Aristotle</p>
+            <p className="text-xs text-slate-400 mt-1">— Prof. Sweta</p>
           </div>
         </div>
       </aside>
@@ -276,23 +293,6 @@ const Login = () => {
                   </svg>
                 </span>
               </div>
-            </div>
-
-            {/* Remember + Forgot */}
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2 cursor-pointer text-slate-600">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 rounded border-slate-300 text-[#0a1f44] focus:ring-[#0a1f44] cursor-pointer"
-                />
-                Remember me
-              </label>
-              <a
-                href="#"
-                className="text-[#0a1f44] font-medium hover:text-[#c5a572] transition"
-              >
-                Forgot password?
-              </a>
             </div>
 
             {/* Submit */}

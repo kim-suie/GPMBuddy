@@ -2,3 +2,13 @@
 @import './tailwind.css';
 @import './theme.css';
 @import './globals.css';
+
+html,body{
+    overflow-x: hidden;
+}
+
+button,
+a{
+    cursor:pointer;
+}
+
