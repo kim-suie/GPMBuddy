@@ -423,18 +423,6 @@ export default function HeroSection() {
                   ))}
                 </div>
               </div>
-
-              <div className="bg-gradient-to-br from-[#FF9933] to-[#ff7a00] text-[#0b1f5e] p-6 rounded-sm shadow-md relative overflow-hidden">
-                <div className="absolute -right-4 -bottom-4 w-32 h-32 rounded-full bg-white/20"></div>
-                <div className="relative">
-                  <div className="text-[11px] font-bold uppercase tracking-wider mb-1">Highest Package 2024-25</div>
-                  <div className="text-[44px] font-bold leading-none mb-2">₹8.4 <span className="text-[20px]">LPA</span></div>
-                  <div className="text-[13px] font-medium">Offered by an IT major to a CSE diploma student.</div>
-                  <button className="mt-4 bg-[#0b1f5e] text-white px-4 py-2 text-[12px] font-semibold rounded-sm hover:bg-[#0a1a4d] transition-colors flex items-center gap-1.5">
-                    View placement report <Icon.ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
