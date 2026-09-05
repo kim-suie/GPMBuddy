@@ -1,12 +1,6 @@
 import { useState } from "react"; 
 import { Navbar } from "./components/Navbar"; 
 import HeroSection  from "./components/HeroSection"; 
-import { QuickAccess } from "./components/QuickAccess"; 
-import { DepartmentsSection } from "./components/DepartmentsSection"; 
-import { WhyChooseSection } from "./components/WhyChooseSection"; 
-import { FacilitiesSection } from "./components/FacilitiesSection"; 
-import { PlacementsSection } from "./components/PlacementsSection"; 
-import  NoticesSection  from "./components/NoticesSection"; 
 import  Footer  from "./components/Footer"; 
 import  GPBuddyPage  from "./components/GPBuddyPage"; 
 import DepartmentPage from "./components/DepartmentPage"; 
@@ -44,12 +38,6 @@ export default function App() {
       <Navbar onNavigate={handleNavigate} currentPage={currentPage} /> 
       <main> 
         <HeroSection onNavigate={handleNavigate} /> 
-        <QuickAccess onNavigate={handleNavigate} /> 
-        <DepartmentsSection /> 
-        <WhyChooseSection /> 
-        <FacilitiesSection /> 
-        <PlacementsSection /> 
-        <NoticesSection /> 
       </main> 
       <Footer onNavigate={handleNavigate} /> 
     </div> 
