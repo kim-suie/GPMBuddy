@@ -1,45 +1,83 @@
-import { useState } from "react"; 
-import { Navbar } from "./components/Navbar"; 
-import HeroSection  from "./components/HeroSection"; 
-import  Footer  from "./components/Footer"; 
-import  GPBuddyPage  from "./components/GPBuddyPage"; 
-import DepartmentPage from "./components/DepartmentPage"; 
+import { BrowserRouter, Routes, Route, useLocation, useNavigate, useParams, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+
+import { Navbar } from "./components/Navbar";
+import HeroSection from "./components/HeroSection";
+import Footer from "./components/Footer";
+import GPBuddyPage from "./components/GPBuddyPage";
+import DepartmentPage from "./components/DepartmentPage";
+import AcademicsPage from "./components/AcahdemicPage";
+import PlacementPage from "./components/PlacementPage";
+import NoticePage from "./components/NoticePage";
 import Login from "./components/Login";
 
-export default function App() { 
-  const [currentPage, setCurrentPage] = useState("home"); 
+// ScrollToTop helper component to scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
+  return null;
+}
 
-  // CHANGED HERE: Removed ": string" type definition
-  const handleNavigate = (page) => { 
-    setCurrentPage(page); 
-    window.scrollTo({ top: 0, behavior: "smooth" }); 
-  }; 
+// Layout component that wraps standard pages with Navbar and Footer
+function StandardLayout() {
+  return (
+    <>
+      <Navbar />
+      <main className="min-h-screen">
+        <Outlet /> {/* This renders the matched child route */}
+      </main>
+      <Footer />
+    </>
+  );
+}
 
-  if (currentPage === "gpbuddy") { 
-    return <GPBuddyPage onNavigate={handleNavigate} />; 
-  } 
+export default function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        
+        {/* Standalone pages without standard Navbar/Footer */}
+        <Route path="/gpbuddy" element={<GPBuddyPage />} />
+        <Route path="/login" element={<Login />} />
 
-  if (currentPage === "login") { 
-    return <Login onNavigate={handleNavigate} />; 
-  } 
+        {/* Standard Pages with Navbar and Footer */}
+        <Route element={<StandardLayout />}>
+          <Route index element={<HeroSection />} /> {/* This is the home page ("/") */}
+          <Route path="academics" element={<AcademicsPage />} />
+          <Route path="placements" element={<PlacementPage />} />
+          <Route path="notices" element={<NoticePage />} />
+          <Route path="dept/:deptId" element={<DepartmentPage />} />
+          
+          {/* Fallback for old links or direct department URLs like /dept-cse */}
+          <Route path=":pageName" element={<DynamicRouter />} /> 
+        </Route>
 
-  if (currentPage.startsWith("dept-")) { 
-    return ( 
-      <> 
-        <Navbar onNavigate={handleNavigate} currentPage={currentPage} /> 
-        <DepartmentPage deptId={currentPage} onNavigate={handleNavigate} /> 
-        <Footer onNavigate={handleNavigate} /> 
-      </> 
-    ); 
-  } 
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
-  return ( 
-    <div className="min-h-screen bg-[#f0f4f8]"> 
-      <Navbar onNavigate={handleNavigate} currentPage={currentPage} /> 
-      <main> 
-        <HeroSection onNavigate={handleNavigate} /> 
-      </main> 
-      <Footer onNavigate={handleNavigate} /> 
-    </div> 
-  ); 
+// Helper to handle direct page names like "academics" or "dept-cse"
+function DynamicRouter() {
+  const { pageName } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (pageName === "home") {
+      navigate("/", { replace: true });
+    } else if (pageName === "academics") {
+      navigate("/academics", { replace: true });
+    } else if (pageName?.startsWith("dept-")) {
+      navigate(`/dept/${pageName}`, { replace: true });
+    } else if (pageName === "gpbuddy") {
+      navigate("/gpbuddy", { replace: true });
+    } else if (pageName === "login") {
+      navigate("/login", { replace: true });
+    }
+  }, [pageName, navigate]);
+
+  return <div className="min-h-screen bg-[#f0f4f8]"></div>; // Empty div while redirecting
 }

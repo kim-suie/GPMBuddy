@@ -1,2074 +1,498 @@
-// // import {
-// //   ArrowLeft,
-// //   Wrench,
-// //   Cpu,
-// //   Zap,
-// //   Radio,
-// //   Settings,
-// //   FlaskConical,
-// //   Atom,
-// //   Globe,
-// //   Scissors,
-// // } from "lucide-react";
-
-// // const deptData = {
-// //   "dept-civil": {
-// //     title: "Civil Engineering",
-// //     fullTitle: "Department of Civil Engineering",
-// //     icon: <Wrench size={32} />,
-// //     color: "from-amber-500 to-orange-600",
-// //     description:
-// //       "The Civil Engineering department prepares students in the design, construction, and maintenance of infrastructure projects including roads, bridges, dams, and buildings. Our curriculum balances theoretical knowledge with practical skill development.",
-// //     vision:
-// //       "To develop competent civil engineers who contribute to nation-building through sustainable infrastructure development.",
-// //     highlights: [
-// //       "Structural Design",
-// //       "Surveying & Geo-informatics",
-// //       "Transportation Engineering",
-// //       "Environmental Engineering",
-// //     ],
-// //     courses: [
-// //       "Engineering Drawing",
-// //       "Strength of Materials",
-// //       "Fluid Mechanics",
-// //       "Concrete Technology",
-// //       "Highway Engineering",
-// //       "Estimating & Costing",
-// //     ],
-// //     labs: [
-// //       "Survey Lab",
-// //       "Concrete & Material Testing Lab",
-// //       "Soil Mechanics Lab",
-// //       "Hydraulics Lab",
-// //     ],
-// //     hod: "Head of Department",
-// //     seats: 60,
-// //     duration: "3 Years (Diploma)",
-// //     externalUrl: "https://www.gpmuz.ac.in/department/",
-// //   },
-
-// //   "dept-cse": {
-// //     title: "Computer Science & Engineering",
-// //     fullTitle: "Department of Computer Science & Engineering",
-// //     icon: <Cpu size={32} />,
-// //     color: "from-blue-600 to-indigo-700",
-// //     description:
-// //       "The CSE department is at the forefront of technology education, offering comprehensive training in programming, software development, networking, and emerging technologies like AI, web development, and cloud computing.",
-// //     vision:
-// //       "To produce skilled software professionals capable of innovating and solving real-world problems through technology.",
-// //     highlights: [
-// //       "Programming & Software Dev",
-// //       "Web & Mobile Development",
-// //       "Networking & Cybersecurity",
-// //       "Database Management",
-// //     ],
-// //     courses: [
-// //       "C/C++ Programming",
-// //       "Data Structures",
-// //       "Operating Systems",
-// //       "DBMS",
-// //       "Web Technology",
-// //       "Computer Networks",
-// //       "Python Programming",
-// //     ],
-// //     labs: [
-// //       "Programming Lab",
-// //       "Networking Lab",
-// //       "Web Development Lab",
-// //       "Project Lab",
-// //     ],
-// //     hod: "Head of Department",
-// //     seats: 60,
-// //     duration: "3 Years (Diploma)",
-// //     externalUrl: "https://www.gpmuz.ac.in/department/",
-// //   },
-
-// //   "dept-electrical": {
-// //     title: "Electrical Engineering",
-// //     fullTitle: "Department of Electrical Engineering",
-// //     icon: <Zap size={32} />,
-// //     color: "from-yellow-500 to-amber-600",
-// //     description:
-// //       "The Electrical Engineering department trains students in electrical circuits, power systems, machines, and control systems. Graduates are equipped to work in power generation, distribution, and industrial automation.",
-// //     vision:
-// //       "To create skilled electrical engineers who drive India's energy and industrial sectors forward.",
-// //     highlights: [
-// //       "Power Systems",
-// //       "Electrical Machines",
-// //       "Control Systems",
-// //       "Industrial Automation",
-// //     ],
-// //     courses: [
-// //       "Basic Electrical Engineering",
-// //       "Electrical Machines",
-// //       "Power Systems",
-// //       "Control Systems",
-// //       "Switchgear & Protection",
-// //       "Utilization of Electrical Energy",
-// //     ],
-// //     labs: [
-// //       "Electrical Machines Lab",
-// //       "Power Electronics Lab",
-// //       "Control Systems Lab",
-// //       "Measurement Lab",
-// //     ],
-// //     hod: "Head of Department",
-// //     seats: 60,
-// //     duration: "3 Years (Diploma)",
-// //     externalUrl: "https://www.gpmuz.ac.in/department/",
-// //   },
-
-// //   "dept-electronics": {
-// //     title: "Electronics Engineering",
-// //     fullTitle: "Department of Electronics Engineering",
-// //     icon: <Radio size={32} />,
-// //     color: "from-purple-600 to-violet-700",
-// //     description:
-// //       "The Electronics Engineering department covers analog and digital electronics, communication systems, microprocessors, and embedded systems. Students gain hands-on experience with modern electronic components and instruments.",
-// //     vision:
-// //       "To nurture electronics engineers who innovate in communication, embedded systems, and consumer electronics.",
-// //     highlights: [
-// //       "Analog & Digital Electronics",
-// //       "Communication Systems",
-// //       "Embedded Systems",
-// //       "Microprocessors",
-// //     ],
-// //     courses: [
-// //       "Electronic Devices & Circuits",
-// //       "Digital Electronics",
-// //       "Microprocessors",
-// //       "Communication Engineering",
-// //       "Embedded Systems",
-// //       "PCB Design",
-// //     ],
-// //     labs: [
-// //       "Electronics Lab",
-// //       "Digital Lab",
-// //       "Microprocessor Lab",
-// //       "Communication Lab",
-// //     ],
-// //     hod: "Head of Department",
-// //     seats: 60,
-// //     duration: "3 Years (Diploma)",
-// //     externalUrl: "https://www.gpmuz.ac.in/department/",
-// //   },
-
-// //   "dept-mechanical": {
-// //     title: "Mechanical Engineering",
-// //     fullTitle: "Department of Mechanical Engineering",
-// //     icon: <Settings size={32} />,
-// //     color: "from-slate-600 to-gray-700",
-// //     description:
-// //       "The Mechanical Engineering department provides training in machine design, manufacturing processes, thermodynamics, and fluid mechanics. Students are prepared for roles in manufacturing, automotive, and energy industries.",
-// //     vision:
-// //       "To produce skilled mechanical engineers who excel in design, manufacturing, and maintenance of mechanical systems.",
-// //     highlights: [
-// //       "Machine Design",
-// //       "Manufacturing Technology",
-// //       "Thermodynamics",
-// //       "CAD/CAM",
-// //     ],
-// //     courses: [
-// //       "Engineering Mechanics",
-// //       "Thermodynamics",
-// //       "Machine Design",
-// //       "Manufacturing Processes",
-// //       "CAD/CAM",
-// //       "Industrial Management",
-// //     ],
-// //     labs: [
-// //       "Machine Shop",
-// //       "Fitting Shop",
-// //       "Welding Shop",
-// //       "CAD Lab",
-// //       "Thermodynamics Lab",
-// //     ],
-// //     hod: "Head of Department",
-// //     seats: 60,
-// //     duration: "3 Years (Diploma)",
-// //     externalUrl: "https://www.gpmuz.ac.in/department/",
-// //   },
-
-// //   "dept-chemistry": {
-// //     title: "Chemistry",
-// //     fullTitle: "Department of Applied Chemistry",
-// //     icon: <FlaskConical size={32} />,
-// //     color: "from-green-600 to-teal-700",
-// //     description:
-// //       "The Chemistry department provides foundational and applied chemistry education supporting all engineering disciplines. It covers organic, inorganic, and physical chemistry with emphasis on industrial applications and environmental chemistry.",
-// //     vision:
-// //       "To build strong chemical fundamentals that empower engineering students to solve industrial and environmental challenges.",
-// //     highlights: [
-// //       "Organic Chemistry",
-// //       "Industrial Chemistry",
-// //       "Environmental Chemistry",
-// //       "Analytical Techniques",
-// //     ],
-// //     courses: [
-// //       "Engineering Chemistry",
-// //       "Industrial Chemistry",
-// //       "Polymer Chemistry",
-// //       "Environmental Science",
-// //       "Analytical Chemistry",
-// //     ],
-// //     labs: ["Chemistry Lab", "Analytical Lab"],
-// //     hod: "Head of Department",
-// //     seats: 0,
-// //     duration: "Support Department",
-// //     externalUrl: "https://www.gpmuz.ac.in/department/",
-// //   },
-
-// //   "dept-physics": {
-// //     title: "Physics",
-// //     fullTitle: "Department of Applied Physics",
-// //     icon: <Atom size={32} />,
-// //     color: "from-cyan-600 to-blue-700",
-// //     description:
-// //       "The Physics department delivers essential physics education to all engineering students, covering mechanics, optics, electromagnetism, and modern physics. The department strengthens the scientific foundation necessary for engineering excellence.",
-// //     vision:
-// //       "To provide strong physics fundamentals that enable engineering students to understand and innovate in their respective fields.",
-// //     highlights: [
-// //       "Classical Mechanics",
-// //       "Optics & Lasers",
-// //       "Electromagnetism",
-// //       "Modern Physics",
-// //     ],
-// //     courses: [
-// //       "Engineering Physics",
-// //       "Optics",
-// //       "Mechanics",
-// //       "Quantum Physics",
-// //       "Electronics Fundamentals",
-// //     ],
-// //     labs: ["Physics Lab"],
-// //     hod: "Head of Department",
-// //     seats: 0,
-// //     duration: "Support Department",
-// //     externalUrl: "https://www.gpmuz.ac.in/department/",
-// //   },
-
-// //   "dept-humanities": {
-// //     title: "Humanities",
-// //     fullTitle: "Department of Humanities & Social Sciences",
-// //     icon: <Globe size={32} />,
-// //     color: "from-rose-500 to-pink-600",
-// //     description:
-// //       "The Humanities department enriches the overall education of engineering students by covering communication skills, economics, management principles, and social sciences. It fosters professional and interpersonal competencies.",
-// //     vision:
-// //       "To develop well-rounded engineers with strong communication, ethical values, and managerial skills for the modern workplace.",
-// //     highlights: [
-// //       "Communication Skills",
-// //       "Technical Writing",
-// //       "Engineering Economics",
-// //       "Management Principles",
-// //     ],
-// //     courses: [
-// //       "English Communication",
-// //       "Technical Report Writing",
-// //       "Engineering Economics",
-// //       "Entrepreneurship",
-// //       "Industrial Management",
-// //     ],
-// //     labs: ["Language Lab"],
-// //     hod: "Head of Department",
-// //     seats: 0,
-// //     duration: "Support Department",
-// //     externalUrl: "https://www.gpmuz.ac.in/department/",
-// //   },
-
-// //   "dept-leather": {
-// //     title: "Leather Technology",
-// //     fullTitle: "Department of Leather Technology",
-// //     icon: <Scissors size={32} />,
-// //     color: "from-orange-700 to-red-800",
-// //     description:
-// //       "The Leather Technology department is a unique and specialized program training students in leather processing, product design, and quality control. Bihar's rich leather industry makes this a highly relevant and career-oriented discipline.",
-// //     vision:
-// //       "To produce skilled leather technologists who drive innovation and quality in India's growing leather and footwear industry.",
-// //     highlights: [
-// //       "Leather Processing",
-// //       "Footwear Design",
-// //       "Quality Control",
-// //       "Industrial Tanning",
-// //     ],
-// //     courses: [
-// //       "Leather Science",
-// //       "Tanning Technology",
-// //       "Footwear Design & Manufacturing",
-// //       "Quality Assurance",
-// //       "Environmental Management in Tanneries",
-// //     ],
-// //     labs: [
-// //       "Tanning Lab",
-// //       "Footwear Manufacturing Lab",
-// //       "Testing & Quality Lab",
-// //     ],
-// //     hod: "Head of Department",
-// //     seats: 30,
-// //     duration: "3 Years (Diploma)",
-// //     externalUrl: "https://www.gpmuz.ac.in/department/",
-// //   },
-// // };
-
-
-
-// // const DepartmentPage = ({ deptId, onNavigate }) => {
-// //   const dept = deptData[deptId];
-
-// //   if (!dept) {
-// //     return (
-// //       <div className="min-h-screen flex items-center justify-center">
-// //         <h2 className="text-xl text-gray-500">Department not found</h2>
-// //       </div>
-// //     );
-// //   }
-
-// //   return (
-// //     <div className="min-h-screen bg-slate-100">
-// //       {/* Hero Section */}
-// //       <div
-// //         className={`bg-gradient-to-r ${dept.color} text-white pt-28 pb-16 px-6 relative`}
-// //       >
-// //         <div className="max-w-6xl mx-auto">
-// //           <button
-// //             onClick={() => onNavigate("home")}
-// //             className="flex items-center gap-2 mb-6 hover:text-gray-200"
-// //           >
-// //             <ArrowLeft size={18} />
-// //             Back to Home
-// //           </button>
-
-// //           <div className="flex items-center gap-4">
-// //             <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center">
-// //               {dept.icon}
-// //             </div>
-
-// //             <div>
-// //               <p className="uppercase text-sm tracking-wider text-white/80">
-// //                 Government Polytechnic Muzaffarpur
-// //               </p>
-
-// //               <h1 className="text-4xl font-bold">{dept.title}</h1>
-// //             </div>
-// //           </div>
-
-// //           <div className="flex flex-wrap gap-3 mt-6">
-// //             <span className="bg-white/20 px-4 py-1 rounded-full text-sm">
-// //               {dept.seats} Seats
-// //             </span>
-
-// //             <span className="bg-white/20 px-4 py-1 rounded-full text-sm">
-// //               {dept.duration}
-// //             </span>
-
-// //             <span className="bg-white/20 px-4 py-1 rounded-full text-sm">
-// //               BTEUP Affiliated
-// //             </span>
-// //           </div>
-// //         </div>
-// //       </div>
-
-// //       {/* Content */}
-// //       <div className="max-w-6xl mx-auto py-12 px-6 grid lg:grid-cols-3 gap-8">
-// //         {/* Left */}
-// //         <div className="lg:col-span-2 space-y-6">
-// //           {/* About */}
-// //           <div className="bg-white rounded-xl shadow p-6">
-// //             <h2 className="text-2xl font-semibold mb-3">
-// //               About the Department
-// //             </h2>
-// //             <p className="text-gray-700">{dept.description}</p>
-// //           </div>
-
-// //           {/* Vision */}
-// //           <div className="bg-white rounded-xl shadow p-6">
-// //             <h2 className="text-2xl font-semibold mb-3">Vision</h2>
-// //             <p className="text-gray-700">{dept.vision}</p>
-// //           </div>
-
-// //           {/* Highlights */}
-// //           <div className="bg-white rounded-xl shadow p-6">
-// //             <h2 className="text-2xl font-semibold mb-3">
-// //               Department Highlights
-// //             </h2>
-
-// //             <ul className="list-disc ml-5 space-y-2">
-// //               {dept.highlights.map((item, index) => (
-// //                 <li key={index}>{item}</li>
-// //               ))}
-// //             </ul>
-// //           </div>
-
-// //           {/* Courses */}
-// //           <div className="bg-white rounded-xl shadow p-6">
-// //             <h2 className="text-2xl font-semibold mb-3">Courses</h2>
-
-// //             <ul className="list-disc ml-5 space-y-2">
-// //               {dept.courses.map((course, index) => (
-// //                 <li key={index}>{course}</li>
-// //               ))}
-// //             </ul>
-// //           </div>
-
-// //           {/* Labs */}
-// //           <div className="bg-white rounded-xl shadow p-6">
-// //             <h2 className="text-2xl font-semibold mb-3">Laboratories</h2>
-
-// //             <ul className="list-disc ml-5 space-y-2">
-// //               {dept.labs.map((lab, index) => (
-// //                 <li key={index}>{lab}</li>
-// //               ))}
-// //             </ul>
-// //           </div>
-// //         </div>
-
-// //         {/* Right Sidebar */}
-// //         <div className="space-y-6">
-// //           <div className="bg-white rounded-xl shadow p-6">
-// //             <h3 className="text-xl font-semibold mb-4">
-// //               Department Information
-// //             </h3>
-
-// //             <p>
-// //               <strong>HOD:</strong> {dept.hod}
-// //             </p>
-
-// //             <p className="mt-2">
-// //               <strong>Seats:</strong> {dept.seats}
-// //             </p>
-
-// //             <p className="mt-2">
-// //               <strong>Duration:</strong> {dept.duration}
-// //             </p>
-
-// //             <a
-// //               href={dept.externalUrl}
-// //               target="_blank"
-// //               rel="noopener noreferrer"
-// //               className="mt-6 inline-block bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
-// //             >
-// //               Visit Department
-// //             </a>
-// //           </div>
-// //         </div>
-// //       </div>
-// //     </div>
-// //   );
-// // }
-
-
-import React from "react";
-
+import { useParams, useNavigate } from "react-router-dom";
 import {
-  ArrowLeft,
-  ChevronRight,
-  Cpu,
-  Users,
-  Clock3,
   GraduationCap,
-  Landmark,
-  UserRound,
-  CalendarDays,
-  Database,
-  Eye,
-  Target,
-  MonitorCog,
+  Users,
   FlaskConical,
-  Network,
-  Globe,
-  FolderOpen,
   BookOpen,
-  MapPin,
-  Mail,
+  Target,
+  Eye,
   Phone,
+  Mail,
+  ArrowRight,
+  Cpu,
+  Building2,
   Wrench,
-  Zap,
-  Radio,
-  Settings,
+  CircuitBoard,
+  FlaskRound,
   Atom,
-  Scissors,
+  BookMarked,
+  Hand,
+  FileText,
+  Link2,
 } from "lucide-react";
 
-/* =========================================================
-   DEPARTMENT DATA
-========================================================= */
-
-const deptData = {
+const departmentsData = {
   "dept-civil": {
-    title: "Civil Engineering",
-    fullTitle: "Department of Civil Engineering",
-    icon: Wrench,
-
-    description:
-      "The Civil Engineering department prepares students in the design, construction, and maintenance of infrastructure projects including roads, bridges, dams, and buildings. Our curriculum balances theoretical knowledge with practical skill development.",
-
-    vision:
-      "To develop competent civil engineers who contribute to nation-building through sustainable infrastructure development.",
-
-    mission: [
-      "Provide strong fundamentals in civil engineering.",
-      "Develop practical engineering and problem-solving skills.",
-      "Encourage project-based and laboratory-based learning.",
-      "Promote professional ethics, teamwork and lifelong learning.",
-    ],
-
-    highlights: [
-      {
-        icon: Wrench,
-        title: "Structural Design",
-        description: "Training in modern structural design techniques.",
-        box: "bg-blue-50 text-blue-600",
-      },
-      {
-        icon: MapPin,
-        title: "Surveying",
-        description: "Practical surveying and geo-informatics skills.",
-        box: "bg-violet-50 text-violet-600",
-      },
-      {
-        icon: Globe,
-        title: "Transportation",
-        description: "Study of transportation and highway engineering.",
-        box: "bg-orange-50 text-orange-500",
-      },
-      {
-        icon: FlaskConical,
-        title: "Environmental",
-        description: "Sustainable and environmentally responsible engineering.",
-        box: "bg-emerald-50 text-emerald-600",
-      },
-    ],
-
-    courses: [
-      "Engineering Drawing",
-      "Strength of Materials",
-      "Fluid Mechanics",
-      "Concrete Technology",
-      "Highway Engineering",
-      "Estimating & Costing",
-    ],
-
+    name: "Civil Engineering",
+    hindiName: "सिविल अभियांत्रिकी विभाग",
+    icon: Building2,
+    established: "1958",
+    intake: "60",
+    desc: "The Civil Engineering department is the cornerstone of infrastructure development. It deals with the design, construction, and maintenance of physical and naturally built environments including roads, bridges, canals, dams, and buildings.",
+    vision: "To produce highly competent civil diploma engineers equipped with sustainable construction practices and modern surveying techniques.",
+    mission: "To impart strong foundations in structural engineering, surveying, and construction management through extensive fieldwork and laboratory testing.",
+    hod: {
+      name: "Er. R. K. Mishra",
+      msg: "Civil engineering is about shaping the world around us. We emphasize practical surveying, material testing, and modern construction management to make our students industry-ready.",
+      img: "https://picsum.photos/seed/gpm-hod-civil/300/400",
+    },
     labs: [
-      {
-        icon: Wrench,
-        title: "Survey",
-        subtitle: "Lab",
-      },
-      {
-        icon: FlaskConical,
-        title: "Concrete",
-        subtitle: "Lab",
-      },
-      {
-        icon: MonitorCog,
-        title: "Soil Mechanics",
-        subtitle: "Lab",
-      },
-      {
-        icon: Network,
-        title: "Hydraulics",
-        subtitle: "Lab",
-      },
+      { name: "Surveying Lab", desc: "Theodolites, total stations, auto levels, and GPS surveying equipment." },
+      { name: "Material Testing Lab", desc: "Universal testing machine, concrete compressive strength, and aggregate testing." },
+      { name: "Hydraulics & Fluid Mechanics Lab", desc: "Flow measurement, open channel flume, and centrifugal pump test rigs." },
+      { name: "Highway Material Lab", desc: "Bitumen testing, Marshall stability, and pavement design tools." },
+      { name: "Geotechnical Engineering Lab", desc: "Soil classification, compaction, and shear strength testing." },
+      { name: "CAD Lab", desc: "AutoCAD, STAAD Pro, and BIM software for structural drafting." },
     ],
-
-    seats: 60,
-    duration: "3 Years",
-    program: "Diploma",
-    affiliation: "BTEUP",
-
-    hod: "Head of Department",
-    established: "2010",
-
-    email: "civil@gpm.ac.in",
-    phone: "+91 98765 43210",
-
-    location: "Academic Block - I",
-    room: "Room No. 205",
+    faculty: [
+      { name: "Er. A. K. Singh", role: "Lecturer (Selection Grade)", exp: "14 Years" },
+      { name: "Mr. B. K. Pandey", role: "Lecturer", exp: "9 Years" },
+      { name: "Mrs. S. Kumari", role: "Lecturer", exp: "7 Years" },
+    ],
   },
-
   "dept-cse": {
-    title: "Computer Science & Engineering",
-    fullTitle: "Department of Computer Science & Engineering",
+    name: "Computer Science & Engineering",
+    hindiName: "कंप्यूटर विज्ञान एवं अभियांत्रिकी विभाग",
     icon: Cpu,
-
-    description:
-      "The Department of Computer Science & Engineering provides students with strong foundations in computing, programming, data structures, databases, operating systems, networking, web technologies and emerging areas of computer science. The department emphasizes hands-on learning through modern laboratories, industry-oriented projects and technical activities.",
-
-    vision:
-      "To develop technically skilled and responsible professionals with the knowledge and practical abilities required to contribute effectively to the field of computing and technology.",
-
-    mission: [
-      "Provide strong fundamentals in computer science and engineering.",
-      "Develop practical programming and problem-solving skills.",
-      "Encourage project-based and laboratory-based learning.",
-      "Promote professional ethics, teamwork and lifelong learning.",
-    ],
-
-    highlights: [
-      {
-        icon: MonitorCog,
-        title: "Industry Oriented Curriculum",
-        description:
-          "Updated curriculum aligned with industry requirements.",
-        box: "bg-blue-50 text-blue-600",
-      },
-      {
-        icon: FlaskConical,
-        title: "Modern Laboratories",
-        description:
-          "Well-equipped labs for practical and hands-on learning.",
-        box: "bg-violet-50 text-violet-600",
-      },
-      {
-        icon: Users,
-        title: "Project Based Learning",
-        description:
-          "Encouraging innovation through mini and major projects.",
-        box: "bg-orange-50 text-orange-500",
-      },
-      {
-        icon: Target,
-        title: "Skill Development",
-        description:
-          "Workshops, seminars and training for overall skill enhancement.",
-        box: "bg-emerald-50 text-emerald-600",
-      },
-    ],
-
-    courses: [
-      "C/C++ Programming",
-      "Data Structures",
-      "Operating Systems",
-      "DBMS",
-      "Web Technology",
-      "Computer Networks",
-      "Python Programming",
-    ],
-
+    established: "1999",
+    intake: "60",
+    desc: "The Department of Computer Science & Engineering at GPM is dedicated to producing diploma engineers equipped with foundational and advanced knowledge in computing, software development, and systems architecture.",
+    vision: "To be a center of excellence in computer science education, producing innovative and ethical technocrats who can meet the global challenges of the IT industry.",
+    mission: "To impart quality technical education through state-of-the-art laboratories, industry-aligned curriculum, and project-based learning to foster problem-solving skills.",
+    hod: {
+      name: "Dr. A. K. Sharma",
+      msg: "Our focus is on bridging the gap between theoretical concepts and practical applications. We emphasize coding skills, software engineering principles, and emerging technologies like AI and IoT.",
+      img: "https://picsum.photos/seed/gpm-hod-cse/300/400",
+    },
     labs: [
-      {
-        icon: MonitorCog,
-        title: "Programming",
-        subtitle: "Lab",
-      },
-      {
-        icon: Network,
-        title: "Networking",
-        subtitle: "Lab",
-      },
-      {
-        icon: Globe,
-        title: "Web Development",
-        subtitle: "Lab",
-      },
-      {
-        icon: FolderOpen,
-        title: "Project",
-        subtitle: "Lab",
-      },
+      { name: "Programming Lab (C/C++)", desc: "Fundamentals of structured and object-oriented programming." },
+      { name: "DBMS & Oracle Lab", desc: "Database design, SQL queries, and backend management." },
+      { name: "Computer Network Lab", desc: "Routing, switching, and network topology simulation." },
+      { name: "Web Development Lab", desc: "HTML, CSS, JavaScript, and modern full-stack frameworks." },
+      { name: "Hardware & Microprocessor Lab", desc: "Assembly language and microcontroller architecture." },
+      { name: "Project & IoT Lab", desc: "Hands-on projects integrating sensors, cloud, and automation." },
     ],
-
-    seats: 60,
-    duration: "3 Years",
-    program: "Diploma",
-    affiliation: "BTEUP",
-
-    hod: "Mr. Amit Kumar, Lecturer (CSE)",
-    established: "2010",
-
-    email: "cse@gpm.ac.in",
-    phone: "+91 98765 43210",
-
-    location: "Academic Block - I",
-    room: "Room No. 205",
+    faculty: [
+      { name: "Mr. R. K. Verma", role: "Lecturer (Selection Grade)", exp: "12 Years" },
+      { name: "Mrs. S. Singh", role: "Lecturer", exp: "8 Years" },
+      { name: "Mr. A. Kumar", role: "Lecturer", exp: "6 Years" },
+    ],
   },
-
   "dept-electrical": {
-    title: "Electrical Engineering",
-    fullTitle: "Department of Electrical Engineering",
-    icon: Zap,
-
-    description:
-      "The Electrical Engineering department trains students in electrical circuits, power systems, machines, and control systems. Graduates are equipped to work in power generation, distribution, and industrial automation.",
-
-    vision:
-      "To create skilled electrical engineers who drive India's energy and industrial sectors forward.",
-
-    mission: [
-      "Build strong fundamentals in electrical engineering.",
-      "Develop practical electrical and problem-solving skills.",
-      "Encourage laboratory and project-based learning.",
-      "Prepare students for modern electrical industries.",
-    ],
-
-    highlights: [
-      {
-        icon: Zap,
-        title: "Power Systems",
-        description: "Power generation, transmission and distribution.",
-        box: "bg-yellow-50 text-yellow-600",
-      },
-      {
-        icon: Settings,
-        title: "Electrical Machines",
-        description: "Practical knowledge of electrical machines.",
-        box: "bg-blue-50 text-blue-600",
-      },
-      {
-        icon: Target,
-        title: "Control Systems",
-        description: "Fundamentals of modern control systems.",
-        box: "bg-violet-50 text-violet-600",
-      },
-      {
-        icon: MonitorCog,
-        title: "Automation",
-        description: "Industrial automation and control technologies.",
-        box: "bg-emerald-50 text-emerald-600",
-      },
-    ],
-
-    courses: [
-      "Basic Electrical Engineering",
-      "Electrical Machines",
-      "Power Systems",
-      "Control Systems",
-      "Switchgear & Protection",
-      "Utilization of Electrical Energy",
-    ],
-
+    name: "Electrical Engineering",
+    hindiName: "विद्युत अभियांत्रिकी विभाग",
+    icon: CircuitBoard,
+    established: "1962",
+    intake: "60",
+    desc: "The Electrical Engineering department focuses on the study and application of electricity, electronics, and electromagnetism. It covers power generation, transmission, distribution, and utilization of electrical energy.",
+    vision: "To produce skilled diploma electrical engineers capable of meeting the growing demands of the power sector and renewable energy industries.",
+    mission: "To provide a strong foundation in electrical machines, power systems, and control systems through rigorous practical training and industrial exposure.",
+    hod: {
+      name: "Er. S. N. Verma",
+      msg: "Electricity is the lifeblood of modern civilization. We train our students to handle power systems safely, efficiently, and with a deep understanding of modern smart grid technologies.",
+      img: "https://picsum.photos/seed/gpm-hod-elec/300/400",
+    },
     labs: [
-      {
-        icon: Zap,
-        title: "Electrical",
-        subtitle: "Machines Lab",
-      },
-      {
-        icon: MonitorCog,
-        title: "Power",
-        subtitle: "Electronics Lab",
-      },
-      {
-        icon: Target,
-        title: "Control",
-        subtitle: "Systems Lab",
-      },
-      {
-        icon: FlaskConical,
-        title: "Measurement",
-        subtitle: "Lab",
-      },
+      { name: "Electrical Machine Lab", desc: "Transformers, DC motors, induction motors, and alternators testing." },
+      { name: "Power System Lab", desc: "Relays, circuit breakers, and transmission line simulation." },
+      { name: "Electrical Measurement Lab", desc: "Bridges, CRO, digital multimeters, and transducers." },
+      { name: "Control System Lab", desc: "DC position control, AC servo motor, and PID controllers." },
+      { name: "Power Electronics Lab", desc: "Rectifiers, inverters, choppers, and SCR control circuits." },
+      { name: "Wiring & Winding Lab", desc: "Domestic wiring, panel design, and machine winding practices." },
     ],
-
-    seats: 60,
-    duration: "3 Years",
-    program: "Diploma",
-    affiliation: "BTEUP",
-
-    hod: "Head of Department",
-    established: "2010",
-
-    email: "electrical@gpm.ac.in",
-    phone: "+91 98765 43210",
-
-    location: "Academic Block - I",
-    room: "Room No. 205",
+    faculty: [
+      { name: "Er. D. K. Singh", role: "Lecturer (Selection Grade)", exp: "16 Years" },
+      { name: "Mr. P. R. Gupta", role: "Lecturer", exp: "11 Years" },
+      { name: "Mrs. R. Kumari", role: "Lecturer", exp: "5 Years" },
+    ],
   },
-
   "dept-electronics": {
-    title: "Electronics Engineering",
-    fullTitle: "Department of Electronics Engineering",
-    icon: Radio,
-
-    description:
-      "The Electronics Engineering department covers analog and digital electronics, communication systems, microprocessors, and embedded systems. Students gain hands-on experience with modern electronic components and instruments.",
-
-    vision:
-      "To nurture electronics engineers who innovate in communication, embedded systems, and consumer electronics.",
-
-    mission: [
-      "Build strong foundations in electronics engineering.",
-      "Develop practical electronics and communication skills.",
-      "Encourage embedded and project-based learning.",
-      "Prepare students for modern electronics industries.",
-    ],
-
-    highlights: [
-      {
-        icon: Radio,
-        title: "Communication",
-        description: "Modern communication system fundamentals.",
-        box: "bg-blue-50 text-blue-600",
-      },
-      {
-        icon: Cpu,
-        title: "Embedded Systems",
-        description: "Hands-on embedded system development.",
-        box: "bg-violet-50 text-violet-600",
-      },
-      {
-        icon: MonitorCog,
-        title: "Digital Electronics",
-        description: "Digital circuits and modern electronics.",
-        box: "bg-orange-50 text-orange-500",
-      },
-      {
-        icon: Settings,
-        title: "Microprocessors",
-        description: "Microprocessors and microcontrollers.",
-        box: "bg-emerald-50 text-emerald-600",
-      },
-    ],
-
-    courses: [
-      "Electronic Devices & Circuits",
-      "Digital Electronics",
-      "Microprocessors",
-      "Communication Engineering",
-      "Embedded Systems",
-      "PCB Design",
-    ],
-
+    name: "Electronics Engineering",
+    hindiName: "इलेक्ट्रॉनिक्स अभियांत्रिकी विभाग",
+    icon: CircuitBoard,
+    established: "1985",
+    intake: "60",
+    desc: "The Electronics Engineering department deals with the design and application of electronic circuits, microcontrollers, and communication systems. It is at the heart of modern automation and connectivity.",
+    vision: "To produce highly skilled diploma engineers in electronics and communication who can contribute to the rapidly evolving electronics industry.",
+    mission: "To provide a strong foundation in analog and digital electronics, embedded systems, and communication engineering through modern laboratories and projects.",
+    hod: {
+      name: "Er. A. K. Jha",
+      msg: "Electronics is shaping the future. From embedded systems to IoT, we ensure our students are proficient in both hardware design and software programming.",
+      img: "https://picsum.photos/seed/gpm-hod-ece/300/400",
+    },
     labs: [
-      {
-        icon: Radio,
-        title: "Electronics",
-        subtitle: "Lab",
-      },
-      {
-        icon: Cpu,
-        title: "Digital",
-        subtitle: "Lab",
-      },
-      {
-        icon: MonitorCog,
-        title: "Microprocessor",
-        subtitle: "Lab",
-      },
-      {
-        icon: Network,
-        title: "Communication",
-        subtitle: "Lab",
-      },
+      { name: "Analog Electronics Lab", desc: "Op-amps, oscillators, and amplifier circuit design." },
+      { name: "Digital Electronics Lab", desc: "Logic gates, flip-flops, counters, and shift registers." },
+      { name: "Microprocessor & Microcontroller Lab", desc: "8085, 8051, and Arduino programming and interfacing." },
+      { name: "Communication Lab", desc: "AM/FM modulation, PCM, TDM, and fiber optic communication." },
+      { name: "Consumer Electronics Lab", desc: "Television, radio, and home appliance circuit analysis." },
+      { name: "PCB Design Lab", desc: "Circuit layout, etching, and soldering practices." },
     ],
-
-    seats: 60,
-    duration: "3 Years",
-    program: "Diploma",
-    affiliation: "BTEUP",
-
-    hod: "Head of Department",
-    established: "2010",
-
-    email: "electronics@gpm.ac.in",
-    phone: "+91 98765 43210",
-
-    location: "Academic Block - I",
-    room: "Room No. 205",
+    faculty: [
+      { name: "Mr. M. K. Prasad", role: "Lecturer (Selection Grade)", exp: "13 Years" },
+      { name: "Mrs. N. Sharma", role: "Lecturer", exp: "9 Years" },
+      { name: "Er. V. Kumar", role: "Lecturer", exp: "4 Years" },
+    ],
   },
-
   "dept-mechanical": {
-    title: "Mechanical Engineering",
-    fullTitle: "Department of Mechanical Engineering",
-    icon: Settings,
-
-    description:
-      "The Mechanical Engineering department provides training in machine design, manufacturing processes, thermodynamics, and fluid mechanics. Students are prepared for roles in manufacturing, automotive, and energy industries.",
-
-    vision:
-      "To produce skilled mechanical engineers who excel in design, manufacturing, and maintenance of mechanical systems.",
-
-    mission: [
-      "Develop strong mechanical engineering fundamentals.",
-      "Build practical design and manufacturing skills.",
-      "Promote project-based learning.",
-      "Prepare students for modern manufacturing industries.",
-    ],
-
-    highlights: [
-      {
-        icon: Settings,
-        title: "Machine Design",
-        description: "Modern machine design and engineering principles.",
-        box: "bg-blue-50 text-blue-600",
-      },
-      {
-        icon: Wrench,
-        title: "Manufacturing",
-        description: "Modern manufacturing processes and techniques.",
-        box: "bg-violet-50 text-violet-600",
-      },
-      {
-        icon: FlaskConical,
-        title: "Thermodynamics",
-        description: "Thermal engineering and energy systems.",
-        box: "bg-orange-50 text-orange-500",
-      },
-      {
-        icon: MonitorCog,
-        title: "CAD/CAM",
-        description: "Computer aided design and manufacturing.",
-        box: "bg-emerald-50 text-emerald-600",
-      },
-    ],
-
-    courses: [
-      "Engineering Mechanics",
-      "Thermodynamics",
-      "Machine Design",
-      "Manufacturing Processes",
-      "CAD/CAM",
-      "Industrial Management",
-    ],
-
+    name: "Mechanical Engineering",
+    hindiName: "यांत्रिक अभियांत्रिकी विभाग",
+    icon: Wrench,
+    established: "1955",
+    intake: "60",
+    desc: "One of the oldest departments at GPM, Mechanical Engineering deals with the design, manufacturing, and maintenance of mechanical systems, blending traditional workshop practices with modern CAD/CAM technologies.",
+    vision: "To produce skilled mechanical diploma engineers capable of contributing to industrial growth and sustainable manufacturing practices.",
+    mission: "To provide a strong foundation in mechanical principles through rigorous workshop training, industrial visits, and exposure to modern manufacturing technology.",
+    hod: {
+      name: "Er. S. N. Pandey",
+      msg: "Mechanical engineering is the backbone of any industrial infrastructure. We ensure our students are shop-floor ready with extensive hands-on training in our workshops and CAD labs.",
+      img: "https://picsum.photos/seed/gpm-hod-mech/300/400",
+    },
     labs: [
-      {
-        icon: Wrench,
-        title: "Machine",
-        subtitle: "Shop",
-      },
-      {
-        icon: Settings,
-        title: "Fitting",
-        subtitle: "Shop",
-      },
-      {
-        icon: Wrench,
-        title: "Welding",
-        subtitle: "Shop",
-      },
-      {
-        icon: MonitorCog,
-        title: "CAD",
-        subtitle: "Lab",
-      },
+      { name: "Thermal Engineering Lab", desc: "Boilers, IC engines, and refrigeration cycles testing." },
+      { name: "Machine Shop", desc: "Lathes, milling machines, and CNC operations." },
+      { name: "CAD/CAM Lab", desc: "AutoCAD, SolidWorks, and CNC programming simulation." },
+      { name: "Hydraulics & Pneumatics Lab", desc: "Fluid mechanics and control systems." },
+      { name: "Material Testing Lab", desc: "Universal testing machine and metallography." },
+      { name: "Foundry & Welding Shop", desc: "Casting processes and arc/gas welding." },
     ],
-
-    seats: 60,
-    duration: "3 Years",
-    program: "Diploma",
-    affiliation: "BTEUP",
-
-    hod: "Head of Department",
-    established: "2010",
-
-    email: "mechanical@gpm.ac.in",
-    phone: "+91 98765 43210",
-
-    location: "Academic Block - I",
-    room: "Room No. 205",
+    faculty: [
+      { name: "Er. D. K. Mishra", role: "Lecturer (Selection Grade)", exp: "15 Years" },
+      { name: "Mr. P. Thakur", role: "Lecturer", exp: "10 Years" },
+      { name: "Er. N. Gupta", role: "Lecturer", exp: "5 Years" },
+    ],
   },
-
   "dept-chemistry": {
-    title: "Chemistry",
-    fullTitle: "Department of Applied Chemistry",
-    icon: FlaskConical,
-
-    description:
-      "The Chemistry department provides foundational and applied chemistry education supporting all engineering disciplines. It covers organic, inorganic, and physical chemistry with emphasis on industrial applications and environmental chemistry.",
-
-    vision:
-      "To build strong chemical fundamentals that empower engineering students to solve industrial and environmental challenges.",
-
-    mission: [
-      "Provide strong chemistry fundamentals.",
-      "Connect chemistry with engineering applications.",
-      "Develop practical laboratory skills.",
-      "Promote environmental awareness.",
-    ],
-
-    highlights: [
-      {
-        icon: FlaskConical,
-        title: "Organic Chemistry",
-        description: "Fundamentals of organic chemistry.",
-        box: "bg-green-50 text-green-600",
-      },
-      {
-        icon: FlaskConical,
-        title: "Industrial Chemistry",
-        description: "Chemistry applications in industry.",
-        box: "bg-teal-50 text-teal-600",
-      },
-      {
-        icon: Globe,
-        title: "Environmental Chemistry",
-        description: "Environmental chemistry and sustainability.",
-        box: "bg-blue-50 text-blue-600",
-      },
-      {
-        icon: Target,
-        title: "Analytical Techniques",
-        description: "Chemical analysis and laboratory techniques.",
-        box: "bg-violet-50 text-violet-600",
-      },
-    ],
-
-    courses: [
-      "Engineering Chemistry",
-      "Industrial Chemistry",
-      "Polymer Chemistry",
-      "Environmental Science",
-      "Analytical Chemistry",
-    ],
-
+    name: "Chemistry (Applied Sciences)",
+    hindiName: "रसायन विज्ञान विभाग",
+    icon: FlaskRound,
+    established: "1949",
+    intake: "N/A",
+    desc: "The Department of Chemistry provides fundamental science education to engineering students. It focuses on the chemical properties of materials used in construction, manufacturing, and electronics, along with environmental chemistry.",
+    vision: "To build a strong scientific foundation for engineering students, enabling them to apply chemical principles in their respective technical domains.",
+    mission: "To impart knowledge of material chemistry, water treatment, and polymer science through modern laboratory practices and research-oriented teaching.",
+    hod: {
+      name: "Dr. R. P. Singh",
+      msg: "Chemistry is the foundation of all material sciences. We ensure our engineering students understand the properties and reactions of the materials they will use in the field.",
+      img: "https://picsum.photos/seed/gpm-hod-chem/300/400",
+    },
     labs: [
-      {
-        icon: FlaskConical,
-        title: "Chemistry",
-        subtitle: "Lab",
-      },
-      {
-        icon: FlaskConical,
-        title: "Analytical",
-        subtitle: "Lab",
-      },
+      { name: "Analytical Chemistry Lab", desc: "Titration, pH measurement, and gravimetric analysis." },
+      { name: "Material Testing Lab", desc: "Water quality, solid fuel, and lubricant testing." },
+      { name: "Polymer Chemistry Lab", desc: "Synthesis and property analysis of polymers and plastics." },
+      { name: "Electrochemistry Lab", desc: "Conductivity, potentiometry, and corrosion testing." },
     ],
-
-    seats: 0,
-    duration: "Support",
-    program: "Support Department",
-    affiliation: "BTEUP",
-
-    hod: "Head of Department",
-    established: "2010",
-
-    email: "chemistry@gpm.ac.in",
-    phone: "+91 98765 43210",
-
-    location: "Academic Block - I",
-    room: "Room No. 205",
+    faculty: [
+      { name: "Dr. A. Pandey", role: "Assistant Professor", exp: "10 Years" },
+      { name: "Mrs. K. Kumari", role: "Lecturer", exp: "7 Years" },
+      { name: "Mr. R. Sharma", role: "Lecturer", exp: "5 Years" },
+    ],
   },
-
   "dept-physics": {
-    title: "Physics",
-    fullTitle: "Department of Applied Physics",
+    name: "Physics (Applied Sciences)",
+    hindiName: "भौतिकी विभाग",
     icon: Atom,
-
-    description:
-      "The Physics department delivers essential physics education to all engineering students, covering mechanics, optics, electromagnetism, and modern physics. The department strengthens the scientific foundation necessary for engineering excellence.",
-
-    vision:
-      "To provide strong physics fundamentals that enable engineering students to understand and innovate in their respective fields.",
-
-    mission: [
-      "Provide strong physics fundamentals.",
-      "Connect scientific concepts with engineering.",
-      "Develop practical laboratory skills.",
-      "Encourage scientific thinking and innovation.",
-    ],
-
-    highlights: [
-      {
-        icon: Atom,
-        title: "Classical Mechanics",
-        description: "Fundamental mechanics for engineering.",
-        box: "bg-blue-50 text-blue-600",
-      },
-      {
-        icon: Eye,
-        title: "Optics & Lasers",
-        description: "Optics and modern laser applications.",
-        box: "bg-violet-50 text-violet-600",
-      },
-      {
-        icon: Zap,
-        title: "Electromagnetism",
-        description: "Electromagnetic principles and applications.",
-        box: "bg-orange-50 text-orange-500",
-      },
-      {
-        icon: Cpu,
-        title: "Modern Physics",
-        description: "Modern physics concepts for engineers.",
-        box: "bg-emerald-50 text-emerald-600",
-      },
-    ],
-
-    courses: [
-      "Engineering Physics",
-      "Optics",
-      "Mechanics",
-      "Quantum Physics",
-      "Electronics Fundamentals",
-    ],
-
+    established: "1949",
+    intake: "N/A",
+    desc: "The Department of Physics imparts fundamental knowledge of matter, energy, and their interactions. It lays the groundwork for understanding electronics, optics, thermodynamics, and material science.",
+    vision: "To cultivate a scientific temperament and strong analytical thinking among engineering students through the study of applied physics.",
+    mission: "To provide conceptual understanding of physical principles and their practical applications in engineering and technology.",
+    hod: {
+      name: "Dr. S. K. Jha",
+      msg: "Physics explains the 'why' and 'how' of engineering. We ensure our students develop a rigorous scientific approach to problem-solving.",
+      img: "https://picsum.photos/seed/gpm-hod-phy/300/400",
+    },
     labs: [
-      {
-        icon: Atom,
-        title: "Physics",
-        subtitle: "Lab",
-      },
+      { name: "Optics Lab", desc: "Lasers, interferometry, and diffraction experiments." },
+      { name: "Electronics Lab", desc: "Diodes, transistors, and basic circuit analysis." },
+      { name: "Thermal Physics Lab", desc: "Thermal conductivity, Stefan's law, and heat measurement." },
+      { name: "Mechanics & Acoustics Lab", desc: "Vibration analysis, sound velocity, and Young's modulus." },
     ],
-
-    seats: 0,
-    duration: "Support",
-    program: "Support Department",
-    affiliation: "BTEUP",
-
-    hod: "Head of Department",
-    established: "2010",
-
-    email: "physics@gpm.ac.in",
-    phone: "+91 98765 43210",
-
-    location: "Academic Block - I",
-    room: "Room No. 205",
+    faculty: [
+      { name: "Dr. V. K. Singh", role: "Assistant Professor", exp: "12 Years" },
+      { name: "Mr. A. K. Verma", role: "Lecturer", exp: "8 Years" },
+      { name: "Mrs. S. Pandey", role: "Lecturer", exp: "6 Years" },
+    ],
   },
-
   "dept-humanities": {
-    title: "Humanities",
-    fullTitle: "Department of Humanities & Social Sciences",
-    icon: Globe,
-
-    description:
-      "The Humanities department enriches the overall education of engineering students by covering communication skills, economics, management principles, and social sciences. It fosters professional and interpersonal competencies.",
-
-    vision:
-      "To develop well-rounded engineers with strong communication, ethical values, and managerial skills for the modern workplace.",
-
-    mission: [
-      "Develop strong communication skills.",
-      "Improve professional and interpersonal abilities.",
-      "Introduce engineering economics and management.",
-      "Build ethical and responsible professionals.",
-    ],
-
-    highlights: [
-      {
-        icon: Globe,
-        title: "Communication Skills",
-        description: "Professional and technical communication.",
-        box: "bg-blue-50 text-blue-600",
-      },
-      {
-        icon: BookOpen,
-        title: "Technical Writing",
-        description: "Technical report writing skills.",
-        box: "bg-violet-50 text-violet-600",
-      },
-      {
-        icon: Target,
-        title: "Engineering Economics",
-        description: "Economic principles for engineers.",
-        box: "bg-orange-50 text-orange-500",
-      },
-      {
-        icon: Users,
-        title: "Management",
-        description: "Management and professional development.",
-        box: "bg-emerald-50 text-emerald-600",
-      },
-    ],
-
-    courses: [
-      "English Communication",
-      "Technical Report Writing",
-      "Engineering Economics",
-      "Entrepreneurship",
-      "Industrial Management",
-    ],
-
+    name: "Humanities & Management",
+    hindiName: "मानविकी एवं प्रबंधन विभाग",
+    icon: BookMarked,
+    established: "1949",
+    intake: "N/A",
+    desc: "The Department of Humanities focuses on communication skills, ethics, and management principles. It plays a vital role in the holistic development of students, preparing them for industry interactions and leadership roles.",
+    vision: "To nurture well-rounded professionals equipped with excellent communication, interpersonal, and managerial skills.",
+    mission: "To enhance English communication, soft skills, and management aptitude to complement technical education.",
+    hod: {
+      name: "Dr. Mrs. A. Singh",
+      msg: "Technical skills are essential, but communication and management skills are what make a technologist a leader. We focus on the holistic development of our students.",
+      img: "https://picsum.photos/seed/gpm-hod-hum/300/400",
+    },
     labs: [
-      {
-        icon: Globe,
-        title: "Language",
-        subtitle: "Lab",
-      },
+      { name: "Language Lab", desc: "Audio-visual aids for pronunciation, group discussion, and interview skills." },
+      { name: "Soft Skills Lab", desc: "Personality development, teamwork, and leadership activities." },
+      { name: "Management Lab", desc: "Case studies on industrial management and entrepreneurship." },
     ],
-
-    seats: 0,
-    duration: "Support",
-    program: "Support Department",
-    affiliation: "BTEUP",
-
-    hod: "Head of Department",
-    established: "2010",
-
-    email: "humanities@gpm.ac.in",
-    phone: "+91 98765 43210",
-
-    location: "Academic Block - I",
-    room: "Room No. 205",
+    faculty: [
+      { name: "Mrs. R. Kumari", role: "Lecturer", exp: "15 Years" },
+      { name: "Mr. P. Sharma", role: "Lecturer", exp: "9 Years" },
+      { name: "Miss N. Verma", role: "Lecturer", exp: "4 Years" },
+    ],
   },
-
   "dept-leather": {
-    title: "Leather Technology",
-    fullTitle: "Department of Leather Technology",
-    icon: Scissors,
-
-    description:
-      "The Leather Technology department is a unique and specialized program training students in leather processing, product design, and quality control. Bihar's rich leather industry makes this a highly relevant and career-oriented discipline.",
-
-    vision:
-      "To produce skilled leather technologists who drive innovation and quality in India's growing leather and footwear industry.",
-
-    mission: [
-      "Develop strong fundamentals in leather technology.",
-      "Provide practical tanning and processing skills.",
-      "Develop footwear design and manufacturing skills.",
-      "Promote quality and environmental responsibility.",
-    ],
-
-    highlights: [
-      {
-        icon: FlaskConical,
-        title: "Leather Processing",
-        description: "Modern leather processing techniques.",
-        box: "bg-blue-50 text-blue-600",
-      },
-      {
-        icon: Scissors,
-        title: "Footwear Design",
-        description: "Footwear design and manufacturing.",
-        box: "bg-violet-50 text-violet-600",
-      },
-      {
-        icon: Target,
-        title: "Quality Control",
-        description: "Testing and quality assurance.",
-        box: "bg-orange-50 text-orange-500",
-      },
-      {
-        icon: Settings,
-        title: "Industrial Tanning",
-        description: "Industrial tanning processes.",
-        box: "bg-emerald-50 text-emerald-600",
-      },
-    ],
-
-    courses: [
-      "Leather Science",
-      "Tanning Technology",
-      "Footwear Design & Manufacturing",
-      "Quality Assurance",
-      "Environmental Management in Tanneries",
-    ],
-
+    name: "Leather Technology",
+    hindiName: "चर्म प्रौद्योगिकी विभाग",
+    icon: Hand,
+    established: "1992",
+    intake: "40",
+    desc: "Muzaffarpur is a historic hub for the leather industry. The Department of Leather Technology provides specialized education in leather processing, footwear design, and quality control, serving a vital sector of the local economy.",
+    vision: "To produce highly skilled leather technologists who can innovate in leather processing, footwear design, and sustainable waste management.",
+    mission: "To impart comprehensive knowledge of raw hide processing, tanning, leather chemicals, and footwear manufacturing through industry-aligned practicals.",
+    hod: {
+      name: "Er. D. N. Mahto",
+      msg: "Leather technology is a highly specialized and lucrative field. We provide hands-on training in tanning and footwear manufacturing to meet the demands of the global leather industry.",
+      img: "https://picsum.photos/seed/gpm-hod-leather/300/400",
+    },
     labs: [
-      {
-        icon: FlaskConical,
-        title: "Tanning",
-        subtitle: "Lab",
-      },
-      {
-        icon: Scissors,
-        title: "Footwear",
-        subtitle: "Lab",
-      },
-      {
-        icon: Target,
-        title: "Testing & Quality",
-        subtitle: "Lab",
-      },
+      { name: "Tannery Lab", desc: "Pre-tanning, tanning, and post-tanning processes of hides and skins." },
+      { name: "Leather Chemicals Lab", desc: "Analysis of chromium, vegetable tannins, and syntans." },
+      { name: "Footwear Design Lab", desc: "Pattern making, clicking, and shoe manufacturing machines." },
+      { name: "Leather Testing Lab", desc: "Tensile strength, flex endurance, and color fastness testing." },
+      { name: "Waste Management Lab", desc: "Effluent treatment and eco-friendly leather processing." },
     ],
-
-    seats: 30,
-    duration: "3 Years",
-    program: "Diploma",
-    affiliation: "BTEUP",
-
-    hod: "Head of Department",
-    established: "2010",
-
-    email: "leather@gpm.ac.in",
-    phone: "+91 98765 43210",
-
-    location: "Academic Block - I",
-    room: "Room No. 205",
+    faculty: [
+      { name: "Mr. S. K. Paswan", role: "Lecturer (Selection Grade)", exp: "18 Years" },
+      { name: "Mrs. K. Singh", role: "Lecturer", exp: "10 Years" },
+      { name: "Er. R. Kumar", role: "Lecturer", exp: "6 Years" },
+    ],
   },
 };
 
+export default function DepartmentPage() {
+  // FIXED: Get deptId directly from the URL parameter using React Router
+  const { deptId } = useParams();
+  const navigate = useNavigate();
 
-/* =========================================================
-   FACULTY
-   =========================================================
-   Keep this separate because faculty can later come from
-   MongoDB / API.
-========================================================= */
+  // Fallback to CSE if the parameter is somehow missing, otherwise use the correct data
+  const data = departmentsData[deptId] || departmentsData["dept-cse"];
+  const DeptIcon = data.icon || Building2;
 
-const faculty = [
-  {
-    name: "Mr. Amit Kumar",
-    role: "Head of Department",
-    qualification: "M.Tech (CSE)",
-    email: "amit.kumar@gpm.ac.in",
-    image: "/faculty/amit-kumar.jpg",
-  },
-  {
-    name: "Mr. Rajesh Ranjan",
-    role: "Lecturer (CSE)",
-    qualification: "M.Tech (CSE)",
-    email: "rajesh.ranjan@gpm.ac.in",
-    image: "/faculty/rajesh-ranjan.jpg",
-  },
-  {
-    name: "Ms. Pooja Kumari",
-    role: "Lecturer (CSE)",
-    qualification: "M.Tech (CSE)",
-    email: "pooja.kumari@gpm.ac.in",
-    image: "/faculty/pooja-kumari.jpg",
-  },
-  {
-    name: "Mr. Vivek Kumar",
-    role: "Lecturer (CSE)",
-    qualification: "M.Tech (CSE)",
-    email: "vivek.kumar@gpm.ac.in",
-    image: "/faculty/vivek-kumar.jpg",
-  },
-];
+  // Helper for routing
+  const onNavigate = (path) => {
+    if (path === "home") {
+      navigate("/");
+    } else if (path.startsWith("dept-")) {
+      navigate(`/dept/${path}`);
+    } else {
+      navigate(`/${path}`);
+    }
+  };
 
-
-/* =========================================================
-   SECTION TITLE
-========================================================= */
-
-const SectionTitle = ({ icon: Icon, children }) => {
   return (
-    <div className="mb-4 flex items-center gap-3">
+    <div className="bg-[#f6f3ea] text-[#0b1f5e] font-roboto min-h-screen" style={{ fontFamily: "'Roboto', system-ui, sans-serif" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Tiro+Devanagari+Hindi&display=swap');
+        html { scroll-behavior: smooth; }
+      `}</style>
 
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-        <Icon size={21} strokeWidth={2.2} />
-      </div>
-
-      <h2 className="text-[18px] font-extrabold text-[#09286b]">
-        {children}
-      </h2>
-
-    </div>
-  );
-};
-
-
-/* =========================================================
-   INFO ROW
-========================================================= */
-
-const InfoRow = ({ icon: Icon, title, value }) => {
-  return (
-    <div className="flex items-center gap-3 border-b border-gray-200 py-2.5 last:border-0">
-
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-        <Icon size={18} />
-      </div>
-
-      <div className="flex min-w-0 flex-col">
-
-        <strong className="text-[12px] font-extrabold text-[#071c50]">
-          {title}
-        </strong>
-
-        <span className="text-[12px] leading-5 text-[#1c315c]">
-          {value}
-        </span>
-
-      </div>
-
-    </div>
-  );
-};
-
-
-/* =========================================================
-   MAIN COMPONENT
-========================================================= */
-
-export default function DepartmentPage({
-  deptId,
-  onNavigate,
-}) {
-
-  const dept = deptData[deptId];
-
-  /* -------------------------------------------------------
-     INVALID DEPARTMENT
-  ------------------------------------------------------- */
-
-  if (!dept) {
-    return (
-      <div className="flex min-h-[500px] items-center justify-center bg-[#f6f8fc]">
-
-        <div className="text-center">
-
-          <h2 className="text-xl font-bold text-gray-500">
-            Department not found
-          </h2>
-
-          <button
-            onClick={() => onNavigate?.("home")}
-            className="mt-4 rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white"
-          >
-            Go Home
-          </button>
-
+      {/* ===================== HEADER ===================== */}
+      <section className="bg-[#0b1f5e] text-white border-b-4 border-[#FF9933]">
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-8">
+          <div className="flex items-center gap-2 text-[12px] text-white/60 mb-6">
+            <button onClick={() => onNavigate("home")} className="hover:text-[#FF9933] transition-colors">Home</button>
+            <span>›</span>
+            <button onClick={() => onNavigate("academics")} className="hover:text-[#FF9933] transition-colors">Academics</button>
+            <span>›</span>
+            <span className="text-[#FF9933] font-medium">{data.name}</span>
+          </div>
+          
+          <div className="flex items-center gap-5 border-l-4 border-[#FF9933] pl-5">
+            <div className="w-16 h-16 flex items-center justify-center text-[#FF9933] border border-[#FF9933]/30 bg-white/5">
+              <DeptIcon className="w-9 h-9" />
+            </div>
+            <div>
+              <h1 className="text-[26px] sm:text-[32px] font-bold leading-tight uppercase tracking-wide">
+                {data.name}
+              </h1>
+              <p className="text-[16px] text-white/80 mt-1" style={{ fontFamily: "'Tiro Devanagari Hindi', sans-serif" }}>
+                {data.hindiName}
+              </p>
+            </div>
+          </div>
         </div>
+      </section>
 
-      </div>
-    );
-  }
-
-
-  const DepartmentIcon = dept.icon;
-
-
-  /* =======================================================
-     PAGE
-  ======================================================= */
-
-  return (
-    <div className="min-h-screen bg-[#f6f8fc] text-[#10245b]">
-
-      <main className="mx-auto w-[calc(100%-18px)] max-w-[1480px] pb-7">
-
-
-        {/* =================================================
-            HERO
-        ================================================= */}
-
-        <section className="relative min-h-[350px] overflow-hidden rounded-b-xl">
-
-          {/* Campus image */}
-
-          {/* <img
-            src="/department-building.jpg"
-            alt="Government Polytechnic campus"
-            className="absolute inset-0 h-full w-full object-cover object-right"
-          /> */}
-
-
-          {/* Blue overlay */}
-
-          <div className="absolute inset-0 bg-gradient-to-r from-[#061e72] via-[#0c3299]/95 via-[52%] to-transparent" />
-
-
-          {/* Hero content */}
-
-          <div className="relative z-10 flex min-h-[350px] flex-col px-6 py-7 md:px-9">
-
-
-            {/* Back */}
-
-            <button
-              type="button"
-              onClick={() => onNavigate?.("home")}
-              className="mb-7 flex w-fit items-center gap-2 text-sm font-medium text-white transition hover:opacity-80"
+      {/* ===================== STATS STRIP ===================== */}
+      <div className="bg-white border-b border-gray-300">
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4">
+          {[
+            { icon: GraduationCap, label: "Established", val: data.established },
+            { icon: Users, label: "Intake Capacity", val: data.intake.includes("N/A") ? "Core Branch" : data.intake + " Seats" },
+            { icon: FlaskConical, label: "Laboratories", val: data.labs.length + " Labs" },
+            { icon: BookOpen, label: "Program", val: "Diploma" },
+          ].map((s, i) => (
+            <div
+              key={i}
+              className={`p-4 flex items-center gap-3 ${i !== 3 ? "md:border-r border-gray-200" : ""} ${i % 2 === 0 ? "border-r border-gray-200" : ""} ${i < 2 ? "border-b md:border-b-0" : ""}`}
             >
-              <ArrowLeft size={17} />
-
-              Back to Home
-            </button>
-
-
-            {/* Title */}
-
-            <div className="flex items-start gap-4">
-
-              <div className="flex h-[70px] w-[70px] shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-lg">
-
-                <DepartmentIcon
-                  size={45}
-                  strokeWidth={1.5}
-                />
-
-              </div>
-
-
+              <s.icon className="w-6 h-6 text-[#0b1f5e] flex-shrink-0" />
               <div>
+                <div className="text-[10px] text-gray-500 uppercase tracking-wider font-bold">{s.label}</div>
+                <div className="text-[16px] font-bold text-[#0b1f5e] leading-none mt-1">{s.val}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-                <p className="mb-1 text-sm font-medium tracking-wide text-white">
-                  DEPARTMENT OF
+      {/* ===================== MAIN LAYOUT ===================== */}
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-8 grid lg:grid-cols-[1fr_320px] gap-8">
+        
+        {/* ----------- LEFT MAIN CONTENT ----------- */}
+        <main className="space-y-8">
+          
+          {/* About Section */}
+          <section className="bg-white border border-gray-200">
+            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#FF9933]" />
+              <h2 className="text-[15px] font-bold uppercase tracking-wider">About the Department</h2>
+            </div>
+            <div className="p-6">
+              <p className="text-gray-700 text-[14px] leading-relaxed text-justify">{data.desc}</p>
+            </div>
+            
+            {/* Vision & Mission inside About Box */}
+            <div className="grid md:grid-cols-2 border-t border-gray-200 divide-x divide-gray-200">
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-gray-200">
+                  <Eye className="w-5 h-5 text-[#138808]" />
+                  <h3 className="text-[14px] font-bold text-[#0b1f5e] uppercase">Vision</h3>
+                </div>
+                <p className="text-[13px] text-gray-600 leading-relaxed text-justify">{data.vision}</p>
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-gray-200">
+                  <Target className="w-5 h-5 text-[#FF9933]" />
+                  <h3 className="text-[14px] font-bold text-[#0b1f5e] uppercase">Mission</h3>
+                </div>
+                <p className="text-[13px] text-gray-600 leading-relaxed text-justify">{data.mission}</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Labs Section */}
+          <section className="bg-white border border-gray-200">
+            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+              <FlaskConical className="w-4 h-4 text-[#FF9933]" />
+              <h2 className="text-[15px] font-bold uppercase tracking-wider">Laboratories & Facilities</h2>
+            </div>
+            <div className="grid md:grid-cols-2 divide-x divide-gray-200">
+              {data.labs.map((lab, i) => (
+                <div key={i} className={`p-5 border-b border-gray-200 ${i % 2 !== 0 ? "" : "md:border-r"}`}>
+                  <h3 className="text-[14px] font-bold text-[#0b1f5e] mb-1.5">{lab.name}</h3>
+                  <p className="text-[13px] text-gray-600 leading-relaxed">{lab.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Faculty Section (Table) */}
+          <section className="bg-white border border-gray-200 overflow-hidden">
+            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+              <Users className="w-4 h-4 text-[#FF9933]" />
+              <h2 className="text-[15px] font-bold uppercase tracking-wider">Faculty Members</h2>
+            </div>
+            <table className="w-full text-sm border-collapse">
+              <thead className="bg-[#f6f3ea] text-[#0b1f5e] border-b border-gray-200">
+                <tr>
+                  <th className="text-left p-3 font-semibold border-r border-gray-200 w-12">S.No.</th>
+                  <th className="text-left p-3 font-semibold border-r border-gray-200">Name</th>
+                  <th className="text-left p-3 font-semibold border-r border-gray-200">Designation</th>
+                  <th className="text-left p-3 font-semibold">Experience</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.faculty.map((f, i) => (
+                  <tr key={i} className="border-b border-gray-200 last:border-0 hover:bg-gray-50 transition-colors">
+                    <td className="p-3 border-r border-gray-200 text-gray-500 font-medium">{i + 1}.</td>
+                    <td className="p-3 border-r border-gray-200 font-medium text-[#0b1f5e]">{f.name}</td>
+                    <td className="p-3 border-r border-gray-200 text-gray-700">{f.role}</td>
+                    <td className="p-3 text-gray-700">{f.exp}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        </main>
+
+        {/* ----------- RIGHT SIDEBAR ----------- */}
+        <aside className="space-y-6">
+          
+          {/* HOD Profile Box */}
+          <div className="bg-white border border-gray-200">
+            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+              <Users className="w-4 h-4 text-[#FF9933]" />
+              <h3 className="text-[14px] font-bold uppercase tracking-wider">Head of Department</h3>
+            </div>
+            <div className="p-5">
+              <div className="flex flex-col items-center text-center mb-4">
+                <div className="w-32 h-40 border-2 border-gray-200 p-1 mb-3">
+                  <img src={data.hod.img} alt={data.hod.name} className="w-full h-full object-cover" />
+                </div>
+                <h4 className="text-[16px] font-bold text-[#0b1f5e]">{data.hod.name}</h4>
+                <p className="text-[12px] text-gray-500 font-medium uppercase tracking-wider mt-1">Professor & HOD</p>
+              </div>
+              
+              <div className="border-t border-gray-200 pt-4">
+                <p className="text-[13px] text-gray-700 leading-relaxed text-justify italic">
+                  "{data.hod.msg}"
                 </p>
-
-                <h1 className="max-w-[800px] text-[30px] font-extrabold leading-tight tracking-tight text-white sm:text-[38px] lg:text-[48px]">
-                  {dept.title}
-                </h1>
-
-                <div className="mt-3 h-1 w-12 rounded-full bg-yellow-400" />
-
               </div>
-
             </div>
+          </div>
 
-
-            {/* Hero statistics */}
-
-            <div className="mt-6 grid max-w-[570px] grid-cols-2 gap-3 sm:flex sm:flex-wrap">
-
-
-              {/* Seats */}
-
-              <div className="flex h-[58px] items-center gap-3 rounded-lg border border-white/10 bg-blue-500/55 px-4 text-white backdrop-blur-sm">
-
-                <Users
-                  size={31}
-                  strokeWidth={1.5}
-                />
-
-                <div className="flex flex-col">
-
-                  <strong className="text-sm">
-                    {dept.seats}
-                  </strong>
-
-                  <span className="text-xs opacity-90">
-                    Seats
-                  </span>
-
-                </div>
-
-              </div>
-
-
-              {/* Duration */}
-
-              <div className="flex h-[58px] items-center gap-3 rounded-lg border border-white/10 bg-blue-500/55 px-4 text-white backdrop-blur-sm">
-
-                <Clock3
-                  size={31}
-                  strokeWidth={1.5}
-                />
-
-                <div className="flex flex-col">
-
-                  <strong className="text-sm">
-                    {dept.duration}
-                  </strong>
-
-                  <span className="text-xs opacity-90">
-                    Duration
-                  </span>
-
-                </div>
-
-              </div>
-
-
-              {/* Program */}
-
-              <div className="flex h-[58px] items-center gap-3 rounded-lg border border-white/10 bg-blue-500/55 px-4 text-white backdrop-blur-sm">
-
-                <GraduationCap
-                  size={32}
-                  strokeWidth={1.5}
-                />
-
-                <div className="flex flex-col">
-
-                  <strong className="text-sm">
-                    {dept.program}
-                  </strong>
-
-                  <span className="text-xs opacity-90">
-                    Program
-                  </span>
-
-                </div>
-
-              </div>
-
-
-              {/* Affiliation */}
-
-              <div className="flex h-[58px] items-center gap-3 rounded-lg border border-white/10 bg-blue-500/55 px-4 text-white backdrop-blur-sm">
-
-                <Landmark
-                  size={32}
-                  strokeWidth={1.5}
-                />
-
-                <div className="flex flex-col">
-
-                  <strong className="text-sm">
-                    {dept.affiliation}
-                  </strong>
-
-                  <span className="text-xs opacity-90">
-                    Affiliated
-                  </span>
-
-                </div>
-
-              </div>
-
+          {/* Contact Box */}
+          <div className="bg-white border border-gray-200">
+            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+              <Phone className="w-4 h-4 text-[#FF9933]" />
+              <h3 className="text-[14px] font-bold uppercase tracking-wider">Contact Info</h3>
             </div>
-
+            <div className="p-5 space-y-3 text-sm">
+              <div className="flex items-start gap-3 text-gray-700">
+                <Building2 className="w-4 h-4 text-[#FF9933] flex-shrink-0 mt-0.5" />
+                <span>Government Polytechnic, Muzaffarpur, Bihar 842002</span>
+              </div>
+              <div className="flex items-start gap-3 text-gray-700">
+                <Mail className="w-4 h-4 text-[#FF9933] flex-shrink-0 mt-0.5" />
+                <span>dept@gpmuzaffarpur.ac.in</span>
+              </div>
+            </div>
+            <div className="border-t border-gray-200 p-4">
+              <button onClick={() => onNavigate("home")} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0b1f5e] text-white text-[13px] font-semibold hover:bg-[#FF9933] hover:text-[#0b1f5e] transition-colors uppercase tracking-wider">
+                Back to Home <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
-        </section>
-
-
-        {/* =================================================
-            ABOUT + INFORMATION + VISION + MISSION
-        ================================================= */}
-
-        <section className="mt-4 grid gap-4 lg:grid-cols-[1.22fr_1fr]">
-
-
-          {/* ABOUT */}
-
-          <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-
-            <SectionTitle icon={Users}>
-              About the Department
-            </SectionTitle>
-
-            <p className="text-[13px] leading-[1.8] text-[#172b59]">
-              {dept.description}
-            </p>
-
-          </div>
-
-
-          {/* INFORMATION */}
-
-          <div className="row-span-2 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-
-            <h2 className="mb-3 text-[18px] font-extrabold text-[#09286b]">
-              Department Information
-            </h2>
-
-            <InfoRow
-              icon={UserRound}
-              title="Head of Department"
-              value={dept.hod}
-            />
-
-            <InfoRow
-              icon={CalendarDays}
-              title="Established"
-              value={dept.established}
-            />
-
-            <InfoRow
-              icon={Database}
-              title="Program Offered"
-              value={`${dept.program} in ${dept.title}`}
-            />
-
-            <InfoRow
-              icon={Users}
-              title="Intake"
-              value={`${dept.seats} Students`}
-            />
-
-            <InfoRow
-              icon={Clock3}
-              title="Duration"
-              value={dept.duration}
-            />
-
-            <InfoRow
-              icon={Landmark}
-              title="Affiliation"
-              value={dept.affiliation}
-            />
-
-          </div>
-
-
-          {/* VISION */}
-
-          <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-
-            <SectionTitle icon={Eye}>
-              Vision
-            </SectionTitle>
-
-            <p className="text-[13px] leading-[1.8] text-[#172b59]">
-              {dept.vision}
-            </p>
-
-          </div>
-
-
-          {/* MISSION */}
-
-          <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-
-            <SectionTitle icon={Target}>
-              Mission
-            </SectionTitle>
-
-            <ul className="list-disc space-y-1 pl-5 text-[13px] leading-[1.65] text-[#172b59]">
-
-              {dept.mission.map((item, index) => (
-                <li key={index}>
-                  {item}
+          {/* Important Links Box */}
+          <div className="bg-white border border-gray-200">
+            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+              <Link2 className="w-4 h-4 text-[#FF9933]" />
+              <h3 className="text-[14px] font-bold uppercase tracking-wider">Quick Links</h3>
+            </div>
+            <ul className="divide-y divide-gray-100">
+              {["Syllabus", "Time Table", "Previous Papers", "Faculty List", "Notice Board"].map((l) => (
+                <li key={l}>
+                  <a href="#" className="flex items-center gap-2 p-3 text-[13px] text-gray-700 hover:bg-gray-50 hover:text-[#0b1f5e] transition-colors">
+                    <span className="text-[#FF9933]">›</span> {l}
+                  </a>
                 </li>
               ))}
-
             </ul>
-
           </div>
 
-        </section>
-
-
-        {/* =================================================
-            HIGHLIGHTS
-        ================================================= */}
-
-        <section className="mt-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-
-          <SectionTitle icon={BookOpen}>
-            Department Highlights
-          </SectionTitle>
-
-
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-
-            {dept.highlights.map((item, index) => {
-
-              const Icon = item.icon;
-
-              return (
-                <div
-                  key={index}
-                  className="flex min-h-[100px] items-center gap-3 rounded-lg border border-gray-200 p-3 transition hover:-translate-y-0.5 hover:shadow-sm"
-                >
-
-                  <div
-                    className={`flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-lg ${item.box}`}
-                  >
-                    <Icon size={27} />
-                  </div>
-
-
-                  <div>
-
-                    <h3 className="mb-1 text-[12px] font-extrabold leading-5 text-[#0a286c]">
-                      {item.title}
-                    </h3>
-
-                    <p className="text-[11px] leading-[1.55] text-[#425477]">
-                      {item.description}
-                    </p>
-
-                  </div>
-
-                </div>
-              );
-
-            })}
-
-          </div>
-
-        </section>
-
-
-        {/* =================================================
-            PROGRAM + LABS
-        ================================================= */}
-
-        <section className="mt-4 grid gap-4 lg:grid-cols-2">
-
-
-          {/* PROGRAM */}
-
-          <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-
-            <SectionTitle icon={BookOpen}>
-              Programs Offered
-            </SectionTitle>
-
-
-            <div className="overflow-hidden rounded-lg border border-gray-200">
-
-              <table className="w-full border-collapse">
-
-                <thead className="bg-gradient-to-r from-[#123dba] to-[#174fd2] text-white">
-
-                  <tr>
-
-                    <th className="px-4 py-3 text-left text-[11px] font-extrabold">
-                      Program
-                    </th>
-
-                    <th className="px-3 py-3 text-left text-[11px] font-extrabold">
-                      Duration
-                    </th>
-
-                    <th className="px-3 py-3 text-left text-[11px] font-extrabold">
-                      Intake
-                    </th>
-
-                    <th className="px-3 py-3 text-left text-[11px] font-extrabold">
-                      Affiliation
-                    </th>
-
-                  </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                  <tr>
-
-                    <td className="px-4 py-4 text-xs leading-5 text-[#172c5d]">
-                      {dept.program}
-                      <br />
-                      {dept.title}
-                    </td>
-
-                    <td className="px-3 py-4 text-xs text-[#172c5d]">
-                      {dept.duration}
-                    </td>
-
-                    <td className="px-3 py-4 text-xs text-[#172c5d]">
-                      {dept.seats}
-                    </td>
-
-                    <td className="px-3 py-4 text-xs text-[#172c5d]">
-                      {dept.affiliation}
-                    </td>
-
-                  </tr>
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-          </div>
-
-
-          {/* LABS */}
-
-          <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-
-            <SectionTitle icon={FlaskConical}>
-              Laboratories &amp; Facilities
-            </SectionTitle>
-
-
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-
-              {dept.labs.map((lab, index) => {
-
-                const Icon = lab.icon;
-
-                return (
-                  <div
-                    key={index}
-                    className="flex min-h-[95px] flex-col items-center justify-center gap-1 rounded-lg border border-gray-200 text-center text-blue-600 transition hover:bg-blue-50/40"
-                  >
-
-                    <Icon
-                      size={31}
-                      strokeWidth={1.8}
-                    />
-
-                    <strong className="text-[11px] leading-4 text-[#0a286b]">
-                      {lab.title}
-                    </strong>
-
-                    <span className="text-[11px] font-bold text-[#0a286b]">
-                      {lab.subtitle}
-                    </span>
-
-                  </div>
-                );
-
-              })}
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        {/* =================================================
-            FACULTY
-        ================================================= */}
-
-        <section className="mt-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-
-          <SectionTitle icon={Users}>
-            Faculty Members
-          </SectionTitle>
-
-
-          <div className="relative">
-
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-
-              {faculty.map((member, index) => (
-
-                <article
-                  key={index}
-                  className="flex min-h-[120px] items-center gap-3 rounded-lg border border-gray-200 p-3"
-                >
-
-                  <div className="h-[78px] w-[78px] shrink-0 overflow-hidden rounded-full bg-gray-100">
-
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="h-full w-full object-cover"
-                      onError={(event) => {
-                        event.currentTarget.src =
-                          "https://placehold.co/120x120/eef2f7/123b91?text=Faculty";
-                      }}
-                    />
-
-                  </div>
-
-
-                  <div className="min-w-0">
-
-                    <h3 className="truncate text-[12px] font-extrabold text-blue-700">
-                      {member.name}
-                    </h3>
-
-                    <p className="text-[10px] leading-4 text-[#26395e]">
-                      {member.role}
-                    </p>
-
-                    <p className="text-[10px] leading-4 text-[#26395e]">
-                      {member.qualification}
-                    </p>
-
-                    <p className="truncate text-[8px] text-[#26395e]">
-                      {member.email}
-                    </p>
-
-                  </div>
-
-                </article>
-
-              ))}
-
-            </div>
-
-
-            {/* Right arrow */}
-
-            <button
-              type="button"
-              className="absolute -right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white text-blue-600 shadow-md"
-              aria-label="Next faculty"
-            >
-              <ChevronRight size={19} />
-            </button>
-
-          </div>
-
-        </section>
-
-
-        {/* =================================================
-            CONTACT
-        ================================================= */}
-
-        <section className="mt-4 grid overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm md:grid-cols-2 xl:grid-cols-[1.35fr_.9fr_.8fr_.85fr]">
-
-
-          {/* Department */}
-
-          <div className="flex items-center gap-3 border-b border-gray-200 p-5 xl:border-b-0 xl:border-r">
-
-            <Phone
-              size={27}
-              className="shrink-0 text-blue-600"
-            />
-
-            <div>
-
-              <h3 className="mb-1 text-sm font-extrabold text-[#09286b]">
-                Contact Department
-              </h3>
-
-              <p className="text-[10px] leading-[1.55] text-[#24375e]">
-                {dept.fullTitle}
-                <br />
-                Government Polytechnic Muzaffarpur, Bihar
-              </p>
-
-            </div>
-
-          </div>
-
-
-          {/* Location */}
-
-          <div className="flex items-center gap-3 border-b border-gray-200 p-5 md:border-r xl:border-b-0">
-
-            <MapPin
-              size={27}
-              className="shrink-0 text-blue-600"
-            />
-
-            <div>
-
-              <h3 className="mb-1 text-sm font-extrabold text-[#09286b]">
-                Location
-              </h3>
-
-              <p className="text-[10px] leading-[1.55] text-[#24375e]">
-                {dept.location}
-                <br />
-                {dept.room}
-              </p>
-
-            </div>
-
-          </div>
-
-
-          {/* Email */}
-
-          <div className="flex items-center gap-3 border-b border-gray-200 p-5 xl:border-b-0 xl:border-r">
-
-            <Mail
-              size={27}
-              className="shrink-0 text-blue-600"
-            />
-
-            <div>
-
-              <h3 className="mb-1 text-sm font-extrabold text-[#09286b]">
-                Email
-              </h3>
-
-              <p className="text-[10px] text-[#24375e]">
-                {dept.email}
-              </p>
-
-            </div>
-
-          </div>
-
-
-          {/* Phone */}
-
-          <div className="flex items-center gap-3 p-5">
-
-            <Phone
-              size={27}
-              className="shrink-0 text-blue-600"
-            />
-
-            <div>
-
-              <h3 className="mb-1 text-sm font-extrabold text-[#09286b]">
-                Phone
-              </h3>
-
-              <p className="text-[10px] text-[#24375e]">
-                {dept.phone}
-              </p>
-
-            </div>
-
-          </div>
-
-        </section>
-
-      </main>
-
+        </aside>
+      </div>
     </div>
   );
 }
