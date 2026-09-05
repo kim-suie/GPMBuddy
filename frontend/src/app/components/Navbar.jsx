@@ -15,46 +15,6 @@ const departments = [
   { label: "Leather Technology", id: "dept-leather" },
 ];
 
-/* ---------- Spinning Ashoka Chakra SVG ---------- */
-function AshokaChakra({ size = 76 }) {
-  const cx = 60, cy = 60, r = 50;
-  const spokes = Array.from({ length: 24 }, (_, i) => {
-    const a = (i * 15 * Math.PI) / 180;
-    return { x1: cx + 8 * Math.cos(a), y1: cy + 8 * Math.sin(a), x2: cx + r * Math.cos(a), y2: cy + r * Math.sin(a) };
-  });
-  return (
-    <svg width={size} height={size} viewBox="0 0 120 120" className="gpm-chakra">
-      <circle cx="60" cy="60" r="50" fill="none" stroke="#0b1f5e" strokeWidth="2.5" />
-      <circle cx="60" cy="60" r="42" fill="none" stroke="#0b1f5e" strokeWidth="1.2" opacity="0.4" />
-      <circle cx="60" cy="60" r="6" fill="#0b1f5e" />
-      {spokes.map((s, i) => (
-        <line key={i} x1={s.x1} y1={s.y1} x2={s.x2} y2={s.y2} stroke="#0b1f5e" strokeWidth="1.2" />
-      ))}
-      {Array.from({ length: 24 }).map((_, i) => {
-        const a = (i * 15 * Math.PI) / 180;
-        return <circle key={`d-${i}`} cx={cx + r * Math.cos(a)} cy={cy + r * Math.sin(a)} r="1.3" fill="#0b1f5e" />;
-      })}
-    </svg>
-  );
-}
-
-/* ---------- Tricolor-rimmed circular emblem (logo) ---------- */
-function Logo({ size = 90 }) {
-  return (
-    <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
-      <svg width={size} height={size} viewBox="0 0 120 120" className="absolute inset-0">
-        <circle cx="60" cy="60" r="58" fill="#ffffff" />
-        <circle cx="60" cy="60" r="58" fill="none" stroke="#FF9933" strokeWidth="6" strokeDasharray="121.5 243" strokeDashoffset="0" transform="rotate(-90 60 60)" />
-        <circle cx="60" cy="60" r="58" fill="none" stroke="#ffffff" strokeWidth="6" strokeDasharray="121.5 243" strokeDashoffset="-121.5" transform="rotate(-90 60 60)" />
-        <circle cx="60" cy="60" r="58" fill="none" stroke="#138808" strokeWidth="6" strokeDasharray="121.5 243" strokeDashoffset="-243" transform="rotate(-90 60 60)" />
-        <circle cx="60" cy="60" r="52" fill="#ffffff" stroke="#0b1f5e" strokeWidth="1" opacity="0.2" />
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <AshokaChakra size={size * 0.66} />
-      </div>
-    </div>
-  );
-}
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -109,9 +69,6 @@ export function Navbar() {
       <div className="bg-[#0b1f5e] text-white text-[13px]">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 flex items-center justify-between h-9">
           <div className="flex items-center gap-5">
-            <a href="tel:+916212280000" className="flex items-center gap-1.5 hover:text-[#FF9933] transition-colors">
-              <Phone className="w-3.5 h-3.5" /> +91 6212 280 000
-            </a>
             <a href="mailto:principal@gpmuzaffarpur.ac.in" className="hidden sm:flex items-center gap-1.5 hover:text-[#FF9933] transition-colors">
               <Mail className="w-3.5 h-3.5" /> principal@gpmuzaffarpur.ac.in
             </a>
@@ -139,7 +96,7 @@ export function Navbar() {
           
           {/* Logo + Name */}
           <button onClick={() => onNavigate("home")} className="flex items-center gap-4 group">
-            <Logo size={80} />
+            <img src={image_poly} alt="GPM Logo" className="w-14 h-14 sm:w-16 sm:h-16 object-contain shadow-sm" />
             <div className="hidden sm:block text-left">
               <h1 className="text-[20px] sm:text-[24px] font-bold leading-tight text-[#0b1f5e]" style={{ letterSpacing: "-0.01em" }}>
                 Government Polytechnic, Muzaffarpur

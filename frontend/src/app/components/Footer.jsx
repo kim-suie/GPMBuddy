@@ -1,46 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Users, Calendar, MapPin, Phone, Mail, Facebook, Twitter, Youtube, Instagram } from "lucide-react";
-
-/* ---------- Spinning Ashoka Chakra SVG ---------- */
-function AshokaChakra({ size = 64 }) {
-  const cx = 60, cy = 60, r = 50;
-  const spokes = Array.from({ length: 24 }, (_, i) => {
-    const a = (i * 15 * Math.PI) / 180;
-    return { x1: cx + 8 * Math.cos(a), y1: cy + 8 * Math.sin(a), x2: cx + r * Math.cos(a), y2: cy + r * Math.sin(a) };
-  });
-  return (
-    <svg width={size} height={size} viewBox="0 0 120 120" className="gpm-chakra">
-      <circle cx="60" cy="60" r="50" fill="none" stroke="#0b1f5e" strokeWidth="2.5" />
-      <circle cx="60" cy="60" r="42" fill="none" stroke="#0b1f5e" strokeWidth="1.2" opacity="0.4" />
-      <circle cx="60" cy="60" r="6" fill="#0b1f5e" />
-      {spokes.map((s, i) => (
-        <line key={i} x1={s.x1} y1={s.y1} x2={s.x2} y2={s.y2} stroke="#0b1f5e" strokeWidth="1.2" />
-      ))}
-      {Array.from({ length: 24 }).map((_, i) => {
-        const a = (i * 15 * Math.PI) / 180;
-        return <circle key={`d-${i}`} cx={cx + r * Math.cos(a)} cy={cy + r * Math.sin(a)} r="1.3" fill="#0b1f5e" />;
-      })}
-    </svg>
-  );
-}
-
-/* ---------- Tricolor-rimmed circular emblem (logo) ---------- */
-function Logo({ size = 64 }) {
-  return (
-    <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
-      <svg width={size} height={size} viewBox="0 0 120 120" className="absolute inset-0">
-        <circle cx="60" cy="60" r="58" fill="#ffffff" />
-        <circle cx="60" cy="60" r="58" fill="none" stroke="#FF9933" strokeWidth="6" strokeDasharray="121.5 243" strokeDashoffset="0" transform="rotate(-90 60 60)" />
-        <circle cx="60" cy="60" r="58" fill="none" stroke="#ffffff" strokeWidth="6" strokeDasharray="121.5 243" strokeDashoffset="-121.5" transform="rotate(-90 60 60)" />
-        <circle cx="60" cy="60" r="58" fill="none" stroke="#138808" strokeWidth="6" strokeDasharray="121.5 243" strokeDashoffset="-243" transform="rotate(-90 60 60)" />
-        <circle cx="60" cy="60" r="52" fill="#ffffff" stroke="#0b1f5e" strokeWidth="1" opacity="0.2" />
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <AshokaChakra size={size * 0.66} />
-      </div>
-    </div>
-  );
-}
+import image_poly from "@/imports/poly.jpg";
 
 /* ---------- Main Footer Component ---------- */
 export function Footer() {
@@ -93,7 +53,7 @@ export function Footer() {
         @keyframes gpm-spin { to { transform: rotate(360deg); } }
         .gpm-chakra { animation: gpm-spin 22s linear infinite; transform-origin: center; }
       `}</style>
-      
+
       <footer className="bg-[#0b1f5e] text-white border-t-4 border-[#FF9933]">
         {/* Visitor / Last updated strip */}
         <div className="bg-white/5 border-b border-white/10">
@@ -113,7 +73,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <button onClick={() => handleNavigate("home")}>
-                <Logo size={64} />
+                <img src={image_poly} alt="GPM Logo" className="w-14 h-18 sm:w-16 sm:h-16 object-contain rounded-3xl shadow-sm" />
               </button>
               <div>
                 <div className="text-[15px] font-bold leading-tight">Government Polytechnic</div>
@@ -138,8 +98,8 @@ export function Footer() {
             <ul className="space-y-2 text-[13px] text-white/75">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <button 
-                    onClick={() => openExternal(link.url)} 
+                  <button
+                    onClick={() => openExternal(link.url)}
                     className="hover:text-[#FF9933] transition-colors flex items-center gap-1.5 text-left"
                   >
                     <span className="text-[#FF9933]">›</span> {link.label}
@@ -158,8 +118,8 @@ export function Footer() {
             <ul className="space-y-2 text-[13px] text-white/75">
               {importantPages.map((link) => (
                 <li key={link.label}>
-                  <button 
-                    onClick={() => handleNavigate(link.path)} 
+                  <button
+                    onClick={() => handleNavigate(link.path)}
                     className="hover:text-[#FF9933] transition-colors flex items-center gap-1.5 text-left"
                   >
                     <span className="text-[#FF9933]">›</span> {link.label}
