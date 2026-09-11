@@ -146,15 +146,6 @@ export default function PlacementPage() {
                 </tbody>
               </table>
             </div>
-            <div className="bg-[#FFF4E5] p-4 border-t border-[#FF9933]/30 flex items-center justify-between">
-              <p className="text-[13px] text-gray-700 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-[#FF9933]" />
-                For detailed branch-wise placement statistics, download the full report.
-              </p>
-              <button className="flex items-center gap-2 px-4 py-2 bg-[#0b1f5e] text-white text-[12px] font-semibold hover:bg-[#0a1a4d] transition-colors">
-                <Download className="w-4 h-4" /> Download Report
-              </button>
-            </div>
           </section>
 
           {/* Training & Development */}
