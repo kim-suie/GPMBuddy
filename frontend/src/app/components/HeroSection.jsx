@@ -26,11 +26,11 @@ const Icon = {
 /* ---------- Reusable: notice status pill ---------- */
 function StatusPill({ type }) {
   const map = {
-    NEW: "bg-rose-500/10 text-rose-500 ring-rose-500/20",
-    IMP: "bg-amber-500/10 text-amber-600 ring-amber-500/20",
-    OLD: "bg-slate-500/10 text-slate-500 ring-slate-500/20",
+    NEW: "bg-red-100 text-red-600",
+    IMP: "bg-amber-100 text-amber-700",
+    OLD: "bg-slate-100 text-slate-500",
   };
-  return <span className={`px-2.5 py-1 text-[10px] font-bold rounded-full tracking-wider ring-1 ${map[type] || map.OLD}`}>{type}</span>;
+  return <span className={`px-2.5 py-1 text-[10px] font-bold rounded-full tracking-wider ${map[type] || map.OLD}`}>{type}</span>;
 }
 
 /* ---------- Main Component ---------- */
@@ -53,6 +53,7 @@ export default function HeroSection() {
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
+
 
   const notices = [
     { tag: "NEW", title: "Admission notification for Diploma 1st Year 2025-26 — apply before 30th June", date: "12 Jun 2025" },
@@ -85,64 +86,60 @@ export default function HeroSection() {
   const recruiters = ["TCS", "Infosys", "L&T", "Bajaj", "Mahindra", "ITC", "Tata Motors", "Sail", "BSNL", "BEL", "Wipro", "Capgemini"];
 
   return (
-    <div className="bg-slate-50 text-slate-900 font-jakarta" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+    <div className="bg-slate-50 text-[#0b1f5e] font-jakarta" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
       
-      {/* ===================== HERO SECTION ===================== */}
-      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
-        {/* Background Image */}
+      {/* ===================== STATIC HERO SECTION ===================== */}
+      <section className="relative h-[600px] overflow-hidden rounded-b-[40px]">
+        {/* Static Background Image with subtle slow zoom */}
         <div className="absolute inset-0 gpm-kenburns" style={{ backgroundImage: `url('${collegeimage}')`, backgroundSize: "cover", backgroundPosition: "center" }}></div>
         
-        {/* Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/70 to-slate-900/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent" />
-        
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 gpm-grid-pattern opacity-20"></div>
+        {/* Modern Vibrant Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#0b1f5e] via-[#0b1f5e]/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f5e]/90 via-transparent to-transparent" />
 
         {/* Hero Text Content */}
-        <div className="relative max-w-[1320px] w-full mx-auto px-4 sm:px-6 py-24 z-10">
-          <div className="max-w-3xl text-white gpm-fadeup">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] mb-8 bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/30 backdrop-blur-md">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
+        <div className="relative max-w-[1320px] mx-auto px-4 sm:px-6 h-full flex items-center">
+          <div className="max-w-2xl text-white gpm-fadeup">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-wider mb-5 shadow-lg bg-[#FF9933] text-[#0b1f5e]">
+              <Icon.Sparkles className="w-3.5 h-3.5" />
               Admissions Open 2025-26
             </span>
-            <h2 className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold leading-[1.05] mb-6" style={{ letterSpacing: "-0.03em" }}>
-              Shaping the Engineers of <span className="text-emerald-400">Tomorrow.</span>
-            </h2>
-            <p className="text-[16px] sm:text-[18px] text-slate-300 leading-relaxed mb-10 max-w-xl">
-              Government Polytechnic, Muzaffarpur — a premier technical institution since 1949. Applications invited for diploma programs across nine disciplines.
-            </p>
-            <div className="flex flex-wrap gap-4 mb-16">
-              <button onClick={() => navigate("/academics")} className="group bg-emerald-500 text-white px-8 py-4 rounded-full text-[14px] font-bold hover:bg-emerald-400 transition-all hover:scale-105 shadow-xl shadow-emerald-500/20 flex items-center gap-2">
-                Apply for Admission 
-                <Icon.ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <h2 className="text-[34px] sm:text-[52px] font-extrabold leading-[1.05] mb-5" style={{ letterSpacing: "-0.02em" }}>Shaping Engineers of Bihar Since 1949</h2>
+            <p className="text-[16px] sm:text-[18px] text-white/80 leading-relaxed mb-8 max-w-xl">Government Polytechnic, Muzaffarpur — a premier technical institution. Applications invited for diploma programs across nine disciplines.</p>
+            <div className="flex flex-wrap gap-4">
+              <button onClick={() => navigate("/academics")} className="bg-[#FF9933] text-[#0b1f5e] px-7 py-3.5 rounded-full text-[14px] font-bold hover:bg-[#ffb84d] transition-all hover:scale-105 shadow-lg shadow-[#FF9933]/30 flex items-center gap-2">
+                Apply for Admission <Icon.ArrowRight className="w-4 h-4" />
               </button>
-              <button onClick={() => navigate("/placements")} className="border border-white/20 bg-white/5 backdrop-blur-md text-white px-8 py-4 rounded-full text-[14px] font-semibold hover:bg-white/10 transition-all">
+              <button onClick={() => navigate("/placements")} className="border border-white/30 bg-white/10 backdrop-blur-md text-white px-7 py-3.5 rounded-full text-[14px] font-semibold hover:bg-white/20 transition-all">
                 View Placements 
               </button>
-            </div>
-
-            {/* Floating Glass Stats Card */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl">
-              {[
-                { v: "75+", l: "Years of Legacy" },
-                { v: "9", l: "Disciplines" },
-                { v: "85%+", l: "Placement Rate" },
-                { v: "28", l: "Acres Campus" }
-              ].map((s, i) => (
-                <div key={i} className="bg-white/5 backdrop-blur-lg border border-white/10 p-5 rounded-2xl">
-                  <div className="text-2xl font-extrabold text-white mb-1">{s.v}</div>
-                  <div className="text-xs text-slate-400 uppercase tracking-wider">{s.l}</div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
       </section>
 
+      {/* ===================== NOTICE MARQUEE ===================== */}
+      <section className="reveal mb-12 mt-5">
+        <div className="bg-white border-y border-slate-100 overflow-hidden">
+          <div className="max-w-[1320px] mx-auto px-4 sm:px-6 flex items-center">
+            <div className="flex-shrink-0 bg-[#0b1f5e] text-white px-5 py-2.5 rounded-full text-[12px] font-bold uppercase tracking-wider flex items-center gap-2 -mr-4 z-10 relative shadow-lg">
+              <span className="w-2 h-2 rounded-full bg-red-500 gpm-pulse"></span>
+              Latest
+            </div>
+            <div className="flex-1 overflow-hidden py-3 pl-8">
+              <div className="gpm-marquee whitespace-nowrap flex gap-12 text-[14px] text-slate-600 hover:[animation-play-state:paused]">
+                {[...notices, ...notices].map((n, i) => (
+                  <span key={i} className="inline-flex items-center gap-2">
+                    <span className="text-[#FF9933]">●</span>
+                    <span className="font-medium">{n.title}</span>
+                    <span className="text-slate-300">|</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ===================== MAIN CONTENT ===================== */}
       <main id="main" className="max-w-[1320px] mx-auto px-4 sm:px-6 pb-16">
@@ -150,10 +147,10 @@ export default function HeroSection() {
           
           {/* Welcome / About */}
           <div className="reveal">
-            <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider mb-5">
+            <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-wider mb-4">
               <Icon.Sparkles className="w-3.5 h-3.5" /> Welcome to GPM
             </div>
-            <h2 className="text-[32px] sm:text-[44px] font-extrabold text-slate-900 mb-5" style={{ letterSpacing: "-0.02em" }}>
+            <h2 className="text-[32px] sm:text-[40px] font-extrabold text-[#0b1f5e] mb-4" style={{ letterSpacing: "-0.02em" }}>
               Building Bihar's technical backbone since 1949.
             </h2>
             <p className="text-slate-600 text-[16px] leading-relaxed mb-4">
@@ -165,35 +162,35 @@ export default function HeroSection() {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10">
               {[
-                { icon: Icon.Building, v: "28 acres", l: "Campus area", bg: "bg-sky-50", text: "text-sky-600" },
+                { icon: Icon.Building, v: "28 acres", l: "Campus area", bg: "bg-blue-50", text: "text-blue-600" },
                 { icon: Icon.Users, v: "120+", l: "Faculty & staff", bg: "bg-purple-50", text: "text-purple-600" },
                 { icon: Icon.BookOpen, v: "35,000+", l: "Library volumes", bg: "bg-emerald-50", text: "text-emerald-600" },
                 { icon: Icon.Briefcase, v: "85%+", l: "Avg placement", bg: "bg-amber-50", text: "text-amber-600" },
                 { icon: Icon.Award, v: "AICTE", l: "Approved", bg: "bg-rose-50", text: "text-rose-600" },
                 { icon: Icon.GradCap, v: "9", l: "Diploma branches", bg: "bg-indigo-50", text: "text-indigo-600" },
               ].map((s) => (
-                <div key={s.l} className="bg-white p-5 flex items-center gap-4 rounded-2xl border border-slate-100 transition-all hover:shadow-lg hover:shadow-slate-100 hover:-translate-y-1">
+                <div key={s.l} className="bg-white p-5 flex items-center gap-4 rounded-2xl shadow-sm shadow-slate-200/50 border border-slate-100">
                   <div className={`w-12 h-12 rounded-xl ${s.bg} ${s.text} flex items-center justify-center`}>
                      <s.icon className="w-6 h-6" />
                   </div>
                   <div>
-                    <div className="text-[18px] font-extrabold text-slate-900 leading-tight">{s.v}</div>
-                    <div className="text-[12px] text-slate-500 font-medium leading-tight uppercase tracking-wide">{s.l}</div>
+                    <div className="text-[18px] font-extrabold text-[#0b1f5e] leading-tight">{s.v}</div>
+                    <div className="text-[12px] text-slate-500 font-medium leading-tight">{s.l}</div>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Principal's Message Card */}
-            <div className="bg-slate-900 rounded-3xl p-8 text-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
-              <div className="relative flex flex-col sm:flex-row items-start gap-6">
-                <div className="w-24 h-28 bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden flex-shrink-0 border border-white/10">
+            <div className="bg-gradient-to-br from-[#0b1f5e] to-[#1e3a8a] rounded-3xl p-8 text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF9933]/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+              <div className="relative flex items-start gap-6">
+                <div className="w-20 h-24 bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden flex-shrink-0 border border-white/20">
                   <img src="https://picsum.photos/seed/gpm-principal-portrait/120/160" alt="Principal" className="w-full h-full object-cover" />
                 </div>
                 <div>
-                  <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400 mb-3">Principal's Message</div>
-                  <p className="text-[15px] text-slate-300 leading-relaxed italic mb-4 border-l-2 border-emerald-500/50 pl-4">
+                  <div className="text-[12px] font-bold uppercase tracking-wider text-[#FF9933] mb-3">Principal's Message</div>
+                  <p className="text-[15px] text-white/90 leading-relaxed italic mb-4">
                     "Technical education must serve the cause of equitable development. At GPM Muzaffarpur, we strive to produce diploma engineers who are not just employable, but who carry forward the tradition of integrity, craftsmanship and nation-building."
                   </p>
                   <div className="text-[14px] font-bold text-white">— Dr. R. K. Thakur</div>
@@ -204,19 +201,19 @@ export default function HeroSection() {
 
           {/* Sidebar: Notices & Circulars */}
           <aside className="reveal">
-            <div className="bg-white border border-slate-100 rounded-3xl shadow-xl shadow-slate-100/50 overflow-hidden lg:sticky lg:top-6">
+            <div className="bg-white border border-slate-100 rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden sticky top-4">
               <div className="bg-white px-5 py-4 flex items-center justify-between border-b border-slate-100">
-                <h3 className="text-[18px] font-extrabold text-slate-900 flex items-center gap-2">
-                  <span className="bg-emerald-50 p-2 rounded-xl text-emerald-600"><Icon.Bell className="w-5 h-5" /></span> Notices &amp; Circulars
+                <h3 className="text-[18px] font-extrabold text-[#0b1f5e] flex items-center gap-2">
+                  <span className="bg-amber-50 p-2 rounded-xl text-amber-500"><Icon.Bell className="w-5 h-5" /></span> Notices &amp; Circulars
                 </h3>
-                <span className="text-[11px] bg-rose-50 text-rose-500 px-3 py-1 rounded-full font-bold">{notices.filter(n => n.tag === "NEW").length} New</span>
+                <span className="text-[11px] bg-red-50 text-red-500 px-3 py-1 rounded-full font-bold">{notices.filter(n => n.tag === "NEW").length} New</span>
               </div>
-              <div className="p-4 space-y-2 max-h-[500px] overflow-y-auto custom-scroll">
+              <div className="p-4 space-y-3 max-h-[600px] overflow-y-auto custom-scroll">
                 {notices.map((n, i) => (
                   <a key={i} href="#" className="group flex items-start gap-3 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-200 cursor-pointer">
                     <StatusPill type={n.tag} />
                     <div className="flex-1">
-                      <div className="text-[14px] text-slate-800 font-semibold leading-snug group-hover:text-emerald-600 transition-colors">{n.title}</div>
+                      <div className="text-[14px] text-[#0b1f5e] font-semibold leading-snug group-hover:text-indigo-600 transition-colors">{n.title}</div>
                       <div className="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1.5 font-medium">
                         <Icon.Calendar className="w-3.5 h-3.5" /> {n.date}
                       </div>
@@ -225,7 +222,7 @@ export default function HeroSection() {
                 ))}
               </div>
               <div className="px-5 py-4 bg-slate-50 border-t border-slate-100">
-                <a href="#" className="text-[14px] font-bold text-slate-900 hover:text-emerald-600 transition-colors flex items-center justify-center gap-2 bg-white rounded-full py-2.5 border border-slate-200 hover:border-emerald-200 hover:bg-emerald-50">
+                <a href="#" className="text-[14px] font-bold text-[#0b1f5e] hover:text-indigo-600 transition-colors flex items-center justify-center gap-2 bg-white rounded-full py-2 border border-slate-200 hover:border-indigo-200">
                   View All Notices <Icon.ArrowRight className="w-4 h-4" />
                 </a>
               </div>
@@ -235,45 +232,29 @@ export default function HeroSection() {
       </main>
 
       {/* ===================== ACADEMIC DEPARTMENTS ===================== */}
-      <section className="py-20 bg-white reveal">
+      <section className="py-16 bg-white reveal">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider mb-4">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-wider mb-4">
               <Icon.GradCap className="w-3.5 h-3.5" /> Academic Departments
             </div>
-            <h2 className="text-[32px] sm:text-[44px] font-extrabold text-slate-900 mb-3" style={{ letterSpacing: "-0.02em" }}>
+            <h2 className="text-[32px] sm:text-[40px] font-extrabold text-[#0b1f5e]" style={{ letterSpacing: "-0.02em" }}>
               Nine disciplines. One mission.
             </h2>
-            <p className="text-slate-500 max-w-xl mx-auto">Explore our cutting-edge programs designed to foster innovation and technical excellence.</p>
           </div>
 
-          {/* Bento Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Featured Card */}
-            <article className="group relative lg:col-span-2 lg:row-span-2 min-h-[400px] rounded-3xl overflow-hidden cursor-pointer" onClick={() => navigate(`/dept/dept-cse`)}>
-              <img src="https://picsum.photos/seed/gpm-dept-cse/800/600" alt="Computer Science" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent" />
-              <div className="relative h-full flex flex-col justify-end p-8">
-                <span className="bg-emerald-500 text-white px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full w-fit mb-4">Featured Department</span>
-                <h3 className="text-3xl font-extrabold text-white mb-2">Computer Science & Engg</h3>
-                <p className="text-slate-200 max-w-md mb-4">Programming, data structures, DBMS, computer networks, full-stack development with modern labs.</p>
-                <span className="inline-flex items-center gap-2 text-sm font-bold text-emerald-400 group-hover:gap-3 transition-all">
-                  Know More <Icon.ArrowRight className="w-4 h-4" />
-                </span>
-              </div>
-            </article>
-
-            {/* Smaller Cards */}
-            {deptCards.filter(d => d.path !== 'dept-cse').map((d) => (
-              <article key={d.name} className="group bg-slate-50 rounded-3xl border border-slate-100 hover:border-emerald-200 hover:bg-white hover:shadow-xl hover:shadow-emerald-50 transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-pointer" onClick={() => navigate(`/dept/${d.path}`)}>
-                <div className="relative h-40 overflow-hidden">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {deptCards.map((d) => (
+              <article key={d.name} className="group bg-slate-50 rounded-3xl border border-slate-100 hover:border-indigo-200 hover:bg-white hover:shadow-2xl hover:shadow-indigo-100/50 transition-all duration-300 hover:-translate-y-2 overflow-hidden cursor-pointer" onClick={() => navigate(`/dept/${d.path}`)}>
+                <div className="relative h-52 overflow-hidden rounded-t-3xl">
                   <img src={d.img} alt={d.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+                  <div className="absolute bottom-4 left-4 bg-white/20 backdrop-blur-md text-white px-3 py-1 text-[11px] font-bold uppercase tracking-wider rounded-full border border-white/30">Department</div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-[18px] font-extrabold text-slate-900 mb-2 group-hover:text-emerald-600 transition-colors">{d.name}</h3>
-                  <p className="text-[13px] text-slate-500 leading-relaxed mb-4 line-clamp-2">{d.desc}</p>
-                  <span className="inline-flex items-center gap-2 text-[13px] font-bold text-emerald-600 group-hover:gap-3 transition-all">
+                  <h3 className="text-[20px] font-extrabold text-[#0b1f5e] mb-2 group-hover:text-indigo-600 transition-colors">{d.name}</h3>
+                  <p className="text-[14px] text-slate-500 leading-relaxed mb-4">{d.desc}</p>
+                  <span className="inline-flex items-center gap-2 text-[14px] font-bold text-indigo-600 group-hover:gap-3 transition-all">
                     Know More <Icon.ArrowRight className="w-4 h-4" />
                   </span>
                 </div>
@@ -284,38 +265,38 @@ export default function HeroSection() {
       </section>
 
       {/* ===================== PLACEMENTS SNAPSHOT ===================== */}
-      <section className="py-20 bg-slate-50 reveal">
+      <section className="py-16 bg-slate-50 reveal">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 bg-amber-50 text-amber-600 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider mb-4">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-amber-50 text-amber-600 px-3 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-wider mb-4">
               <Icon.Award className="w-3.5 h-3.5" /> Placements Snapshot
             </div>
-            <h2 className="text-[32px] sm:text-[44px] font-extrabold text-slate-900 mb-3" style={{ letterSpacing: "-0.02em" }}>
+            <h2 className="text-[32px] sm:text-[40px] font-extrabold text-[#0b1f5e]" style={{ letterSpacing: "-0.02em" }}>
               Where our engineers go next.
             </h2>
-            <p className="text-slate-500 max-w-xl mx-auto">We take pride in our consistent placement record and strong industry connections.</p>
           </div>
 
           <div className="grid lg:grid-cols-[1.4fr_1fr] gap-8">
+            {/* Modern Placement Cards instead of Table */}
             <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
-              <h3 className="text-[18px] font-extrabold text-slate-900 mb-8 flex items-center gap-2">
-                <span className="bg-emerald-50 p-2 rounded-xl text-emerald-600"><Icon.Award className="w-5 h-5" /></span>
+              <h3 className="text-[18px] font-extrabold text-[#0b1f5e] mb-6 flex items-center gap-2">
+                <span className="bg-indigo-50 p-2 rounded-xl text-indigo-600"><Icon.Award className="w-5 h-5" /></span>
                 Placement Records (Last 5 Years)
               </h3>
               <div className="space-y-6">
                 {placementData.map((r) => (
-                  <div key={r.year} className="grid grid-cols-[80px_1fr_auto] items-center gap-4">
-                    <div className="text-[14px] font-bold text-slate-500">{r.year}</div>
+                  <div key={r.year} className="grid grid-cols-[100px_1fr_auto] items-center gap-4">
+                    <div className="text-[16px] font-bold text-slate-700">{r.year}</div>
                     <div className="w-full">
-                      <div className="flex justify-between text-[12px] mb-1.5">
-                        <span className="text-slate-400 font-medium">{r.placed} / {r.eligible} placed</span>
-                        <span className="font-bold text-emerald-600">{r.percent}</span>
+                      <div className="flex justify-between text-[13px] mb-1.5">
+                        <span className="text-slate-500 font-medium">{r.placed} / {r.eligible} placed</span>
+                        <span className="font-bold text-emerald-500">{r.percent}</span>
                       </div>
-                      <div className="w-full bg-slate-100 rounded-full h-2">
-                        <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 h-2 rounded-full transition-all duration-1000 ease-out" style={{ width: r.width }}></div>
+                      <div className="w-full bg-slate-100 rounded-full h-2.5">
+                        <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 h-2.5 rounded-full transition-all duration-1000" style={{ width: r.width }}></div>
                       </div>
                     </div>
-                    <div className="text-[13px] font-extrabold text-slate-900 bg-slate-100 px-3 py-1.5 rounded-lg">{r.ctc}</div>
+                    <div className="text-[14px] font-extrabold text-[#FF9933] bg-amber-50 px-3 py-1.5 rounded-lg">{r.ctc}</div>
                   </div>
                 ))}
               </div>
@@ -323,13 +304,13 @@ export default function HeroSection() {
 
             <div className="flex flex-col gap-6">
               <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm h-full">
-                <h3 className="text-[18px] font-extrabold text-slate-900 mb-6 flex items-center gap-2">
-                  <span className="bg-slate-100 p-2 rounded-xl text-slate-700"><Icon.Briefcase className="w-5 h-5" /></span>
+                <h3 className="text-[18px] font-extrabold text-[#0b1f5e] mb-6 flex items-center gap-2">
+                  <span className="bg-purple-50 p-2 rounded-xl text-purple-600"><Icon.Briefcase className="w-5 h-5" /></span>
                   Top Recruiters
                 </h3>
                 <div className="grid grid-cols-3 gap-3">
                   {recruiters.map((r) => (
-                    <div key={r} className="bg-slate-50 border border-slate-100 px-2 py-4 text-center text-[12px] font-bold text-slate-600 rounded-xl hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-colors cursor-default">
+                    <div key={r} className="bg-slate-50 border border-slate-100 px-2 py-4 text-center text-[13px] font-bold text-slate-600 rounded-xl hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-colors cursor-default">
                       {r}
                     </div>
                   ))}
@@ -363,7 +344,7 @@ export default function HeroSection() {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
-        .gpm-marquee { animation: gpm-marquee 40s linear infinite; will-change: transform; }
+        .gpm-marquee { animation: gpm-marquee 50s linear infinite; will-change: transform; }
         .gpm-marquee:hover { animation-play-state: paused; }
 
         @keyframes gpm-pulse {
@@ -378,18 +359,6 @@ export default function HeroSection() {
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
-
-        .gpm-grid-pattern {
-          background-image: linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px);
-          background-size: 40px 40px;
-        }
-        
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
       `}</style>
     </div>
   );
