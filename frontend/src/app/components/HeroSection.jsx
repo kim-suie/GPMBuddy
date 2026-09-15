@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import collegeimage from "../../imports/clg.jpg";
+import image_campus from "../../imports/clg.jpg";
+import { Bot, MapPin, ArrowRight } from "lucide-react";
+import { motion } from "motion/react";
 
 /* ---------- Tiny inline SVG icons ---------- */
 const Icon = {
@@ -20,7 +22,7 @@ const Icon = {
   Megaphone: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="m3 11 18-5v12L3 14v-3z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" /></svg>),
   Bell: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /></svg>),
   MapPin: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>),
-  Sparkles: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/></svg>),
+  Sparkles: (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z" /></svg>),
 };
 
 /* ---------- Reusable: notice status pill ---------- */
@@ -87,37 +89,216 @@ export default function HeroSection() {
 
   return (
     <div className="bg-slate-50 text-[#0b1f5e] font-jakarta" style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
-      
+
       {/* ===================== STATIC HERO SECTION ===================== */}
-      <section className="relative h-[600px] overflow-hidden rounded-b-[40px]">
-        {/* Static Background Image with subtle slow zoom */}
-        <div className="absolute inset-0 gpm-kenburns" style={{ backgroundImage: `url('${collegeimage}')`, backgroundSize: "cover", backgroundPosition: "center" }}></div>
-        
-        {/* Modern Vibrant Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#0b1f5e] via-[#0b1f5e]/70 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f5e]/90 via-transparent to-transparent" />
+      
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
 
-        {/* Hero Text Content */}
-        <div className="relative max-w-[1320px] mx-auto px-4 sm:px-6 h-full flex items-center">
-          <div className="max-w-2xl text-white gpm-fadeup">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-wider mb-5 shadow-lg bg-[#FF9933] text-[#0b1f5e]">
-              <Icon.Sparkles className="w-3.5 h-3.5" />
-              Admissions Open 2025-26
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src={image_campus}
+          alt="Government Polytechnic Muzaffarpur campus"
+          className="w-full h-full object-cover"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/90 via-[#0f2e5a]/75 to-[#0f2e5a]/40" />
+      </div>
+
+
+      {/* Floating Shapes */}
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.5 }}
+        className="absolute top-32 right-20 w-32 h-32 rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 rotate-12 hidden lg:block"
+      />
+
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.7 }}
+        className="absolute bottom-40 right-40 w-20 h-20 rounded-2xl bg-[#38b2f0]/20 backdrop-blur-sm border border-[#38b2f0]/30 -rotate-6 hidden lg:block"
+      />
+
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.9 }}
+        className="absolute top-1/2 right-16 w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hidden lg:block"
+      />
+
+
+
+      {/* Content */}
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+
+        <div className="max-w-5xl">
+
+
+          {/* Badge */}
+
+          <motion.div
+            initial={{opacity:0,y:20}}
+            animate={{opacity:1,y:0}}
+            transition={{duration:0.6}}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 backdrop-blur-sm border border-white/25 text-white mb-6"
+          >
+            <MapPin size={14} className="text-[#38b2f0]" />
+
+            Muzaffarpur, Bihar · Est. 1924
+
+          </motion.div>
+
+
+
+          {/* Title */}
+
+          <motion.h1
+            initial={{opacity:0,y:30}}
+            animate={{opacity:1,y:0}}
+            transition={{duration:0.8}}
+            className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6"
+            style={{
+              fontFamily:"Poppins, sans-serif"
+            }}
+          >
+
+            Government
+            <br />
+
+            <span className="text-[#38b2f0]">
+              Polytechnic
             </span>
-            <h2 className="text-[34px] sm:text-[52px] font-extrabold leading-[1.05] mb-5" style={{ letterSpacing: "-0.02em" }}>Shaping Engineers of Bihar Since 1949</h2>
-            <p className="text-[16px] sm:text-[18px] text-white/80 leading-relaxed mb-8 max-w-xl">Government Polytechnic, Muzaffarpur — a premier technical institution. Applications invited for diploma programs across nine disciplines.</p>
-            <div className="flex flex-wrap gap-4">
-              <button onClick={() => navigate("/academics")} className="bg-[#FF9933] text-[#0b1f5e] px-7 py-3.5 rounded-full text-[14px] font-bold hover:bg-[#ffb84d] transition-all hover:scale-105 shadow-lg shadow-[#FF9933]/30 flex items-center gap-2">
-                Apply for Admission <Icon.ArrowRight className="w-4 h-4" />
-              </button>
-              <button onClick={() => navigate("/placements")} className="border border-white/30 bg-white/10 backdrop-blur-md text-white px-7 py-3.5 rounded-full text-[14px] font-semibold hover:bg-white/20 transition-all">
-                View Placements 
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
 
+            <br />
+
+            Muzaffarpur
+
+          </motion.h1>
+
+
+
+          {/* Description */}
+
+          <motion.p
+            initial={{opacity:0,y:20}}
+            animate={{opacity:1,y:0}}
+            transition={{duration:0.8,delay:0.2}}
+            className="text-lg lg:text-2xl text-white/80 max-w-2xl mb-8"
+          >
+
+            Empowering Future Engineers Since 1924 through quality technical
+            education, innovation, and industry-ready skills.
+
+          </motion.p>
+
+
+
+          {/* Buttons */}
+
+          <motion.div
+            initial={{opacity:0,y:20}}
+            animate={{opacity:1,y:0}}
+            transition={{duration:0.8,delay:0.4}}
+            className="flex flex-wrap gap-4"
+          >
+
+
+            <button
+              onClick={() =>
+                window.open(
+                  "https://www.gpmuz.ac.in/department/",
+                  "_blank"
+                )
+              }
+              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-[#0f2e5a] font-semibold shadow-lg hover:bg-blue-50"
+            >
+
+              Explore Campus
+
+              <ArrowRight size={16}/>
+
+            </button>
+
+
+
+            <button
+              // onClick={handleNavigate}
+              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#38b2f0] to-[#1a6bc5] text-white font-semibold shadow-lg hover:scale-105 transition"
+            >
+
+              <Bot size={16}/>
+
+              Talk to GP Buddy
+
+            </button>
+
+
+          </motion.div>
+
+
+
+
+          {/* Stats */}
+
+          <motion.div
+            initial={{opacity:0,y:20}}
+            animate={{opacity:1,y:0}}
+            transition={{duration:0.8,delay:0.7}}
+            className="mt-12 flex flex-wrap gap-8"
+          >
+
+            {
+              [
+                {
+                  value:"100+",
+                  label:"Years of Excellence"
+                },
+                {
+                  value:"6",
+                  label:"Departments"
+                },
+                {
+                  value:"5000+",
+                  label:"Alumni Network"
+                },
+                {
+                  value:"AICTE",
+                  label:"Approved"
+                }
+
+              ].map((item)=>(
+                <div key={item.label}>
+
+                  <div
+                    className="text-2xl font-bold text-white"
+                  >
+                    {item.value}
+                  </div>
+
+                  <div className="text-white/60 text-xs">
+                    {item.label}
+                  </div>
+
+                </div>
+              ))
+
+            }
+
+          </motion.div>
+
+
+        </div>
+
+      </div>
+
+
+      </section>
       {/* ===================== NOTICE MARQUEE ===================== */}
       <section className="reveal mb-12 mt-5">
         <div className="bg-white border-y border-slate-100 overflow-hidden">
@@ -144,7 +325,7 @@ export default function HeroSection() {
       {/* ===================== MAIN CONTENT ===================== */}
       <main id="main" className="max-w-[1320px] mx-auto px-4 sm:px-6 pb-16">
         <div className="grid lg:grid-cols-[1fr_400px] gap-10">
-          
+
           {/* Welcome / About */}
           <div className="reveal">
             <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-full text-[12px] font-bold uppercase tracking-wider mb-4">
@@ -171,7 +352,7 @@ export default function HeroSection() {
               ].map((s) => (
                 <div key={s.l} className="bg-white p-5 flex items-center gap-4 rounded-2xl shadow-sm shadow-slate-200/50 border border-slate-100">
                   <div className={`w-12 h-12 rounded-xl ${s.bg} ${s.text} flex items-center justify-center`}>
-                     <s.icon className="w-6 h-6" />
+                    <s.icon className="w-6 h-6" />
                   </div>
                   <div>
                     <div className="text-[18px] font-extrabold text-[#0b1f5e] leading-tight">{s.v}</div>
@@ -363,3 +544,20 @@ export default function HeroSection() {
     </div>
   );
 }
+
+
+// import image_campus from "../../imports/clg.jpg";
+// 
+
+// export default function HeroSection() {
+
+//   const handleNavigate = () => {
+//     alert("Opening GP Buddy...");
+//     // Add your router navigation here
+//     // Example: navigate("/gpbuddy")
+//   };
+
+//   return (
+    
+//   );
+// }
