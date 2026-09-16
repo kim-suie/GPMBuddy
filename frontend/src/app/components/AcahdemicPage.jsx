@@ -80,7 +80,7 @@ export default function AcademicsPage({ onNavigate }) {
       `}</style>
 
       {/* ===================== HERO HEADER ===================== */}
-      <section className="bg-[#0b1f5e] text-white border-b-4 border-[#FF9933]">
+      <section className="bg-slate-900 text-white border-b-4 border-[#FF9933]">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10">
           <div className="flex items-center gap-2 text-[12px] text-white/60 mb-6">
             <button onClick={() => onNavigate("home")} className="hover:text-[#FF9933] transition-colors">Home</button>

@@ -1,170 +1,143 @@
-import { useNavigate } from "react-router-dom";
-import { Users, Calendar, MapPin, Phone, Mail, Facebook, Twitter, Youtube, Instagram } from "lucide-react";
 import image_poly from "@/imports/poly.jpg";
+import { Mail, Phone, MapPin, Bot, ChevronDown, ArrowUp } from "lucide-react";
 
-/* ---------- Main Footer Component ---------- */
+
+// Reusing the exact same departments array for consistency
+const departments = [
+  { label: "Civil Engineering", id: "dept-civil" },
+  { label: "Computer Science & Engineering", id: "dept-cse" },
+  { label: "Electrical Engineering", id: "dept-electrical" },
+  { label: "Electronics Engineering", id: "dept-electronics" },
+  { label: "Mechanical Engineering", id: "dept-mechanical" },
+  { label: "Chemistry", id: "dept-chemistry" },
+  { label: "Physics", id: "dept-physics" },
+  { label: "Humanities", id: "dept-humanities" },
+  { label: "Leather Technology", id: "dept-leather" },
+];
+
 export function Footer() {
-  const navigate = useNavigate();
-
-  // Helper function to handle routing
-  const handleNavigate = (path) => {
-    if (path === "home") {
-      navigate("/");
-    } else if (path.startsWith("dept-")) {
-      navigate(`/dept/${path}`);
-    } else {
-      navigate(`/${path}`);
-    }
+  // Dummy navigate function for demonstration
+  const onNavigate = (path) => {
+    if (path === "home") window.location.href = "/";
+    else if (path.startsWith("dept-")) window.location.href = `/dept/${path}`;
+    else window.location.href = `/${path}`;
   };
-
-  // External links helper
-  const openExternal = (url) => {
-    window.open(url, "_blank");
-  };
-
-  const departmentLinks = [
-    { label: "Computer Science", id: "dept-cse" },
-    { label: "Mechanical Engineering", id: "dept-mechanical" },
-    { label: "Civil Engineering", id: "dept-civil" },
-    { label: "Electrical Engineering", id: "dept-electrical" },
-    { label: "Electronics Engineering", id: "dept-electronics" },
-    { label: "Leather Technology", id: "dept-leather" },
-  ];
 
   const quickLinks = [
-    { label: "AICTE", url: "https://www.aicte-india.org/" },
-    { label: "SBTE Bihar", url: "http://sbte.bihar.gov.in/" },
-    { label: "Department of Science & Tech", url: "https://state.bihar.gov.in/dst/CitizenHome.html" },
-    { label: "Bihar Govt Portal", url: "https://state.bihar.gov.in/main/CitizenHome.html" },
-    { label: "Anti-Ragging Helpline", url: "https://antiragging.in/" },
-  ];
-
-  const importantPages = [
+    { label: "Home", path: "home" },
     { label: "Academics", path: "academics" },
-    { label: "Admissions 2025-26", path: "academics" },
-    { label: "Examination & Results", path: "academics" },
-    { label: "Grievance Redressal", path: "login" },
-    { label: "GPM Buddy", path: "gpbuddy" },
+    { label: "Placements", path: "placements" },
+    { label: "Notices", path: "notices" },
   ];
 
   return (
-    <>
-      <style>{`
-        @keyframes gpm-spin { to { transform: rotate(360deg); } }
-        .gpm-chakra { animation: gpm-spin 22s linear infinite; transform-origin: center; }
-      `}</style>
+    <footer
+      className="w-full bg-slate-900 text-slate-300 font-sans"
+      style={{ fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
+    >
+      {/* ===================== MAIN FOOTER SECTION (Dark Slate) ===================== */}
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-12 lg:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
 
-      <footer className="bg-[#0b1f5e] text-white border-t-4 border-[#FF9933]">
-        {/* Visitor / Last updated strip */}
-        <div className="bg-white/5 border-b border-white/10">
-          <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2 text-[12px]">
-            <div className="flex items-center gap-4">
-              <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-[#FF9933]" /> Visitor Counter: <strong className="text-[#FF9933]">14,82,947</strong></span>
-              <span className="hidden sm:inline opacity-40">|</span>
-              <span className="hidden sm:flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-[#FF9933]" /> Last Updated: 12 June 2025</span>
-            </div>
-            <div className="text-white/60 text-[11px]">Best viewed in Chrome, Firefox, Edge at 1280×800</div>
-          </div>
-        </div>
-
-        {/* 4-column grid */}
-        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Logo + description */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <button onClick={() => handleNavigate("home")}>
-                <img src={image_poly} alt="GPM Logo" className="w-14 h-18 sm:w-16 sm:h-16 object-contain rounded-3xl shadow-sm" />
-              </button>
-              <div>
-                <div className="text-[15px] font-bold leading-tight">Government Polytechnic</div>
-                <div className="text-[13px] text-white/70">Muzaffarpur, Bihar</div>
+          {/* Column 1: Brand & Description */}
+          <div className="space-y-5">
+            <button onClick={() => onNavigate("home")} className="flex items-center gap-3 group">
+              {/* Added a placeholder div for logo since we don't have your image_poly import here */}
+              <div className="relative">
+                <div className="absolute inset-0 rounded-2xl blur-[8px] opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                <img src={image_poly} alt="GPM Logo" className="relative w-11 h-11 sm:w-12 sm:h-12 object-contain rounded-2xl" />
               </div>
-            </div>
-            <p className="text-[13px] text-white/70 leading-relaxed mb-4">
-              A premier technical institution established in 1949, under the Department of Science &amp; Technology, Government of Bihar. Approved by AICTE and affiliated to SBTE Bihar.
+              <div className="text-left">
+                <h1 className="text-[16px] font-extrabold leading-tight text-white" style={{ letterSpacing: "-0.02em" }}>
+                  Government Polytechnic
+                </h1>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="text-[13px] text-emerald-400 font-bold tracking-wide">Muzaffarpur</span>
+                  <span className="w-1 h-1 rounded-full bg-slate-500"></span>
+                  <span className="text-[11px] text-slate-400 font-medium">Est. 1949</span>
+                </div>
+              </div>
+            </button>
+
+            <p className="text-[13px] leading-relaxed text-slate-400">
+              Empowering students with cutting-edge technical education since 1949. Fostering innovation, discipline, and excellence in engineering and sciences.
             </p>
-            <div className="text-[12px] text-white/70 flex items-start gap-2">
-              <MapPin className="w-4 h-4 text-[#FF9933] flex-shrink-0 mt-0.5" />
-              <span>East Ramna Road, Muzaffarpur, Bihar 842002, India</span>
-            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Column 2: Quick Links */}
           <div>
-            <h4 className="text-[14px] font-bold mb-4 relative pb-2">
-              Quick Links
-              <span className="absolute bottom-0 left-0 w-10 h-0.5 bg-[#FF9933]"></span>
-            </h4>
-            <ul className="space-y-2 text-[13px] text-white/75">
+            <h3 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-5">Quick Links</h3>
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
-                <li key={link.label}>
+                <li key={link.path}>
                   <button
-                    onClick={() => openExternal(link.url)}
-                    className="hover:text-[#FF9933] transition-colors flex items-center gap-1.5 text-left"
+                    onClick={() => onNavigate(link.path)}
+                    className="text-[14px] text-slate-400 hover:text-emerald-400 transition-colors flex items-center group"
                   >
-                    <span className="text-[#FF9933]">›</span> {link.label}
+                    <span className="w-0 h-1 rounded-full bg-emerald-500 mr-0 group-hover:mr-2 group-hover:w-1.5 transition-all duration-300"></span>
+                    {link.label}
                   </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Important Pages */}
+          {/* Column 3: Departments */}
           <div>
-            <h4 className="text-[14px] font-bold mb-4 relative pb-2">
-              Important Pages
-              <span className="absolute bottom-0 left-0 w-10 h-0.5 bg-[#FF9933]"></span>
-            </h4>
-            <ul className="space-y-2 text-[13px] text-white/75">
-              {importantPages.map((link) => (
-                <li key={link.label}>
+            <h3 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-5">Departments</h3>
+            <ul className="space-y-3 max-h-[300px] overflow-y-auto custom-scroll pr-2">
+              {departments.map((dept) => (
+                <li key={dept.id}>
                   <button
-                    onClick={() => handleNavigate(link.path)}
-                    className="hover:text-[#FF9933] transition-colors flex items-center gap-1.5 text-left"
+                    onClick={() => onNavigate(dept.id)}
+                    className="text-[14px] text-slate-400 hover:text-emerald-400 transition-colors flex items-center group"
                   >
-                    <span className="text-[#FF9933]">›</span> {link.label}
+                    <span className="w-0 h-1 rounded-full bg-emerald-500 mr-0 group-hover:mr-2 group-hover:w-1.5 transition-all duration-300"></span>
+                    {dept.label}
                   </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Connect with us */}
+          {/* Column 4: Contact & CTA */}
           <div>
-            <h4 className="text-[14px] font-bold mb-4 relative pb-2">
-              Connect With Us
-              <span className="absolute bottom-0 left-0 w-10 h-0.5 bg-[#FF9933]"></span>
-            </h4>
-            <div className="text-[13px] text-white/75 space-y-3 mb-5">
-              <div className="flex items-start gap-2"><Phone className="w-4 h-4 text-[#FF9933] mt-0.5" /> +91 6212 280 000</div>
-              <div className="flex items-start gap-2"><Mail className="w-4 h-4 text-[#FF9933] mt-0.5" /> principal@gpmuzaffarpur.ac.in</div>
-            </div>
-            <div className="flex gap-2">
-              {[Facebook, Twitter, Youtube, Instagram].map((I, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#FF9933] hover:text-[#0b1f5e] flex items-center justify-center transition-colors"
-                  aria-label="social"
-                >
-                  <I className="w-4 h-4" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+            <h3 className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-5">Get in Touch</h3>
+            <ul className="space-y-4 mb-6">
+              <li className="flex items-start gap-3 text-[14px] text-slate-400">
+                <MapPin size={16} className="text-emerald-500 mt-0.5 flex-shrink-0" />
+                <span>Government Polytechnic, Muzaffarpur, Bihar 842001</span>
+              </li>
+              <li className="flex items-center gap-3 text-[14px] text-slate-400">
+                <Phone size={16} className="text-emerald-500 flex-shrink-0" />
+                <span>+91 98765 43210</span>
+              </li>
+              <li className="flex items-center gap-3 text-[14px] text-slate-400">
+                <Mail size={16} className="text-emerald-500 flex-shrink-0" />
+                <span>info@gpmuzaffarpur.ac.in</span>
+              </li>
+            </ul>
 
-        {/* Bottom bar */}
-        <div className="border-t border-white/10">
-          <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-white/70">
-            <div>© {new Date().getFullYear()} Government Polytechnic, Muzaffarpur. All Rights Reserved.</div>
-            <div className="flex items-center gap-1.5">
-              Made with <span className="text-[#FF9933]">❤</span> for the students of Bihar
-            </div>
+            {/* GPM Buddy CTA */}
+            <button
+              onClick={() => onNavigate("gpbuddy")}
+              className="w-full flex items-center justify-center gap-2 bg-emerald-500 text-white px-5 py-3 rounded-full text-[13px] font-semibold hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/30 transition-all"
+            >
+              <Bot size={16} /> Ask GPM Buddy
+            </button>
           </div>
         </div>
-      </footer>
-    </>
+      </div>
+
+      {/* Reusing the exact same styles as navbar */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; } /* Adjusted for dark bg */
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #475569; }
+      `}</style>
+    </footer>
   );
 }
 
