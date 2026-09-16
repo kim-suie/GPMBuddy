@@ -329,14 +329,14 @@ export function Navbar() {
           <button onClick={() => onNavigate("home")} className="flex items-center gap-3 group">
             <div className="relative">
               <div className="absolute inset-0 rounded-full blur-[8px] opacity-30 group-hover:opacity-50 transition-opacity"></div>
-              <img src={image_poly} alt="GPM Logo" className="relative w-11 h-11 sm:w-12 sm:h-12 object-contain rounded-2xl" />
+              <img src={image_poly} alt="GPM Logo" className="relative w-14 h-14 sm:w-12 sm:h-12 object-contain rounded-2xl" />
             </div>
             <div className="hidden sm:block text-left">
               <h1 className="text-[16px] sm:text-[18px] font-extrabold leading-tight text-gray-800" style={{ letterSpacing: "-0.02em" }}>
                 Government Polytechnic
               </h1>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-[13px] text-emerald-400 font-bold tracking-wide">Muzaffarpur</span>
+                <span className="text-[13px] text-orange-400 font-bold tracking-wide">Muzaffarpur</span>
                 <span className="w-1 h-1 rounded-full bg-slate-500"></span>
                 <span className="text-[11px] text-slate-400 font-medium">Est. 1949</span>
               </div>
@@ -387,12 +387,12 @@ export function Navbar() {
                 onClick={() => onNavigate(link.path)}
                 className={`relative px-5 py-4 text-[14px] font-semibold transition-colors group ${
                   scrolled 
-                    ? `${link.active ? "text-emerald-600" : "text-slate-600 hover:text-slate-900"}` 
-                    : `${link.active ? "text-emerald-400" : "text-slate-300 hover:text-white"}`
+                    ? `${link.active ? "text-orange-400" : "text-slate-600 hover:text-slate-900"}` 
+                    : `${link.active ? "text-orange-400" : "text-slate-300 hover:text-white"}`
                 }`}
               >
                 {link.label}
-                <span className={`absolute bottom-1.5 left-1/2 -translate-x-1/2 h-[2px] bg-emerald-500 rounded-t-full transition-all duration-300 ${link.active ? "w-1/2" : "w-0 group-hover:w-6"}`}></span>
+                <span className={`absolute bottom-1.5 left-1/2 -translate-x-1/2 h-[2px] bg-orange-400 rounded-t-full transition-all duration-300 ${link.active ? "w-1/2" : "w-0 group-hover:w-6"}`}></span>
               </button>
             ))}
 
@@ -402,13 +402,13 @@ export function Navbar() {
                 onClick={() => setDeptOpen(!deptOpen)}
                 className={`flex items-center gap-1.5 px-5 py-4 text-[14px] font-semibold transition-colors group ${
                   isDeptPage 
-                    ? (scrolled ? "text-emerald-600" : "text-emerald-400") 
+                    ? (scrolled ? "text-orange-400" : "text-orange-200") 
                     : (scrolled ? "text-slate-600 hover:text-slate-900" : "text-slate-300 hover:text-white")
                 }`}
               >
                 Departments 
                 <ChevronDown size={16} className={`transition-transform duration-200 ${deptOpen ? "rotate-180" : ""}`} />
-                <span className={`absolute bottom-1.5 left-1/2 -translate-x-1/2 h-[2px] bg-emerald-500 rounded-t-full transition-all duration-300 ${isDeptPage ? "w-1/2" : "w-0 group-hover:w-6"}`}></span>
+                <span className={`absolute bottom-1.5 left-1/2 -translate-x-1/2 h-[2px] bg-orange-400 rounded-t-full transition-all duration-300 ${isDeptPage ? "w-1/2" : "w-0 group-hover:w-6"}`}></span>
               </button>
 
               {/* Mega Menu Style Dropdown */}
@@ -424,9 +424,9 @@ export function Navbar() {
                       <li key={dept.id}>
                         <button
                           onClick={() => onNavigate(dept.id)}
-                          className="w-full text-left px-4 py-2.5 text-[13px] text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors flex items-center group"
+                          className="w-full text-left px-4 py-2.5 text-[13px] text-slate-700 hover:bg-emerald-50 hover:text-orange-400 transition-colors flex items-center group"
                         >
-                          <span className="w-1.5 h-1.5 rounded-full bg-slate-300 mr-3 group-hover:bg-emerald-500 transition-colors"></span>
+                          <span className="w-1.5 h-1.5 rounded-full bg-slate-300 mr-3 group-hover:bg-orange-400 transition-colors"></span>
                           {dept.label}
                         </button>
                       </li>
@@ -459,7 +459,7 @@ export function Navbar() {
                 key={link.label}
                 onClick={() => onNavigate(link.path)}
                 className={`w-full text-left p-3 rounded-xl text-sm font-semibold transition-colors ${
-                  link.active ? "bg-emerald-50 text-emerald-600" : "text-slate-700 hover:bg-slate-50"
+                  link.active ? "bg-emerald-50 text-orange-400" : "text-slate-700 hover:bg-slate-50"
                 }`}
               >
                 {link.label}
@@ -471,7 +471,7 @@ export function Navbar() {
               <button
                 onClick={() => setMobileDeptOpen(!mobileDeptOpen)}
                 className={`w-full flex items-center justify-between p-3 rounded-xl text-sm font-semibold transition-colors ${
-                  isDeptPage ? "bg-emerald-50 text-emerald-600" : "text-slate-700 hover:bg-slate-50"
+                  isDeptPage ? "bg-emerald-50 text-orange-400" : "text-slate-700 hover:bg-slate-50"
                 }`}
               >
                 Departments
@@ -484,7 +484,7 @@ export function Navbar() {
                     <button
                       key={dept.id}
                       onClick={() => onNavigate(dept.id)}
-                      className="block w-full text-left px-4 py-2.5 text-[13px] text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors font-medium"
+                      className="block w-full text-left px-4 py-2.5 text-[13px] text-slate-500 hover:text-orange-400 hover:bg-emerald-50 rounded-lg transition-colors font-medium"
                     >
                       {dept.label}
                     </button>
@@ -503,7 +503,7 @@ export function Navbar() {
               </button>
               <button 
                 onClick={() => onNavigate("gpbuddy")} 
-                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-emerald-500 rounded-full"
+                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-orange-400 rounded-full"
               >
                 <Bot size={16} /> GPM Buddy
               </button>

@@ -37,7 +37,7 @@ export default function NoticePage() {
       `}</style>
 
       {/* ===================== HERO HEADER ===================== */}
-      <section className="bg-[#0b1f5e] text-white border-b-4 border-[#FF9933]">
+      <section className="bg-[#0f172b] text-white border-b-4 border-[#FF9933]">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10">
           <div className="flex items-center gap-2 text-[12px] text-white/60 mb-6">
             <span>Home</span>
@@ -92,7 +92,7 @@ export default function NoticePage() {
                   onClick={() => setActiveCategory(cat)}
                   className={`px-3 py-1.5 text-[12px] font-semibold border transition-colors uppercase tracking-wider ${
                     activeCategory === cat 
-                      ? "bg-[#0b1f5e] text-white border-[#0b1f5e]" 
+                      ? "bg-[#0f172b] text-white border-[#0b1f5e]" 
                       : "bg-white text-[#0b1f5e] border-gray-300 hover:bg-gray-50"
                   }`}
                 >
@@ -104,7 +104,7 @@ export default function NoticePage() {
 
           {/* Notice List */}
           <div className="bg-white border border-gray-200 shadow-sm">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center justify-between">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <FileText className="w-4 h-4 text-[#FF9933]" />
                 <h2 className="text-[15px] font-bold uppercase tracking-wider">Recent Notices</h2>
@@ -139,7 +139,7 @@ export default function NoticePage() {
 
                     {/* Action */}
                     <div className="flex-shrink-0 w-full sm:w-auto flex sm:flex-col justify-end">
-                      <button className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-[#0b1f5e] text-white text-[12px] font-semibold hover:bg-[#FF9933] hover:text-[#0b1f5e] transition-colors uppercase tracking-wider">
+                      <button className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-[#0f172b] text-white text-[12px] font-semibold hover:bg-[#FF9933] hover:text-[#0b1f5e] transition-colors uppercase tracking-wider">
                         <Download className="w-4 h-4" /> View PDF
                       </button>
                     </div>
@@ -157,7 +157,7 @@ export default function NoticePage() {
               <span className="text-gray-600">Showing 1 to {filteredNotices.length} of {allNotices.length} entries</span>
               <div className="flex gap-1">
                 <button className="px-3 py-1 border border-gray-300 text-gray-600 hover:bg-white disabled:opacity-50" disabled>Prev</button>
-                <button className="px-3 py-1 border border-[#0b1f5e] bg-[#0b1f5e] text-white">1</button>
+                <button className="px-3 py-1 border border-[#0b1f5e] bg-[#0f172b] text-white">1</button>
                 <button className="px-3 py-1 border border-gray-300 text-[#0b1f5e] hover:bg-white">2</button>
                 <button className="px-3 py-1 border border-gray-300 text-gray-600 hover:bg-white">Next</button>
               </div>
@@ -170,7 +170,7 @@ export default function NoticePage() {
           
           {/* Notice Archives */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <Archive className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Notice Archives</h3>
             </div>
@@ -188,7 +188,7 @@ export default function NoticePage() {
 
           {/* Quick Categories */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <FileText className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Quick Categories</h3>
             </div>
@@ -205,7 +205,7 @@ export default function NoticePage() {
 
           {/* Contact Box */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <Phone className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Notice Board Contact</h3>
             </div>
