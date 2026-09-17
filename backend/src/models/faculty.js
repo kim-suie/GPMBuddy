@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const facultySchema = new mongoose.Schema(
   {
+
     name: {
       type: String,
       required: true,
@@ -10,9 +11,9 @@ const facultySchema = new mongoose.Schema(
     },
 
     department: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "department",
       required: true,
-      trim: true,
     },
 
     designation: {
@@ -21,18 +22,48 @@ const facultySchema = new mongoose.Schema(
       trim: true,
     },
 
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
+    qualification: {
+      type: [String],
+      default: [],
+    },
+
+    specialization: {
+      type: [String],
+      default: [],
     },
 
     phone: {
       type: String,
-      required: true,
       trim: true,
+      default: "",
+    },
+
+    office: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    profileImage: {
+      type: String,
+      default: "",
+    },
+
+    bio: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    joiningYear: {
+      type: Number,
+      min: 1900,
+      max: new Date().getFullYear(),
+    },
+
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   {
@@ -40,4 +71,8 @@ const facultySchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Faculty", facultySchema);
+facultySchema.index({ name: 1 });
+facultySchema.index({ department: 1 });
+facultySchema.index({ designation: 1 });
+
+module.exports = mongoose.model("faculty", facultySchema);

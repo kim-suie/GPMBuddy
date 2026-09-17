@@ -1,25 +1,14 @@
 
 const express = require("express");
-
 const router = express.Router();
 
 const facultyControllers = require("../controllers/facultyControllers");
-
 const authenticate = require("../middleware/authenticateMiddlewares");
 
-// Get all faculty
-router.get("/", facultyControllers.getFaculty);
-
-// Get faculty by ID
+router.get("/", facultyControllers.getFaculties);
 router.get("/id/:id", facultyControllers.getFacultyById);
-
-// Create faculty
-router.post("/", authenticate, facultyControllers.createFaculty);
-
-// Update faculty
-router.put("/:id", authenticate, facultyControllers.updateFaculty);
-
-// Delete faculty
-router.delete("/:id", authenticate, facultyControllers.deleteFaculty);
+router.post("/create/", authenticate, facultyControllers.createFaculty);
+router.put("/update/:id", authenticate, facultyControllers.updateFaculty);
+router.delete("/delete/:id", authenticate, facultyControllers.deleteFaculty);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 const departmentRoutes = require("./routes/departmentRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const facultyRoutes = require("./routes/facultyRoutes");
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use("/api/department", departmentRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/faculty", facultyRoutes);

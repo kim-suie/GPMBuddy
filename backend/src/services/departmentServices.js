@@ -1,23 +1,23 @@
-const departments = require("../models/departments");
+const department = require("../models/department");
 
 exports.getDepartments = async () => {
-    return await departments.find();
+    return await department.find();
 }
 
 exports.getDepartmentsById = async (params) => {
-    return await departments.findById(params.id);
+    return await department.findById(params.id);
 }
 
 exports.getDepartmentsByName = async (params) => {
-    return await departments.findOne({ name: params.name });
+    return await department.findOne({ name: params.name });
 }
 
 exports.getDepartmentsByCode = async (params) => {
-    return await departments.findOne({ code: params.code });
+    return await department.findOne({ code: params.code });
 }
 
 exports.createDepartments = async (body) => {
-    return await departments.create({
+    return await department.create({
         name : body.name,
         code : body.code,
         hod : body.hod
@@ -25,9 +25,9 @@ exports.createDepartments = async (body) => {
 }
 
 exports.updateDepartments = async (req) => {
-    return await departments.findByIdAndUpdate(req.params.id, req.body, {returnDocument: 'after'});
+    return await department.findByIdAndUpdate(req.params.id, req.body, {returnDocument: 'after'});
 }
 
 exports.deleteDepartments = async (params) => {
-    return await departments.findByIdAndDelete(params.id);
+    return await department.findByIdAndDelete(params.id);
 }

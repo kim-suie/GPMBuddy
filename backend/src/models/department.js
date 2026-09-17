@@ -6,4 +6,4 @@ const departmentModel = new mongoose.Schema({
     hod : String
 });
 
-module.exports = mongoose.model("departments", departmentModel);
+module.exports = mongoose.model("department", departmentModel);
