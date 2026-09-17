@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import { loginAdmin } from "../../services/authService";
 
-const Login = ({ onNavigate }) => {
-
+const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("admin");
   const [loading, setLoading] = useState(false);
@@ -27,6 +27,15 @@ const Login = ({ onNavigate }) => {
     }
   };
 
+  const onNavigate = (path) => {
+    if (path === "home") navigate("/");
+    else if (path.startsWith("dept-")) navigate(`/dept/${path}`);
+    else navigate(`/${path}`);
+
+    setMobileOpen(false);
+    setDeptOpen(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,7 +53,7 @@ const Login = ({ onNavigate }) => {
     setLoading(true);
 
     try {
-     
+
       const response = await loginAdmin({
         username: form.username.trim(),
         password: form.password,
@@ -61,13 +70,13 @@ const Login = ({ onNavigate }) => {
 
       const token = response?.data?.token;
       const admin = response?.data?.admin;
-      
-    
+
+
       if (!token) {
         throw new Error("Login succeeded but no authentication token was received.");
       }
 
-  
+
       localStorage.setItem("adminToken", token);
 
       if (admin) {
@@ -77,12 +86,12 @@ const Login = ({ onNavigate }) => {
         );
       }
 
-      console.log("Login successful:", {admin});
+      console.log("Login successful:", { admin });
 
-      onNavigate("admin-dashboard");
+      onNavigate("home");
 
-    }catch(error){
-      
+    } catch (error) {
+
       console.error("Login failed:", error);
 
       const backendMessage =
@@ -90,8 +99,8 @@ const Login = ({ onNavigate }) => {
 
       setError(
         backendMessage ||
-          error?.message ||
-          "Unable to login. Please check your credentials."
+        error?.message ||
+        "Unable to login. Please check your credentials."
       );
     } finally {
       setLoading(false);

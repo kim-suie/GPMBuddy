@@ -1,5 +1,5 @@
 
-
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import {
   Bot,
@@ -34,7 +34,7 @@ const getTime = () =>
     minute: "2-digit",
   });
 
-export default function GPBuddyPage({ onNavigate }) {
+export default function GPBuddyPage() {
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -43,13 +43,23 @@ export default function GPBuddyPage({ onNavigate }) {
       time: getTime(),
     },
   ]);
-
+  
+  const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [activeSection, setActiveSection] = useState("chat");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const bottomRef = useRef(null);
+
+  const onNavigate = (path) => {
+    if (path === "home") navigate("/");
+    else if (path.startsWith("dept-")) navigate(`/dept/${path}`);
+    else navigate(`/${path}`);
+
+    setMobileOpen(false);
+    setDeptOpen(false);
+  };
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({
