@@ -10,7 +10,7 @@ import AcademicsPage from "./components/Pages/AcahdemicPage";
 import PlacementPage from "./components/PlacementPage";
 import NoticePage from "./components/NoticePage";
 import Login from "./components/Login";
-// import AdminPanel from "./components/Pages/AdminPannel";
+import AdminPanel from "./components/Pages/AdminPannel";
 
 // ScrollToTop helper component to scroll to top on route change
 function ScrollToTop() {
@@ -43,6 +43,7 @@ export default function App() {
         {/* Standalone pages without standard Navbar/Footer */}
         <Route path="/gpbuddy" element={<GPBuddyPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<AdminPanel />} />
 
         {/* Standard Pages with Navbar and Footer */}
         <Route element={<StandardLayout />}>
@@ -51,7 +52,6 @@ export default function App() {
           <Route path="placements" element={<PlacementPage />} />
           <Route path="notices" element={<NoticePage />} />
           <Route path="dept/:deptId" element={<DepartmentPage />} />
-          {/* <Route path="admin" element={<AdminPanel />} /> */}
           {/* Fallback for old links or direct department URLs like /dept-cse */}
           <Route path=":pageName" element={<DynamicRouter />} /> 
         </Route>
@@ -77,7 +77,10 @@ function DynamicRouter() {
       navigate("/gpbuddy", { replace: true });
     } else if (pageName === "login") {
       navigate("/login", { replace: true });
+    } else if (pageName === "admin") {
+      navigate("/admin", { replace: true });
     }
+    
   }, [pageName, navigate]);
 
   return <div className="min-h-screen bg-[#f0f4f8]"></div>; // Empty div while redirecting

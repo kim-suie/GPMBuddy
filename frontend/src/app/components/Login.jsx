@@ -29,7 +29,7 @@ const Login = () => {
 
   const onNavigate = (path) => {
     if (path === "home") navigate("/");
-    // if (path === "AdminPanel") navigate("/admin");
+    if (path === "admin") navigate("/admin");
     else if (path.startsWith("dept-")) navigate(`/dept/${path}`);
     else navigate(`/${path}`);
 
@@ -89,7 +89,7 @@ const Login = () => {
 
       console.log("Login successful:", { admin });
 
-      onNavigate("AdminPanel");
+      onNavigate("admin");
 
     } catch (error) {
 
