@@ -10,6 +10,7 @@ import AcademicsPage from "./components/Pages/AcahdemicPage";
 import PlacementPage from "./components/PlacementPage";
 import NoticePage from "./components/NoticePage";
 import Login from "./components/Login";
+// import AdminPanel from "./components/Pages/AdminPannel";
 
 // ScrollToTop helper component to scroll to top on route change
 function ScrollToTop() {
@@ -50,7 +51,7 @@ export default function App() {
           <Route path="placements" element={<PlacementPage />} />
           <Route path="notices" element={<NoticePage />} />
           <Route path="dept/:deptId" element={<DepartmentPage />} />
-          
+          {/* <Route path="admin" element={<AdminPanel />} /> */}
           {/* Fallback for old links or direct department URLs like /dept-cse */}
           <Route path=":pageName" element={<DynamicRouter />} /> 
         </Route>
