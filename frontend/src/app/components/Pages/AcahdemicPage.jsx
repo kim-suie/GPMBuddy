@@ -80,7 +80,7 @@ export default function AcademicsPage({ onNavigate }) {
       `}</style>
 
       {/* ===================== HERO HEADER ===================== */}
-      <section className="bg-[#0b1f5e] text-white border-b-4 border-[#FF9933]">
+      <section className="bg-slate-900 text-white border-b-4 border-[#FF9933]">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10">
           <div className="flex items-center gap-2 text-[12px] text-white/60 mb-6">
             <button onClick={() => onNavigate("home")} className="hover:text-[#FF9933] transition-colors">Home</button>
@@ -135,7 +135,7 @@ export default function AcademicsPage({ onNavigate }) {
           
           {/* Admission & Eligibility */}
           <section className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <PenTool className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">Admission Process & Eligibility</h2>
             </div>
@@ -169,7 +169,7 @@ export default function AcademicsPage({ onNavigate }) {
 
           {/* Syllabus Table */}
           <section className="bg-white border border-gray-200 overflow-hidden">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <BookOpen className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">Syllabus & Curriculum Structure</h2>
             </div>
@@ -203,7 +203,7 @@ export default function AcademicsPage({ onNavigate }) {
 
           {/* Grading System */}
           <section className="bg-white border border-gray-200 overflow-hidden">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <Award className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">Grading System (As per SBTE Bihar)</h2>
             </div>
@@ -231,7 +231,7 @@ export default function AcademicsPage({ onNavigate }) {
 
           {/* Academic Calendar */}
           <section className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <CalendarDays className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">Academic Calendar 2024-25</h2>
             </div>
@@ -258,7 +258,7 @@ export default function AcademicsPage({ onNavigate }) {
           
           {/* Examination Rules Box */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <ClipboardList className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Examination Rules</h3>
             </div>
@@ -271,7 +271,7 @@ export default function AcademicsPage({ onNavigate }) {
 
           {/* Academic Resources Box */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <FileText className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Resources</h3>
             </div>
@@ -288,7 +288,7 @@ export default function AcademicsPage({ onNavigate }) {
 
           {/* Contact Box */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <PenTool className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Academic Cell</h3>
             </div>
@@ -299,7 +299,7 @@ export default function AcademicsPage({ onNavigate }) {
               <p>Email: academics@gpmuzaffarpur.ac.in</p>
             </div>
             <div className="border-t border-gray-200 p-4">
-              <button onClick={() => onNavigate("home")} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0b1f5e] text-white text-[13px] font-semibold hover:bg-[#FF9933] hover:text-[#0b1f5e] transition-colors uppercase tracking-wider">
+              <button onClick={() => onNavigate("home")} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0f172b] text-white text-[13px] font-semibold hover:bg-[#FF9933] hover:text-[#0b1f5e] transition-colors uppercase tracking-wider">
                 Back to Home
               </button>
             </div>

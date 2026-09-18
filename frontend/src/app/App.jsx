@@ -6,7 +6,7 @@ import HeroSection from "./components/HeroSection";
 import Footer from "./components/Footer";
 import GPBuddyPage from "./components/GPBuddyPage";
 import DepartmentPage from "./components/DepartmentPage";
-import AcademicsPage from "./components/AcahdemicPage";
+import AcademicsPage from "./components/Pages/AcahdemicPage";
 import PlacementPage from "./components/PlacementPage";
 import NoticePage from "./components/NoticePage";
 import Login from "./components/Login";

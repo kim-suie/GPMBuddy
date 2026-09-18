@@ -38,7 +38,7 @@ export default function PlacementPage() {
       `}</style>
 
       {/* ===================== HERO HEADER ===================== */}
-      <section className="bg-[#0b1f5e] text-white border-b-4 border-[#FF9933]">
+      <section className="bg-[#0f172b] text-white border-b-4 border-[#FF9933]">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10">
           <div className="flex items-center gap-2 text-[12px] text-white/60 mb-6">
             <span>Home</span>
@@ -93,7 +93,7 @@ export default function PlacementPage() {
           
           {/* About T&P Cell */}
           <section className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <FileText className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">About the Cell</h2>
             </div>
@@ -118,7 +118,7 @@ export default function PlacementPage() {
 
           {/* Placement Records Table */}
           <section className="bg-white border border-gray-200 overflow-hidden">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">Placement Records (Last 5 Years)</h2>
             </div>
@@ -150,7 +150,7 @@ export default function PlacementPage() {
 
           {/* Training & Development */}
           <section className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <Award className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">Training & Development Programs</h2>
             </div>
@@ -166,13 +166,13 @@ export default function PlacementPage() {
 
           {/* Top Recruiters */}
           <section className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <Briefcase className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">Our Top Recruiters</h2>
             </div>
             <div className="p-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {topRecruiters.map((r) => (
-                <div key={r} className="border border-gray-200 px-2 py-4 text-center text-[13px] font-bold text-[#0b1f5e] bg-gray-50 hover:bg-[#0b1f5e] hover:text-white transition-colors cursor-default">
+                <div key={r} className="border border-gray-200 px-2 py-4 text-center text-[13px] font-bold text-[#0b1f5e] bg-gray-50 hover:bg-[#0f172b] hover:text-white transition-colors cursor-default">
                   {r}
                 </div>
               ))}
@@ -196,7 +196,7 @@ export default function PlacementPage() {
 
           {/* Placement Brochure Box */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <Download className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Resources</h3>
             </div>
@@ -213,7 +213,7 @@ export default function PlacementPage() {
 
           {/* Contact Box */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <Phone className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Placement Cell Contact</h3>
             </div>
@@ -225,7 +225,7 @@ export default function PlacementPage() {
               <p className="flex items-start gap-2"><Globe className="w-4 h-4 text-[#FF9933] flex-shrink-0 mt-0.5" /> training-placement-gpmuz.vercel.app</p>
             </div>
             <div className="border-t border-gray-200 p-4">
-              <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0b1f5e] text-white text-[13px] font-semibold hover:bg-[#FF9933] hover:text-[#0b1f5e] transition-colors uppercase tracking-wider">
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0f172b] text-white text-[13px] font-semibold hover:bg-[#FF9933] hover:text-[#0b1f5e] transition-colors uppercase tracking-wider">
                 Recruiter Login <ArrowRight className="w-4 h-4" />
               </button>
             </div>

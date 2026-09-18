@@ -296,7 +296,7 @@ export default function DepartmentPage() {
       `}</style>
 
       {/* ===================== HEADER ===================== */}
-      <section className="bg-[#0b1f5e] text-white border-b-4 border-[#FF9933]">
+      <section className="bg-[#0f172b] text-white border-b-4 border-[#FF9933]">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-8">
           <div className="flex items-center gap-2 text-[12px] text-white/60 mb-6">
             <button onClick={() => onNavigate("home")} className="hover:text-[#FF9933] transition-colors">Home</button>
@@ -353,7 +353,7 @@ export default function DepartmentPage() {
           
           {/* About Section */}
           <section className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <FileText className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">About the Department</h2>
             </div>
@@ -382,7 +382,7 @@ export default function DepartmentPage() {
 
           {/* Labs Section */}
           <section className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <FlaskConical className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">Laboratories & Facilities</h2>
             </div>
@@ -398,7 +398,7 @@ export default function DepartmentPage() {
 
           {/* Faculty Section (Table) */}
           <section className="bg-white border border-gray-200 overflow-hidden">
-            <div className="bg-[#0b1f5e] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-5 py-3 border-b border-gray-200 flex items-center gap-2">
               <Users className="w-4 h-4 text-[#FF9933]" />
               <h2 className="text-[15px] font-bold uppercase tracking-wider">Faculty Members</h2>
             </div>
@@ -430,7 +430,7 @@ export default function DepartmentPage() {
           
           {/* HOD Profile Box */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <Users className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Head of Department</h3>
             </div>
@@ -453,7 +453,7 @@ export default function DepartmentPage() {
 
           {/* Contact Box */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <Phone className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Contact Info</h3>
             </div>
@@ -468,7 +468,7 @@ export default function DepartmentPage() {
               </div>
             </div>
             <div className="border-t border-gray-200 p-4">
-              <button onClick={() => onNavigate("home")} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0b1f5e] text-white text-[13px] font-semibold hover:bg-[#FF9933] hover:text-[#0b1f5e] transition-colors uppercase tracking-wider">
+              <button onClick={() => onNavigate("home")} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0f172b] text-white text-[13px] font-semibold hover:bg-[#FF9933] hover:text-[#0b1f5e] transition-colors uppercase tracking-wider">
                 Back to Home <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -476,7 +476,7 @@ export default function DepartmentPage() {
 
           {/* Important Links Box */}
           <div className="bg-white border border-gray-200">
-            <div className="bg-[#0b1f5e] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+            <div className="bg-[#0f172b] text-white px-4 py-3 border-b border-gray-200 flex items-center gap-2">
               <Link2 className="w-4 h-4 text-[#FF9933]" />
               <h3 className="text-[14px] font-bold uppercase tracking-wider">Quick Links</h3>
             </div>
