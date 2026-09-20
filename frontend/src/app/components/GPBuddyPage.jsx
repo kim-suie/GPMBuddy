@@ -51,6 +51,8 @@ export default function GPBuddyPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const bottomRef = useRef(null);
+  const historyRef = useRef([]);
+  const MAX_HISTORY_TURNS = 10;
 
   const onNavigate = (path) => {
     if (path === "home") navigate("/");
@@ -82,8 +84,8 @@ export default function GPBuddyPage() {
     setInput("");
     setIsTyping(true);
 
-    try {
-      const response = await askQuestion(text.trim());
+        try {
+      const response = await askQuestion(text.trim(), historyRef.current);
 
       if (!response || response.success !== true) {
         throw new Error(
@@ -105,6 +107,12 @@ export default function GPBuddyPage() {
       };
 
       setMessages((prev) => [...prev, botMsg]);
+
+      historyRef.current = [
+        ...historyRef.current,
+        { question: text.trim(), answer },
+      ].slice(-MAX_HISTORY_TURNS);
+      
     } catch (error) {
       console.error("GP Buddy error:", error);
 

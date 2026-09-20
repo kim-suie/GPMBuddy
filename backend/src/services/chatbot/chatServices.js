@@ -1,30 +1,21 @@
-// imports
-const preprocessQuestion = require("./preprocessingServices");
-const detectIntent = require("./intentServices");
-const resolveEntity = require("./entityResolver/entityResolverServices");
-const dispatchIntent = require("./dispatcherServices");
-const createPrompt = require("./promptServices");
-const generateAIResponse = require("./aiResponseServices");
+const { classifyQuestion } = require("./classifierService");
+const { retrieveData } = require("./retrieverService");
+const { generateAnswer } = require("./responseService");
 
+// `history` is an optional array of prior turns in this conversation:
+// [{ question: "...", answer: "..." }, ...], oldest first. The client
+// is responsible for sending it back each request (no server-side
+// session storage exists in this project yet).
+exports.askQuestion = async (question, history = []) => {
 
-exports.askQuestion = async (question) => {
+    const classification = await classifyQuestion(question, history);
+    const retrievedData = await retrieveData(classification);
+    const answer = await generateAnswer(question, classification, retrievedData, history);
 
-// context.answer = await geminiService(context);
-    // Step 1: Convert the user's question into
-    // a structured context.
-    const context = preprocessQuestion(question);
-    // Step 2: Detect what the user is asking about.
-    context.intentDetails = detectIntent(context.keywords);
-    // Step 3: Resolve a specific entity if the
-    // detected intent requires one.
-    context.entity = await resolveEntity(context);
-    // Step 4: Send the context to the appropriate
-    // chat service according to the detected intent.
-    await dispatchIntent(context);
-
-    const prompt = createPrompt(context);
-    
-    context.answer = await generateAIResponse(prompt);
-    
-    return context;
-}
+    return {
+        question,
+        topic: classification.topic,
+        retrievedData,
+        answer
+    };
+};
