@@ -1,13 +1,14 @@
 const departmentServices = require("../departmentServices");
 const facultyServices = require("../facultyServices");
+const aboutUsServices = require("../aboutUsServices");
 const Event = require("../../models/event");
 
-// Fetches real data for the classified topic using the project's
+// Fetches real data for ONE classified request, using the project's
 // existing CRUD services only. Returns null when nothing relevant
 // exists, so the response layer can say so instead of guessing.
-const retrieveData = async (classification) => {
+const retrieveOne = async (request) => {
 
-    const { topic, departmentCode, facultyNameQuery } = classification;
+    const { topic, departmentCode, facultyNameQuery, designationQuery } = request;
 
     switch (topic) {
 
@@ -17,15 +18,16 @@ const retrieveData = async (classification) => {
                 : await departmentServices.getDepartments();
 
         case "faculty": {
-            // facultyServices.searchFaculty does a case-insensitive,
-            // partial match on name, so "sweta" finds "Prof. Sweta
-            // Kumari" regardless of title or exact phrasing.
-            if (facultyNameQuery) {
-                return await facultyServices.searchFaculty({ search: facultyNameQuery });
-            }
-
-            if (departmentCode) {
-                return await facultyServices.searchFaculty({ department: departmentCode });
+            // facultyServices.searchFaculty already supports combining
+            // name (partial match), department, and designation (exact
+            // match) filters together — e.g. "principal of mechanical
+            // department" uses department + designation at once.
+            if (facultyNameQuery || departmentCode || designationQuery) {
+                return await facultyServices.searchFaculty({
+                    search: facultyNameQuery || undefined,
+                    department: departmentCode || undefined,
+                    designation: designationQuery || undefined
+                });
             }
 
             return await facultyServices.getFaculties();
@@ -34,11 +36,27 @@ const retrieveData = async (classification) => {
         case "event":
             return await Event.find().sort({ date: 1 });
 
-        // "unknown" covers greetings, small talk, and anything this
-        // project has no data model for (notices, admissions, etc).
+        case "aboutUs":
+            // Singleton document, no filters needed.
+            return await aboutUsServices.getAboutUs();
+
         default:
             return null;
     }
+};
+
+// A question can ask about several things at once (e.g. "the
+// principal and the college name"); classifierService breaks it into
+// one request per distinct thing, and this fetches each one
+// independently, in parallel.
+const retrieveData = async (requests) => {
+
+    return await Promise.all(
+        requests.map(async request => ({
+            topic: request.topic,
+            data: await retrieveOne(request)
+        }))
+    );
 };
 
 module.exports = { retrieveData };

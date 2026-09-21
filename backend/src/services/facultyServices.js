@@ -77,6 +77,12 @@ exports.getFaculties = async () => {
 };
 
 
+exports.getDesignations = async () => {
+
+    return await Faculty.distinct("designation", { isActive: true });
+};
+
+
 exports.searchFaculty = async (body) => {
 
     const filter = {

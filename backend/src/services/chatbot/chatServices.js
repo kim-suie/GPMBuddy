@@ -9,13 +9,14 @@ const { generateAnswer } = require("./responseService");
 exports.askQuestion = async (question, history = []) => {
 
     const classification = await classifyQuestion(question, history);
-    const retrievedData = await retrieveData(classification);
-    const answer = await generateAnswer(question, classification, retrievedData, history);
+    const results = await retrieveData(classification.requests);
+    const answer = await generateAnswer(question, classification, results, history);
 
     return {
         question,
-        topic: classification.topic,
-        retrievedData,
+        topics: classification.requests.map(request => request.topic),
+        retrievedData: results,
         answer
     };
+
 };
