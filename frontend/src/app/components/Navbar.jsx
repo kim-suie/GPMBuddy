@@ -354,7 +354,7 @@ export function Navbar() {
             </button>
             <button
               onClick={() => onNavigate("gpbuddy")}
-              className="flex items-center gap-2 bg-emerald-500 text-white px-4 sm:px-5 py-2.5 rounded-full text-[12px] font-semibold hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/30 transition-all"
+              className="flex items-center gap-2 bg-blue-700 text-white px-4 sm:px-5 py-2.5 rounded-full text-[12px] font-semibold hover:bg-blue-500 transition-all"
             >
               <Bot className="w-4 h-4" /> 
               <span className="hidden sm:inline">GPM Buddy</span>

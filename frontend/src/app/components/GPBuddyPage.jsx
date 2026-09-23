@@ -1,6 +1,8 @@
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import {
   Bot,
   Send,
@@ -43,7 +45,7 @@ export default function GPBuddyPage() {
       time: getTime(),
     },
   ]);
-  
+
   const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -84,7 +86,7 @@ export default function GPBuddyPage() {
     setInput("");
     setIsTyping(true);
 
-        try {
+    try {
       const response = await askQuestion(text.trim(), historyRef.current);
 
       if (!response || response.success !== true) {
@@ -112,7 +114,7 @@ export default function GPBuddyPage() {
         ...historyRef.current,
         { question: text.trim(), answer },
       ].slice(-MAX_HISTORY_TURNS);
-      
+
     } catch (error) {
       console.error("GP Buddy error:", error);
 
@@ -152,9 +154,8 @@ export default function GPBuddyPage() {
 
       {/* Sidebar */}
       <div
-        className={`${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 fixed lg:relative z-40 h-full w-64 lg:w-20 xl:w-56 bg-white border-r border-[#e2eaf4] flex flex-col transition-transform duration-300`}
+        className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0 fixed lg:relative z-40 h-full w-64 lg:w-20 xl:w-56 bg-white border-r border-[#e2eaf4] flex flex-col transition-transform duration-300`}
       >
         <div className="p-4 border-b border-[#e2eaf4] flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0f2e5a] to-[#1a6bc5] flex items-center justify-center">
@@ -181,11 +182,10 @@ export default function GPBuddyPage() {
                 setActiveSection(id);
                 setSidebarOpen(false);
               }}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${
-                activeSection === id
-                  ? "bg-[#0f2e5a] text-white"
-                  : "text-[#4a6080] hover:bg-[#e8f1fb]"
-              }`}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium ${activeSection === id
+                ? "bg-[#0f2e5a] text-white"
+                : "text-[#4a6080] hover:bg-[#e8f1fb]"
+                }`}
             >
               <Icon size={17} />
               <span className="lg:hidden xl:block">{label}</span>
@@ -290,9 +290,8 @@ export default function GPBuddyPage() {
           {messages.map((msg) => (
             <div
               key={msg.id}
-              className={`flex items-end gap-2 ${
-                msg.role === "user" ? "justify-end" : "justify-start"
-              }`}
+              className={`flex items-end gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"
+                }`}
             >
               {msg.role === "bot" && (
                 <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#0f2e5a] to-[#1a6bc5] flex items-center justify-center">
@@ -300,17 +299,131 @@ export default function GPBuddyPage() {
                 </div>
               )}
 
-              <div className="max-w-md">
-                <div
-                  className={`px-4 py-3 rounded-2xl text-sm ${
-                    msg.role === "user"
-                      ? "bg-[#0f2e5a] text-white"
-                      : "bg-white border text-[#0a1628]"
+              <div
+                className={`max-w-3xl px-4 py-3 rounded-2xl text-sm ${msg.role === "user"
+                  ? "bg-[#0f2e5a] text-white"
+                  : "bg-white border text-[#0a1628]"
                   }`}
-                >
-                  {msg.text}
-                </div>
-                <div className="text-xs text-[#4a6080] mt-1">{msg.time}</div>
+              >
+                {msg.role === "bot" ? (
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      p: ({ children }) => (
+                        <p className="mb-3 last:mb-0 leading-6">
+                          {children}
+                        </p>
+                      ),
+
+                      ul: ({ children }) => (
+                        <ul className="list-disc pl-5 mb-3 space-y-1">
+                          {children}
+                        </ul>
+                      ),
+
+                      ol: ({ children }) => (
+                        <ol className="list-decimal pl-5 mb-3 space-y-1">
+                          {children}
+                        </ol>
+                      ),
+
+                      li: ({ children }) => (
+                        <li className="leading-6">
+                          {children}
+                        </li>
+                      ),
+
+                      strong: ({ children }) => (
+                        <strong className="font-semibold">
+                          {children}
+                        </strong>
+                      ),
+
+                      em: ({ children }) => (
+                        <em className="italic">
+                          {children}
+                        </em>
+                      ),
+
+                      h1: ({ children }) => (
+                        <h1 className="text-lg font-bold mb-3">
+                          {children}
+                        </h1>
+                      ),
+
+                      h2: ({ children }) => (
+                        <h2 className="text-base font-bold mb-2">
+                          {children}
+                        </h2>
+                      ),
+
+                      h3: ({ children }) => (
+                        <h3 className="font-semibold mb-2">
+                          {children}
+                        </h3>
+                      ),
+
+                      table: ({ children }) => (
+                        <div className="overflow-x-auto my-3">
+                          <table className="w-full border-collapse border border-gray-300 text-sm">
+                            {children}
+                          </table>
+                        </div>
+                      ),
+
+                      thead: ({ children }) => (
+                        <thead className="bg-gray-100">
+                          {children}
+                        </thead>
+                      ),
+
+                      th: ({ children }) => (
+                        <th className="border border-gray-300 px-3 py-2 text-left font-semibold">
+                          {children}
+                        </th>
+                      ),
+
+                      td: ({ children }) => (
+                        <td className="border border-gray-300 px-3 py-2">
+                          {children}
+                        </td>
+                      ),
+
+                      blockquote: ({ children }) => (
+                        <blockquote className="border-l-4 border-[#38b2f0] pl-3 my-3 italic">
+                          {children}
+                        </blockquote>
+                      ),
+
+                      code: ({ children }) => (
+                        <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">
+                          {children}
+                        </code>
+                      ),
+
+                      pre: ({ children }) => (
+                        <pre className="bg-gray-900 text-white p-3 rounded-lg overflow-x-auto my-3 text-xs">
+                          {children}
+                        </pre>
+                      ),
+
+                      a: ({ href, children }) => (
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline"
+                        >
+                          {children}
+                        </a>
+                      ),
+                    }}
+                  >
+                    {msg.text}
+                  </ReactMarkdown>
+                ) : (
+                  msg.text
+                )}
               </div>
 
               {msg.role === "user" && (
