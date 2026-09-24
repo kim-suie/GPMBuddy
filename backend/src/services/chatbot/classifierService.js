@@ -1,8 +1,9 @@
 const gemini = require("../../config/gemini");
 const departmentServices = require("../departmentServices");
 const facultyServices = require("../facultyServices");
+const facilityServices = require("../facilityServices");
 
-const KNOWN_TOPICS = ["department", "faculty", "event", "aboutUs"];
+const KNOWN_TOPICS = ["department", "faculty", "event", "aboutUs", "facility"];
 const MAX_HISTORY_TURNS = 6;
 const MAX_REQUESTS = 4;
 
@@ -28,7 +29,7 @@ const formatHistory = (history) => {
 
 // Validates one entry of the "requests" array against real DB values,
 // discarding anything that doesn't check out rather than trusting it.
-const sanitizeRequest = (raw, validDepartmentCodes, validDesignations) => {
+const sanitizeRequest = (raw, validDepartmentCodes, validDesignations, validFacilityCategories) => {
 
     if (!raw || typeof raw !== "object") {
         return null;
@@ -52,13 +53,28 @@ const sanitizeRequest = (raw, validDepartmentCodes, validDesignations) => {
         ? raw.facultyNameQuery.trim()
         : null;
 
-    return { topic, departmentCode, facultyNameQuery, designationQuery };
+    const facilityCategoryQuery = validFacilityCategories.includes(raw.facilityCategoryQuery)
+        ? raw.facilityCategoryQuery
+        : null;
+
+    const facilityNameQuery = typeof raw.facilityNameQuery === "string" && raw.facilityNameQuery.trim()
+        ? raw.facilityNameQuery.trim()
+        : null;
+
+    return {
+        topic,
+        departmentCode,
+        facultyNameQuery,
+        designationQuery,
+        facilityCategoryQuery,
+        facilityNameQuery
+    };
 };
 
 // The model is asked for pure JSON, but we defensively pull out the
 // first JSON object in the response in case it adds stray text, and
 // validate every field before trusting it.
-const parseClassification = (rawText, validDepartmentCodes, validDesignations) => {
+const parseClassification = (rawText, validDepartmentCodes, validDesignations, validFacilityCategories) => {
 
     if (!rawText) {
         return FALLBACK_CLASSIFICATION;
@@ -76,7 +92,7 @@ const parseClassification = (rawText, validDepartmentCodes, validDesignations) =
         const rawRequests = Array.isArray(parsed.requests) ? parsed.requests : [];
 
         const requests = rawRequests
-            .map(raw => sanitizeRequest(raw, validDepartmentCodes, validDesignations))
+            .map(raw => sanitizeRequest(raw, validDepartmentCodes, validDesignations, validFacilityCategories))
             .filter(Boolean)
             .slice(0, MAX_REQUESTS);
 
@@ -93,16 +109,19 @@ const parseClassification = (rawText, validDepartmentCodes, validDesignations) =
 // ONE thing at once (e.g. "the principal and the college name") — and
 // breaks it into one request per distinct thing, using recent
 // conversation history to resolve follow-ups. Only ever allowed to
-// pick a department or designation that genuinely exists.
+// pick a department, designation, or facility category that genuinely
+// exists.
 const classifyQuestion = async (question, history = []) => {
 
-    const [departments, designations] = await Promise.all([
+    const [departments, designations, facilityCategories] = await Promise.all([
         departmentServices.getDepartments(),
-        facultyServices.getDesignations()
+        facultyServices.getDesignations(),
+        facilityServices.getCategories()
     ]);
 
     const validDepartmentCodes = departments.map(department => department.code);
     const validDesignations = designations.filter(Boolean);
+    const validFacilityCategories = facilityCategories.filter(Boolean);
 
     const departmentList = departments
         .map(department => `- code: "${department.code}", name: "${department.name}"`)
@@ -111,6 +130,10 @@ const classifyQuestion = async (question, history = []) => {
     const designationList = validDesignations
         .map(designation => `- "${designation}"`)
         .join("\n") || "(no faculty designations in the database yet)";
+
+    const facilityCategoryList = validFacilityCategories
+        .map(category => `- "${category}"`)
+        .join("\n") || "(no facility categories in the database yet)";
 
     const prompt = `
 You are the routing layer for a college campus chatbot backend. You do
@@ -129,13 +152,17 @@ not pick a topic just because a part of the question sounds college-related):
 - "faculty": a faculty member/teacher/professor/principal, either a specific person, everyone in a department, or everyone with a given designation/role
 - "event": college events, seminars, workshops, fests
 - "aboutUs": general information about the college itself — its name, history, establishment year, address, vision/mission, accreditation, etc.
-(If part of the question is about something NOT in this list — notices, admissions, fees, hostel, placements, etc. — simply omit that part; do not invent a topic for it.)
+- "facility": a physical campus facility — labs, hostels, library, seminar rooms, sports areas, or any other facility category, either a specific named facility, everyone facility of a given category, or facilities belonging to a department
+(If part of the question is about something NOT in this list — notices, admissions, fees, placements, etc. — simply omit that part; do not invent a topic for it.)
 
 Known departments (copy a "code" EXACTLY if a part of the question refers to one of these, otherwise use null — never invent a code):
 ${departmentList}
 
 Known faculty designations/roles actually used in the database (copy one EXACTLY if a part of the question asks about a role such as "professors", "the principal", "HOD", "assistant professors", etc., otherwise use null — never invent one):
 ${designationList}
+
+Known facility categories actually used in the database (copy one EXACTLY if a part of the question asks about a category of facility such as "labs", "hostels", "the library", "sports facilities", etc., otherwise use null — never invent one):
+${facilityCategoryList}
 
 Recent conversation (use this to resolve pronouns like "her"/"his"/"its"
 and short follow-ups like "and the HOD?" or "code of cse" into full,
@@ -150,10 +177,12 @@ Respond with ONLY a single JSON object, no prose, no markdown fences, in exactly
 {
   "requests": [
     {
-      "topic": "department" | "faculty" | "event" | "aboutUs",
+      "topic": "department" | "faculty" | "event" | "aboutUs" | "facility",
       "departmentCode": string or null,
       "facultyNameQuery": string or null,
-      "designationQuery": string or null
+      "designationQuery": string or null,
+      "facilityCategoryQuery": string or null,
+      "facilityNameQuery": string or null
     }
   ],
   "isGreetingOrSmallTalk": true or false
@@ -164,8 +193,10 @@ Rules:
 - "departmentCode" must be exactly one of the codes listed above, or null.
 - "facultyNameQuery" is the name (full or partial, title like "Prof."/"Dr." removed) of a SPECIFIC person, or null if that part of the question is about a role/group rather than one named person.
 - "designationQuery" must be exactly one of the designations listed above, or null. Only set this for a role/title/group question, not a named individual.
+- "facilityCategoryQuery" must be exactly one of the facility categories listed above, or null. Only set this when the question is about a CATEGORY of facility (e.g. "labs", "hostels"), not one specific named facility.
+- "facilityNameQuery" is the name (full or partial) of a SPECIFIC named facility (e.g. "Central Library", "Boys Hostel A"), or null if the question is about a category/group instead.
 - "isGreetingOrSmallTalk" is true only for greetings, thanks, goodbyes, or similar small talk with no factual request.
-- If the new question is a short follow-up ("her designation", "and hod", "what about me"), reuse the department/person/designation/topic from the conversation above rather than returning an empty "requests" array.
+- If the new question is a short follow-up ("her designation", "and hod", "what about me", "what's its capacity"), reuse the department/person/designation/facility/topic from the conversation above rather than returning an empty "requests" array.
 `;
 
     const response = await gemini.models.generateContent({
@@ -173,7 +204,7 @@ Rules:
         contents: prompt
     });
 
-    return parseClassification(response.text, validDepartmentCodes, validDesignations);
+    return parseClassification(response.text, validDepartmentCodes, validDesignations, validFacilityCategories);
 };
 
 module.exports = { classifyQuestion };

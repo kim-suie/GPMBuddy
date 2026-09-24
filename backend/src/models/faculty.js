@@ -60,11 +60,6 @@ const facultySchema = new mongoose.Schema(
       min: 1900,
       max: new Date().getFullYear(),
     },
-
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
   },
   {
     timestamps: true,

@@ -300,7 +300,7 @@ export default function GPBuddyPage() {
               )}
 
               <div
-                className={`max-w-3xl px-4 py-3 rounded-2xl text-sm ${msg.role === "user"
+                className={`max-w-3xl px-6 py-3 rounded-2xl text-sm ${msg.role === "user"
                   ? "bg-[#0f2e5a] text-white"
                   : "bg-white border text-[#0a1628]"
                   }`}

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const Faculty = require("../models/faculty");
-const department = require("../models/department");
+const departmentServices = require("../services/departmentServices");
 const ApiError = require("../utils/ApiError");
 
 
@@ -48,12 +48,16 @@ const findDepartment = async (departmentInput) => {
 
 
 exports.createFaculty = async (body) => {
+    let departmentId = null;
 
-    const department = await findDepartment(body.department);
+    if (body.department) {
+        const department = await departmentServices.findDepartment(body.department);
+        departmentId = department._id;
+    }
 
     const faculty = await Faculty.create({
         name: body.name,
-        department: department._id,
+        department: departmentId,
         designation: body.designation,
         qualification: body.qualification || [],
         specialization: body.specialization || [],
@@ -71,7 +75,7 @@ exports.createFaculty = async (body) => {
 
 exports.getFaculties = async () => {
 
-    return await Faculty.find({ isActive: true })
+    return await Faculty.find()
         .populate("department")
         .sort({ name: 1 });
 };
@@ -79,28 +83,21 @@ exports.getFaculties = async () => {
 
 exports.getDesignations = async () => {
 
-    return await Faculty.distinct("designation", { isActive: true });
+    return await Faculty.distinct("designation");
 };
 
 
 exports.searchFaculty = async (body) => {
 
-    const filter = {
-        isActive: true
-    };
+    const filter = {};
 
-
-    
     if (body.department) {
-
-        const department = await findDepartment(body.department);
-
+        const department = await departmentServices.findDepartment(body.department);
         filter.department = department._id;
     }
 
 
     if (body.designation) {
-
         const designation = body.designation.trim();
 
         if (designation) {
@@ -114,7 +111,6 @@ exports.searchFaculty = async (body) => {
 
     
     if (body.search) {
-
         const search = body.search.trim();
 
         if (search) {
@@ -138,10 +134,7 @@ exports.getFacultyById = async (params) => {
         throw new ApiError(400, "Invalid faculty ID!");
     }
 
-    return await Faculty.findOne({
-        _id: params.id,
-        isActive: true
-    }).populate("department");
+    return await Faculty.findById(params.id).populate("department");
 };
 
 
@@ -201,14 +194,9 @@ exports.updateFaculty = async (req) => {
         faculty.joiningYear = body.joiningYear;
     }
 
-    if (body.isActive !== undefined) {
-        faculty.isActive = body.isActive;
-    }
-
-
     if (body.department !== undefined) {
 
-        const department = await findDepartment(body.department);
+        const department = await departmentServices.findDepartment(body.department);
 
         faculty.department = department._id;
     }
@@ -226,18 +214,9 @@ exports.deleteFaculty = async (params) => {
         throw new ApiError(400, "Invalid faculty ID!");
     }
 
-    const faculty = await Faculty.findOneAndUpdate(
-        {
-            _id: params.id,
-            isActive: true
-        },
-        {
-            isActive: false
-        },
-        {
-            returnDocument: "after"
-        }
-    ).populate("department");
+    const faculty = await Faculty.findOneAndDelete({
+        _id: params.id
+    }).populate("department");
 
     if (!faculty) {
         throw new ApiError(404, "Faculty not found!");
