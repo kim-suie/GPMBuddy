@@ -12,6 +12,7 @@ const facultyRoutes = require("./routes/facultyRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const facilityRoutes = require("./routes/facilityRoutes");
+const subjectRoutes = require("./routes/subjectRoutes");
 const errorHandler = require("./middleware/errorMiddlewares");
 
 
@@ -32,6 +33,7 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/faculty", facultyRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/facility", facilityRoutes);
+app.use("/api/subject", subjectRoutes);
 app.use("/api/uploads", uploadRoutes);
 
 app.use(errorHandler);
