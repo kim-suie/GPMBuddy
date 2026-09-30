@@ -20,7 +20,6 @@ exports.logout = async (req, res) => {
 }
 
 exports.changePassword = async (req, res) => {
-    console.log(req)
     const {currentPassword , newPassword} = req.body;
 
     await authServices.changePassword(req.user.id, currentPassword, newPassword);

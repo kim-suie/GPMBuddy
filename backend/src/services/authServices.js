@@ -37,7 +37,7 @@ exports.changePassword = async (adminId, currentPassword, newPassword) => {
     if(!admin){
         throw new ApiError(401,"Invalid credentials");
     }
-    console.log(admin.password)
+    
     const isCurrentPasswordCorrect = await bcrypt.compare(currentPassword, admin.password);
 
     if(!isCurrentPasswordCorrect){
