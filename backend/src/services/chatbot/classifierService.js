@@ -3,8 +3,9 @@ const departmentServices = require("../departmentServices");
 const facultyServices = require("../facultyServices");
 const facilityServices = require("../facilityServices");
 const subjectServices = require("../subjectServices");
+const academicServices = require("../academicServices");
 
-const KNOWN_TOPICS = ["department", "faculty", "event", "aboutUs", "facility", "subject"];
+const KNOWN_TOPICS = ["department", "faculty", "event", "aboutUs", "facility", "subject", "academic"];
 const MAX_HISTORY_TURNS = 6;
 const MAX_REQUESTS = 4;
 
@@ -134,7 +135,7 @@ const classifyQuestion = async (question, history = []) => {
         facultyServices.getDesignations(),
         facilityServices.getCategories(),
         subjectServices.getSubjectTypes(),
-        subjectServices.getDepartmentNames()
+        subjectServices.getDepartmentNames(),
     ]);
 
     const validDepartmentCodes = departments.map(department => department.code);
@@ -179,10 +180,11 @@ not pick a topic just because a part of the question sounds college-related):
 - "department": a department's name, code, or head of department (HOD)
 - "faculty": a faculty member/teacher/professor/principal, either a specific person, everyone in a department, or everyone with a given designation/role
 - "event": college events, seminars, workshops, fests
+- "academic": a general information about admission, registration and enrollment processes, curriculum/syllabus, disciplinary rules, academic calendar,  examination related queries etc.
 - "aboutUs": general information about the college itself — its name, history, establishment year, address, vision/mission, accreditation, etc.
 - "facility": a physical campus facility — labs, hostels, library, seminar rooms, sports areas, or any other facility category, either a specific named facility, everyone facility of a given category, or facilities belonging to a department
 - "subject": subjects/courses/papers taught — a specific subject by name, the subjects of a department, or of a given type (e.g. theory/practical), including a subject's syllabus. A subject's "department" here is a plain label stored on the subject itself, NOT the same list as the "department" topic's codes below — use the separate "subject departments" list further down for this.
-(If part of the question is about something NOT in this list — notices, admissions, fees, placements, etc. — simply omit that part; do not invent a topic for it.)
+(If part of the question is about something NOT in this list — notices, placements, etc. — simply omit that part; do not invent a topic for it.)
 
 Known departments (copy a "code" EXACTLY if a part of the question refers to one of these, otherwise use null — never invent a code):
 ${departmentList}
@@ -212,7 +214,7 @@ Respond with ONLY a single JSON object, no prose, no markdown fences, in exactly
 {
   "requests": [
     {
-      "topic": "department" | "faculty" | "event" | "aboutUs" | "facility" | "subject",
+      "topic": "department" | "faculty" | "event" | "aboutUs" | "facility" | "subject" | "academic",
       "departmentCode": string or null,
       "facultyNameQuery": string or null,
       "designationQuery": string or null,

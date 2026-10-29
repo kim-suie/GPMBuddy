@@ -4,6 +4,7 @@ const aboutUsServices = require("../aboutUsServices");
 const facilityServices = require("../facilityServices");
 const subjectServices = require("../subjectServices");
 const Event = require("../../models/event");
+const academicServices = require("../../services/academicServices");
 
 // Long syllabus lists for dozens of subjects would bloat the answer
 // prompt for no benefit, so once a result set is larger than this the
@@ -76,6 +77,9 @@ const retrieveOne = async (request) => {
 
         case "event":
             return await Event.find().sort({ date: 1 });
+
+        case "academic":
+            return await academicServices.getAcademicInfo();
 
         case "aboutUs":
             // Singleton document, no filters needed.
