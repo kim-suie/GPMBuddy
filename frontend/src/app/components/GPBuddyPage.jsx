@@ -93,7 +93,7 @@ function AnswerImage({ src, alt }) {
       alt={alt}
       loading="lazy"
       onError={() => setFailed(true)}
-      className="rounded-xl max-w-full my-2 border border-gray-200"
+      className="rounded-xl w-[180px] my-2 border border-gray-200"
     />
   );
 }
