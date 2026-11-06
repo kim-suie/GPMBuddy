@@ -95,7 +95,7 @@ function AnswerImage({ src, alt }) {
       loading="lazy"
       decoding="async"
       onError={() => setFailed(true)}
-      className="my-2 block max-h-[420px] max-w-full cursor-zoom-in rounded-xl border border-gray-200 object-contain"
+     className="my-2 block w-[100px] h-[80px] cursor-zoom-in rounded-xl border border-gray-200 object-contain"
     />
   );
 }
