@@ -85,23 +85,6 @@ const facilityModel = new mongoose.Schema(
 
         },
 
-        // Contact information
-        contact: {
-            phone: {
-                type: String,
-                trim: true
-            },
-
-            email: {
-                type: String,
-                trim: true
-            },
-
-            additionalInfo: {
-                type: String,
-                trim: true
-            }
-        },
 
         // Services/features provided by the facility
         features: {
@@ -110,28 +93,31 @@ const facilityModel = new mongoose.Schema(
         },
 
         // Person responsible for the facility
-        inCharge: {
+        inCharge: [{
             name: {
                 type: String,
                 trim: true
             },
-
-            designation: {
-                type: String,
-                trim: true
-            },
-
             contact: {
                 type: String,
                 trim: true
             }
-        },
+        }],
 
         // Image URLs/paths
-        images: {
-            type: [String],
-            default: []
+        images: [
+    {
+        data: {
+            type: Buffer,
+            required: true,
+            select: false
+        },
+        contentType: {
+            type: String,
+            required: true
         }
+    }
+],
     },
     {
         timestamps: true
