@@ -93,16 +93,20 @@ const facilityModel = new mongoose.Schema(
         },
 
         // Person responsible for the facility
-        inCharge: [{
-            name: {
+        inCharge: {
+            type: [{
+                name: {
                 type: String,
                 trim: true
-            },
-            contact: {
+                },
+                contact: {
                 type: String,
                 trim: true
-            }
-        }],
+                },
+                _id: false
+            }],
+            default: []
+        },
 
         // Image URLs/paths
        images: {

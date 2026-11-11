@@ -100,8 +100,7 @@ const CONFIG = {
       ["availabilityStatus", "Availability", "select"], ["availabilityDays", "Available days (one per line)", "list"],
       ["openingTime", "Opening time", "text"], ["closingTime", "Closing time", "text"],
       ["features", "Features (one per line)", "list"], ["images", "Photos (up to 3)", "files"],
-      ["inChargeName", "In-charge name", "text"],
-      ["inChargeContact", "In-charge contact", "text"],
+      ["inCharge", "In-charge details", "inCharge"],
     ],
   },
   subjects: {
@@ -153,8 +152,17 @@ const initialForm = (section, record) => {
       availabilityStatus: record.availability?.status || "",
       availabilityDays: record.availability?.days || [],
       openingTime: record.availability?.openingTime || "", closingTime: record.availability?.closingTime || "",
-      inChargeName: record.inCharge?.name || "", 
-      inChargeContact: record.inCharge?.contact || "",
+      inCharge: Array.isArray(record.inCharge)
+        ? record.inCharge.map((person) => ({
+            name: person?.name || "",
+            contact: person?.contact || "",
+          }))
+        : record.inCharge?.name || record.inCharge?.contact
+          ? [{
+              name: record.inCharge?.name || "",
+              contact: record.inCharge?.contact || "",
+            }]
+          : [{ name: "", contact: "" }],
     };
   }
   if (section === "aboutUs" && record) {
@@ -164,6 +172,10 @@ const initialForm = (section, record) => {
       achievements: JSON.stringify(record.achievements || [], null, 2),
     };
   }
+  if (section === "facilities" && !record) {
+    source = { ...source, inCharge: [{ name: "", contact: "" }] };
+  }
+
   const result = {};
   CONFIG[section].fields.forEach(([key, , type]) => {
     if (section === "admins" && record && key === "password") {
@@ -172,6 +184,15 @@ const initialForm = (section, record) => {
     }
     if (type === "file") {
       result[key] = null;
+      return;
+    }
+    if (type === "inCharge") {
+      result[key] = Array.isArray(source?.[key]) && source[key].length
+        ? source[key].map((person) => ({
+            name: person?.name || "",
+            contact: person?.contact || "",
+          }))
+        : [{ name: "", contact: "" }];
       return;
     }
         if (type === "files") {
@@ -228,10 +249,16 @@ const makePayload = (section, form, profile) => {
     }
   });
   if (section === "facilities") {
+    payload.inCharge = (Array.isArray(payload.inCharge) ? payload.inCharge : [])
+      .map((person) => ({
+        name: String(person?.name || "").trim(),
+        contact: String(person?.contact || "").trim(),
+      }))
+      .filter((person) => person.name || person.contact);
+
     payload.location = { type: payload.locationType, place: payload.locationPlace, floor: payload.locationFloor, room: payload.locationRoom };
     payload.availability = { status: payload.availabilityStatus || "Available", days: payload.availabilityDays, openingTime: payload.openingTime, closingTime: payload.closingTime };
-    payload.inCharge = { name: payload.inChargeName, contact: payload.inChargeContact };
-    ["locationType", "locationPlace", "locationFloor", "locationRoom", "availabilityStatus", "availabilityDays", "openingTime", "closingTime", "inChargeName", "inChargeContact"].forEach((key) => delete payload[key]);
+    ["locationType", "locationPlace", "locationFloor", "locationRoom", "availabilityStatus", "availabilityDays", "openingTime", "closingTime"].forEach((key) => delete payload[key]);
   }
   if (section === "uploads" && !payload.uploadedBy) payload.uploadedBy = profile.username;
   return payload;
@@ -638,7 +665,83 @@ export default function AdminPanel() {
 
       {viewRecord && <RecordViewModal section={viewRecord.section} record={viewRecord.record} onClose={() => setViewRecord(null)} onEdit={() => openEdit(viewRecord.record)} />}
 
-      {modal && <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/50 p-4" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) setModal(null); }}><form onSubmit={save} className="my-auto max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl"><div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-5 py-4 sm:px-6"><div><h2 className="font-extrabold text-[#12203a]">Edit {modal.section === "faqs" ? "FAQ" : modal.section === "faculties" ? "Faculty" : modal.section === "facilities" ? "Facility" : modal.section === "aboutUs" ? "About Us" : modal.section.slice(0, -1)}</h2><p className="mt-1 text-[11px] text-slate-500">Fields marked required must be completed.</p></div><button type="button" onClick={() => setModal(null)} disabled={busy} aria-label="Close dialog" className="rounded-lg p-2 hover:bg-slate-100"><X size={18} /></button></div><div className="grid gap-4 p-5 sm:grid-cols-2 sm:p-6">{CONFIG[modal.section].fields.map(([key, label, type, required]) => { if (modal.section === "admins" && modal.record && key === "password") return null; const large = ["textarea", "list", "json", "files"].includes(type); const selectOptions = key === "role" ? [["admin", "Admin"], ["super_admin", "Super Admin"]] : key === "locationType" ? [["Campus", "Campus"], ["Off-Campus", "Off-Campus"]] : [["Available", "Available"], ["Temporarily Closed", "Temporarily Closed"], ["Under Maintenance", "Under Maintenance"]]; return <label key={key} className={large ? "sm:col-span-2" : ""}><span className="mb-1.5 block text-[11px] font-bold text-slate-600">{label}{required && <em className="ml-1 not-italic text-red-500">*</em>}</span>{type === "files" ? <FilesInput value={form[key]} existingCount={modal.record?.images?.length || 0} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : type === "file" ? <FileInput value={form[key]} hasExisting={!!modal.record} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : type === "list" ? <ArrayInput values={form[key]} required={required} label={label} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : large ? <textarea rows={type === "json" ? 7 : 4} required={required} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full resize-y rounded-xl border border-slate-200 px-3.5 py-3 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100" /> : type === "select" ? <select required={required} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100"><option value="" disabled>Select {label.toLowerCase()}</option>{selectOptions.map(([value, optionLabel]) => <option key={value} value={value}>{optionLabel}</option>)}</select> : <input type={type} required={required} min={type === "number" ? 0 : undefined} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100" />}</label>; })}</div><div className="flex justify-end gap-2 border-t border-slate-100 px-5 py-4 sm:px-6"><button type="button" onClick={() => setModal(null)} disabled={busy} className="rounded-xl border border-slate-200 px-4 py-2.5 text-[12px] font-bold hover:bg-slate-50">Cancel</button><button type="submit" disabled={busy} className="rounded-xl bg-[#142342] px-5 py-2.5 text-[12px] font-bold text-white hover:bg-[#20365e] disabled:opacity-60">{busy ? "Saving…" : "Save record"}</button></div></form></div>}
+      {modal && <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/50 p-4" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) setModal(null); }}><form onSubmit={save} className="my-auto max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl"><div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-5 py-4 sm:px-6"><div><h2 className="font-extrabold text-[#12203a]">Edit {modal.section === "faqs" ? "FAQ" : modal.section === "faculties" ? "Faculty" : modal.section === "facilities" ? "Facility" : modal.section === "aboutUs" ? "About Us" : modal.section.slice(0, -1)}</h2><p className="mt-1 text-[11px] text-slate-500">Fields marked required must be completed.</p></div><button type="button" onClick={() => setModal(null)} disabled={busy} aria-label="Close dialog" className="rounded-lg p-2 hover:bg-slate-100"><X size={18} /></button></div><div className="grid gap-4 p-5 sm:grid-cols-2 sm:p-6">{CONFIG[modal.section].fields.map(([key, label, type, required]) => { if (modal.section === "admins" && modal.record && key === "password") return null; const large = ["textarea", "list", "json", "files", "inCharge"].includes(type); const selectOptions = key === "role" ? [["admin", "Admin"], ["super_admin", "Super Admin"]] : key === "locationType" ? [["Campus", "Campus"], ["Off-Campus", "Off-Campus"]] : [["Available", "Available"], ["Temporarily Closed", "Temporarily Closed"], ["Under Maintenance", "Under Maintenance"]]; return <label key={key} className={large ? "sm:col-span-2" : ""}><span className="mb-1.5 block text-[11px] font-bold text-slate-600">{label}{required && <em className="ml-1 not-italic text-red-500">*</em>}</span>{type === "files" ? <FilesInput value={form[key]} existingCount={modal.record?.images?.length || 0} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : type === "file" ? <FileInput value={form[key]} hasExisting={!!modal.record} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : type === "inCharge" ? <InChargeInput values={form.inCharge} onChange={(value) => setForm((previous) => ({ ...previous, inCharge: value }))} /> : type === "list" ? <ArrayInput values={form[key]} required={required} label={label} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : large ? <textarea rows={type === "json" ? 7 : 4} required={required} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full resize-y rounded-xl border border-slate-200 px-3.5 py-3 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100" /> : type === "select" ? <select required={required} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100"><option value="" disabled>Select {label.toLowerCase()}</option>{selectOptions.map(([value, optionLabel]) => <option key={value} value={value}>{optionLabel}</option>)}</select> : <input type={type} required={required} min={type === "number" ? 0 : undefined} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100" />}</label>; })}</div><div className="flex justify-end gap-2 border-t border-slate-100 px-5 py-4 sm:px-6"><button type="button" onClick={() => setModal(null)} disabled={busy} className="rounded-xl border border-slate-200 px-4 py-2.5 text-[12px] font-bold hover:bg-slate-50">Cancel</button><button type="submit" disabled={busy} className="rounded-xl bg-[#142342] px-5 py-2.5 text-[12px] font-bold text-white hover:bg-[#20365e] disabled:opacity-60">{busy ? "Saving…" : "Save record"}</button></div></form></div>}
+    </div>
+  );
+}
+
+
+function InChargeInput({ values, onChange }) {
+  const people = Array.isArray(values) && values.length
+    ? values
+    : [{ name: "", contact: "" }];
+
+  const update = (index, field, value) => {
+    onChange(
+      people.map((person, personIndex) =>
+        personIndex === index ? { ...person, [field]: value } : person
+      )
+    );
+  };
+
+  const remove = (index) => {
+    onChange(
+      people.length === 1
+        ? [{ name: "", contact: "" }]
+        : people.filter((_, personIndex) => personIndex !== index)
+    );
+  };
+
+  return (
+    <div className="space-y-3">
+      {people.map((person, index) => (
+        <div key={index} className="rounded-xl border border-slate-200 bg-slate-50/70 p-3.5">
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+              In-charge {index + 1}
+            </p>
+            {people.length > 1 && (
+              <button
+                type="button"
+                onClick={() => remove(index)}
+                aria-label={`Remove in-charge ${index + 1}`}
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600"
+              >
+                <X size={15} />
+              </button>
+            )}
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label className="block">
+              <span className="mb-1.5 block text-[11px] font-bold text-slate-600">Name</span>
+              <input
+                type="text"
+                value={person.name || ""}
+                onChange={(event) => update(index, "name", event.target.value)}
+                placeholder="Enter in-charge name"
+                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100"
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-[11px] font-bold text-slate-600">Contact</span>
+              <input
+                type="tel"
+                value={person.contact || ""}
+                onChange={(event) => update(index, "contact", event.target.value)}
+                placeholder="Enter contact number"
+                className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100"
+              />
+            </label>
+          </div>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={() => onChange([...people, { name: "", contact: "" }])}
+        className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 px-3 py-2 text-[11px] font-bold text-amber-800 hover:bg-amber-50"
+      >
+        <Plus size={14} /> Add another in-charge
+      </button>
     </div>
   );
 }

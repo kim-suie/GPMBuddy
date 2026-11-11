@@ -277,6 +277,7 @@ exports.updateFacility = async (req) => {
     }
 
     if (body.inCharge !== undefined) {
+        console.log("inCharge:", body.inCharge);
         facilityDoc.inCharge = body.inCharge;
     }
 

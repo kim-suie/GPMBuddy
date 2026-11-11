@@ -9,7 +9,7 @@ const ApiError = require("../utils/ApiError");
 // location, availability, contact and inCharge as nested objects) so
 // they can be restored here. A plain JSON request never goes through
 // this, so edits without photos are unaffected.
-const MULTIPART_JSON_FIELDS = ["features", "location", "availability", "contact", "inCharge"];
+const MULTIPART_JSON_FIELDS = ["features", "location", "availability", "inCharge"];
 
 const restoreMultipartFields = (body) => {
 
@@ -52,7 +52,7 @@ const applyUploadedImages = (req) => {
 
 exports.createFacility = async (req, res) => {
         applyUploadedImages(req);
-
+        console.log("Service inCharge:", req.body.inCharge);
         const createdFacility = await facilityServices.createFacility(req.body);
 
         return success(res, 201, "Facility created successfully", createdFacility);
@@ -91,6 +91,7 @@ exports.getFacilityImage = async (req, res) => {
 
 
 exports.updateFacility = async (req, res) => {
+        console.log("Service inCharge:", req.body.inCharge);
         // If no new photos were uploaded, body.images stays undefined
         // and the facility's existing photos are left untouched.
         applyUploadedImages(req);
