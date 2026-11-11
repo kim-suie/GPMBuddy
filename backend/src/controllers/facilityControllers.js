@@ -52,7 +52,6 @@ const applyUploadedImages = (req) => {
 
 exports.createFacility = async (req, res) => {
         applyUploadedImages(req);
-        console.log("Service inCharge:", req.body.inCharge);
         const createdFacility = await facilityServices.createFacility(req.body);
 
         return success(res, 201, "Facility created successfully", createdFacility);
@@ -91,7 +90,6 @@ exports.getFacilityImage = async (req, res) => {
 
 
 exports.updateFacility = async (req, res) => {
-        console.log("Service inCharge:", req.body.inCharge);
         // If no new photos were uploaded, body.images stays undefined
         // and the facility's existing photos are left untouched.
         applyUploadedImages(req);
