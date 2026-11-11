@@ -61,7 +61,7 @@ const CONFIG = {
     update: (id) => `/department/${id}`,
     fields: [
       ["name", "Department name", "text", true], ["code", "Code", "text", true],
-      ["description", "Description", "textarea"], ["established", "Established year", "number"],
+      ["description", "Description", "textarea"],
       ["intake", "Intake", "number"], ["vision", "Vision", "textarea"],
       ["mission", "Mission (one item per line)", "list"], ["peo", "PEOs (one item per line)", "list"],
       ["po", "POs (one item per line)", "list"], ["pso", "PSOs (one item per line)", "list"],
@@ -99,10 +99,8 @@ const CONFIG = {
       ["locationFloor", "Floor", "text"], ["locationRoom", "Room", "text"],
       ["availabilityStatus", "Availability", "select"], ["availabilityDays", "Available days (one per line)", "list"],
       ["openingTime", "Opening time", "text"], ["closingTime", "Closing time", "text"],
-      ["contactPhone", "Contact phone", "text"], ["contactEmail", "Contact email", "email"],
-      ["contactAdditionalInfo", "Additional contact information", "text"],
-      ["features", "Features (one per line)", "list"], ["images", "Image URLs (one per line)", "list"],
-      ["inChargeName", "In-charge name", "text"], ["inChargeDesignation", "In-charge designation", "text"],
+      ["features", "Features (one per line)", "list"], ["images", "Photos (up to 3)", "files"],
+      ["inChargeName", "In-charge name", "text"],
       ["inChargeContact", "In-charge contact", "text"],
     ],
   },
@@ -155,9 +153,7 @@ const initialForm = (section, record) => {
       availabilityStatus: record.availability?.status || "",
       availabilityDays: record.availability?.days || [],
       openingTime: record.availability?.openingTime || "", closingTime: record.availability?.closingTime || "",
-      contactPhone: record.contact?.phone || "", contactEmail: record.contact?.email || "",
-      contactAdditionalInfo: record.contact?.additionalInfo || "",
-      inChargeName: record.inCharge?.name || "", inChargeDesignation: record.inCharge?.designation || "",
+      inChargeName: record.inCharge?.name || "", 
       inChargeContact: record.inCharge?.contact || "",
     };
   }
@@ -176,6 +172,10 @@ const initialForm = (section, record) => {
     }
     if (type === "file") {
       result[key] = null;
+      return;
+    }
+        if (type === "files") {
+      result[key] = [];
       return;
     }
     let value = source?.[key];
@@ -207,6 +207,12 @@ const makePayload = (section, form, profile) => {
       if (!(payload[key] instanceof File)) delete payload[key];
       return;
     }
+        if (type === "files") {
+      const files = Array.isArray(payload[key]) ? payload[key].filter((item) => item instanceof File) : [];
+      if (files.length) payload[key] = files;
+      else delete payload[key];
+      return;
+    }
     if (type === "number") payload[key] = payload[key] === "" ? undefined : Number(payload[key]);
     if (type === "list") {
       const value = payload[key];
@@ -224,23 +230,47 @@ const makePayload = (section, form, profile) => {
   if (section === "facilities") {
     payload.location = { type: payload.locationType, place: payload.locationPlace, floor: payload.locationFloor, room: payload.locationRoom };
     payload.availability = { status: payload.availabilityStatus || "Available", days: payload.availabilityDays, openingTime: payload.openingTime, closingTime: payload.closingTime };
-    payload.contact = { phone: payload.contactPhone, email: payload.contactEmail, additionalInfo: payload.contactAdditionalInfo };
-    payload.inCharge = { name: payload.inChargeName, designation: payload.inChargeDesignation, contact: payload.inChargeContact };
-    ["locationType", "locationPlace", "locationFloor", "locationRoom", "availabilityStatus", "availabilityDays", "openingTime", "closingTime", "contactPhone", "contactEmail", "contactAdditionalInfo", "inChargeName", "inChargeDesignation", "inChargeContact"].forEach((key) => delete payload[key]);
+    payload.inCharge = { name: payload.inChargeName, contact: payload.inChargeContact };
+    ["locationType", "locationPlace", "locationFloor", "locationRoom", "availabilityStatus", "availabilityDays", "openingTime", "closingTime", "inChargeName", "inChargeContact"].forEach((key) => delete payload[key]);
   }
   if (section === "uploads" && !payload.uploadedBy) payload.uploadedBy = profile.username;
   return payload;
 };
 
+const MAX_FACILITY_IMAGES = 3;
+const MAX_IMAGE_BYTES = 500 * 1024;
+const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
+// Adds newly picked files to the ones already chosen, keeping only valid
+// images and at most MAX_FACILITY_IMAGES in total. Mirrors the server's
+// own limits so a bad file is explained here instead of failing the save.
+const addFacilityImages = (current, picked) => {
+  const accepted = [];
+  const problems = [];
+  picked.forEach((file) => {
+    if (!IMAGE_TYPES.includes(file.type)) problems.push(`${file.name}: only JPEG, PNG or WEBP images are allowed.`);
+    else if (file.size > MAX_IMAGE_BYTES) problems.push(`${file.name}: larger than ${MAX_IMAGE_BYTES / 1024}KB.`);
+    else accepted.push(file);
+  });
+  const merged = [...current, ...accepted];
+  if (merged.length > MAX_FACILITY_IMAGES) problems.push(`Only ${MAX_FACILITY_IMAGES} photos are allowed, so the extra files were ignored.`);
+  return { files: merged.slice(0, MAX_FACILITY_IMAGES), problems };
+};
+
 const buildRequestBody = (payload) => {
-  const hasFile = Object.values(payload).some((value) => value instanceof File);
+  const isFile = (value) => value instanceof File;
+  const hasFile = Object.values(payload).some((value) => isFile(value) || (Array.isArray(value) && value.some(isFile)));
   if (!hasFile) return { body: payload, isMultipart: false };
 
+  // Multipart carries only strings and files, so arrays and nested objects
+  // (the facility form's location/availability/contact/inCharge) are
+  // JSON-encoded and decoded again by the controller.
   const formData = new FormData();
   Object.entries(payload).forEach(([key, value]) => {
     if (value === undefined || value === null || value === "") return;
-    if (value instanceof File) formData.append(key, value);
-    else if (Array.isArray(value)) formData.append(key, JSON.stringify(value));
+    if (isFile(value)) formData.append(key, value);
+    else if (Array.isArray(value) && value.some(isFile)) value.filter(isFile).forEach((file) => formData.append(key, file));
+    else if (typeof value === "object") formData.append(key, JSON.stringify(value));
     else formData.append(key, value);
   });
   return { body: formData, isMultipart: true };
@@ -608,7 +638,7 @@ export default function AdminPanel() {
 
       {viewRecord && <RecordViewModal section={viewRecord.section} record={viewRecord.record} onClose={() => setViewRecord(null)} onEdit={() => openEdit(viewRecord.record)} />}
 
-      {modal && <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/50 p-4" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) setModal(null); }}><form onSubmit={save} className="my-auto max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl"><div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-5 py-4 sm:px-6"><div><h2 className="font-extrabold text-[#12203a]">Edit {modal.section === "faqs" ? "FAQ" : modal.section === "faculties" ? "Faculty" : modal.section === "facilities" ? "Facility" : modal.section === "aboutUs" ? "About Us" : modal.section.slice(0, -1)}</h2><p className="mt-1 text-[11px] text-slate-500">Fields marked required must be completed.</p></div><button type="button" onClick={() => setModal(null)} disabled={busy} aria-label="Close dialog" className="rounded-lg p-2 hover:bg-slate-100"><X size={18} /></button></div><div className="grid gap-4 p-5 sm:grid-cols-2 sm:p-6">{CONFIG[modal.section].fields.map(([key, label, type, required]) => { if (modal.section === "admins" && modal.record && key === "password") return null; const large = ["textarea", "list", "json"].includes(type); const selectOptions = key === "role" ? [["admin", "Admin"], ["super_admin", "Super Admin"]] : key === "locationType" ? [["Campus", "Campus"], ["Off-Campus", "Off-Campus"]] : [["Available", "Available"], ["Temporarily Closed", "Temporarily Closed"], ["Under Maintenance", "Under Maintenance"]]; return <label key={key} className={large ? "sm:col-span-2" : ""}><span className="mb-1.5 block text-[11px] font-bold text-slate-600">{label}{required && <em className="ml-1 not-italic text-red-500">*</em>}</span>{type === "file" ? <FileInput value={form[key]} hasExisting={!!modal.record} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : type === "list" ? <ArrayInput values={form[key]} required={required} label={label} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : large ? <textarea rows={type === "json" ? 7 : 4} required={required} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full resize-y rounded-xl border border-slate-200 px-3.5 py-3 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100" /> : type === "select" ? <select required={required} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100"><option value="" disabled>Select {label.toLowerCase()}</option>{selectOptions.map(([value, optionLabel]) => <option key={value} value={value}>{optionLabel}</option>)}</select> : <input type={type} required={required} min={type === "number" ? 0 : undefined} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100" />}</label>; })}</div><div className="flex justify-end gap-2 border-t border-slate-100 px-5 py-4 sm:px-6"><button type="button" onClick={() => setModal(null)} disabled={busy} className="rounded-xl border border-slate-200 px-4 py-2.5 text-[12px] font-bold hover:bg-slate-50">Cancel</button><button type="submit" disabled={busy} className="rounded-xl bg-[#142342] px-5 py-2.5 text-[12px] font-bold text-white hover:bg-[#20365e] disabled:opacity-60">{busy ? "Saving…" : "Save record"}</button></div></form></div>}
+      {modal && <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/50 p-4" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) setModal(null); }}><form onSubmit={save} className="my-auto max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl"><div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-5 py-4 sm:px-6"><div><h2 className="font-extrabold text-[#12203a]">Edit {modal.section === "faqs" ? "FAQ" : modal.section === "faculties" ? "Faculty" : modal.section === "facilities" ? "Facility" : modal.section === "aboutUs" ? "About Us" : modal.section.slice(0, -1)}</h2><p className="mt-1 text-[11px] text-slate-500">Fields marked required must be completed.</p></div><button type="button" onClick={() => setModal(null)} disabled={busy} aria-label="Close dialog" className="rounded-lg p-2 hover:bg-slate-100"><X size={18} /></button></div><div className="grid gap-4 p-5 sm:grid-cols-2 sm:p-6">{CONFIG[modal.section].fields.map(([key, label, type, required]) => { if (modal.section === "admins" && modal.record && key === "password") return null; const large = ["textarea", "list", "json", "files"].includes(type); const selectOptions = key === "role" ? [["admin", "Admin"], ["super_admin", "Super Admin"]] : key === "locationType" ? [["Campus", "Campus"], ["Off-Campus", "Off-Campus"]] : [["Available", "Available"], ["Temporarily Closed", "Temporarily Closed"], ["Under Maintenance", "Under Maintenance"]]; return <label key={key} className={large ? "sm:col-span-2" : ""}><span className="mb-1.5 block text-[11px] font-bold text-slate-600">{label}{required && <em className="ml-1 not-italic text-red-500">*</em>}</span>{type === "files" ? <FilesInput value={form[key]} existingCount={modal.record?.images?.length || 0} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : type === "file" ? <FileInput value={form[key]} hasExisting={!!modal.record} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : type === "list" ? <ArrayInput values={form[key]} required={required} label={label} onChange={(value) => setForm((previous) => ({ ...previous, [key]: value }))} /> : large ? <textarea rows={type === "json" ? 7 : 4} required={required} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full resize-y rounded-xl border border-slate-200 px-3.5 py-3 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100" /> : type === "select" ? <select required={required} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100"><option value="" disabled>Select {label.toLowerCase()}</option>{selectOptions.map(([value, optionLabel]) => <option key={value} value={value}>{optionLabel}</option>)}</select> : <input type={type} required={required} min={type === "number" ? 0 : undefined} value={form[key] ?? ""} onChange={(event) => setForm((previous) => ({ ...previous, [key]: event.target.value }))} className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-[13px] outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100" />}</label>; })}</div><div className="flex justify-end gap-2 border-t border-slate-100 px-5 py-4 sm:px-6"><button type="button" onClick={() => setModal(null)} disabled={busy} className="rounded-xl border border-slate-200 px-4 py-2.5 text-[12px] font-bold hover:bg-slate-50">Cancel</button><button type="submit" disabled={busy} className="rounded-xl bg-[#142342] px-5 py-2.5 text-[12px] font-bold text-white hover:bg-[#20365e] disabled:opacity-60">{busy ? "Saving…" : "Save record"}</button></div></form></div>}
     </div>
   );
 }
@@ -638,6 +668,54 @@ function FileInput({ value, onChange, hasExisting }) {
       />
       {hasExisting && !value && <p className="mt-1 text-[11px] text-slate-400">Leave blank to keep the current photo.</p>}
       {value && <p className="mt-1 text-[11px] text-emerald-600">New photo selected: {value.name}</p>}
+    </div>
+  );
+}
+
+function FilesInput({ value, onChange, existingCount }) {
+  const [problem, setProblem] = useState("");
+  const files = Array.isArray(value) ? value : [];
+
+  const addFiles = (event) => {
+    const picked = Array.from(event.target.files || []);
+    event.target.value = "";
+    if (!picked.length) return;
+    const result = addFacilityImages(files, picked);
+    setProblem(result.problems.join(" "));
+    onChange(result.files);
+  };
+
+  const removeFile = (index) => {
+    setProblem("");
+    onChange(files.filter((_, fileIndex) => fileIndex !== index));
+  };
+
+  return (
+    <div>
+      <input
+        type="file"
+        multiple
+        accept="image/jpeg,image/png,image/webp"
+        disabled={files.length >= MAX_FACILITY_IMAGES}
+        onChange={addFiles}
+        className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-[13px] outline-none file:mr-3 file:rounded-lg file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-[12px] file:font-semibold focus:border-amber-400 focus:ring-2 focus:ring-amber-100 disabled:opacity-50"
+      />
+      {files.length > 0 && (
+        <ul className="mt-2 space-y-1">
+          {files.map((file, index) => (
+            <li key={`${file.name}-${index}`} className="flex items-center justify-between gap-2 rounded-lg bg-slate-50 px-3 py-1.5 text-[12px] text-slate-700">
+              <span className="truncate">{file.name} · {Math.ceil(file.size / 1024)}KB</span>
+              <button type="button" onClick={() => removeFile(index)} aria-label={`Remove ${file.name}`} className="rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-600"><X size={14} /></button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {problem && <p role="alert" className="mt-1 text-[11px] text-red-600">{problem}</p>}
+      <p className="mt-1 text-[11px] text-slate-400">
+        {existingCount > 0
+          ? `This facility has ${existingCount} photo${existingCount === 1 ? "" : "s"}. Leave blank to keep them; choosing new photos replaces ALL current ones.`
+          : `Up to ${MAX_FACILITY_IMAGES} photos (JPEG, PNG or WEBP, ${MAX_IMAGE_BYTES / 1024}KB each).`}
+      </p>
     </div>
   );
 }

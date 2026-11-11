@@ -105,19 +105,21 @@ const facilityModel = new mongoose.Schema(
         }],
 
         // Image URLs/paths
-        images: [
-    {
-        data: {
-            type: Buffer,
-            required: true,
-            select: false
-        },
-        contentType: {
-            type: String,
-            required: true
+       images: {
+            type: [
+                {
+                    data: { type: Buffer, required: true },
+                    contentType: { type: String, required: true },
+                    _id: false
+                }
+            ],
+            default: [],
+            // Keep in sync with MAX_FACILITY_IMAGES in uploadMiddleware.js
+            validate: {
+                validator: (value) => value.length <= 3,
+                message: "A facility can have at most 3 images!"
+            }
         }
-    }
-],
     },
     {
         timestamps: true

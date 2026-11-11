@@ -135,31 +135,37 @@ const retrieveData = async (requests) => {
     );
 };
 
-// Scans retrieved results for real, existing images.
+// Scans the already-retrieved results for real, existing images
+// (a faculty member's uploaded photo, a facility's uploaded photos)
+// and returns them as a flat, vetted list. This is the ONLY source the
+// answer step is allowed to pull an image URL from — it never lets
+// the model type out a URL itself, the same "ground real data, don't
+// trust free text" rule used everywhere else in this pipeline.
 const collectImageCandidates = (results) => {
+
     const candidates = [];
 
     for (const result of results) {
+
         const items = Array.isArray(result.data)
             ? result.data
             : (result.data ? [result.data] : []);
 
         for (const item of items) {
-            if (
-                result.topic === "faculty" &&
-                item?._id &&
-                item?.profileImage?.contentType
-            ) {
+
+            if (result.topic === "faculty" && item?._id && item?.profileImage?.contentType) {
                 candidates.push({
                     label: `Photo of ${item.name}`,
                     url: `/faculty/id/${item._id}/image`
                 });
             }
 
-            // A department's headOfDepartment is a populated faculty record.
+            // A department's headOfDepartment is itself a (populated)
+            // faculty record, carrying its own profileImage — this is
+            // a different data path from the "faculty" topic above, so
+            // it needs its own check rather than being covered by it.
             if (result.topic === "department") {
                 const hod = item?.headOfDepartment;
-
                 if (hod?._id && hod?.profileImage?.contentType) {
                     candidates.push({
                         label: `Photo of ${hod.name} (HOD, ${item.name})`,
@@ -168,14 +174,27 @@ const collectImageCandidates = (results) => {
                 }
             }
 
-            if (
-                result.topic === "facility" &&
-                Array.isArray(item?.images) &&
-                item.images.length
-            ) {
-                candidates.push({
-                    label: `Photo of ${item.name}`,
-                    url: item.images[0]
+            // A facility has up to 3 uploaded photos, each served at
+            // its own position. ?v=<updatedAt> changes whenever the
+            // facility is edited, so a replaced photo never shows a
+            // stale cached copy (the image route is cached for a day).
+            if (result.topic === "facility" && item?._id && Array.isArray(item.images)) {
+
+                const version = item.updatedAt ? `?v=${new Date(item.updatedAt).getTime()}` : "";
+                const photoCount = item.images.length;
+
+                item.images.forEach((image, index) => {
+
+                    if (!image?.contentType) {
+                        return;
+                    }
+
+                    candidates.push({
+                        label: photoCount > 1
+                            ? `Photo ${index + 1} of ${photoCount} of ${item.name}`
+                            : `Photo of ${item.name}`,
+                        url: `/facility/${item._id}/images/${index}${version}`
+                    });
                 });
             }
         }
