@@ -192,7 +192,6 @@ exports.createDepartments = async (body) => {
         name: body.name,
         code: body.code,
         description: body.description,
-        established: body.established,
         intake: body.intake,
         headOfDepartment,
         vision: body.vision,
@@ -241,10 +240,6 @@ exports.updateDepartments = async (req) => {
 
     if (body.description !== undefined) {
         departmentDoc.description = body.description;
-    }
-
-    if (body.established !== undefined) {
-        departmentDoc.established = body.established;
     }
 
     if (body.intake !== undefined) {

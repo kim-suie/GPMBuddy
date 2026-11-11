@@ -22,6 +22,13 @@ const aboutUsModel = new mongoose.Schema(
           },
     ],
 
+    po: [
+          {
+            type: String,
+            required: true,
+            trim: true
+          },
+    ],
 
     principalMessage: {
       type: String,
@@ -35,29 +42,27 @@ const aboutUsModel = new mongoose.Schema(
       required: true,
     },
 
-    achievements: [
+    affiliation: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+
+    accreditations: [
       {
-        title: {
+        name: {
           type: String,
           required: true,
           trim: true,
         },
 
-        description: {
+        details: {
           type: String,
           trim: true,
         },
-
-        year: {
-          type: Number,
-        },
       },
-    ],
-
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
+    ]
   },
   {
     timestamps: true,

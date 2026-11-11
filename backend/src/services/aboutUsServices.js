@@ -42,7 +42,23 @@ const resolvePrincipal = async (input) => {
 };
 
 exports.getAboutUs = async () => {
-    return await aboutUs.findOne({ isActive: true }).populate("principal");
+    const AboutUsData = await aboutUs.findOne({ isActive: true }).populate("principal");
+
+    if(!AboutUsData){
+            throw new ApiError(400, "About Us not found");
+    }
+
+    const structuredAboutUsData = AboutUsData.toObject();
+    structuredAboutUsData.po = structuredAboutUsData.po.map((description, index) => ({
+        code : `PO${index+1}`,
+        description: description
+    }));
+    structuredAboutUsData.mission = structuredAboutUsData.mission.map((description, index) => ({
+        code : `M${index+1}`,
+        description: description
+    }));
+
+    return structuredAboutUsData;
 }
 
 exports.createAboutUs = async (body) => {
@@ -52,8 +68,9 @@ exports.createAboutUs = async (body) => {
             history: body.history,
             vision: body.vision,
             mission: body.mission,
+            po: body.po,
             principalMessage: body.principalMessage,
-            achievements: body.achievements,
+            affiliation: body.affiliation,
             principal
         });
     
@@ -62,5 +79,8 @@ exports.createAboutUs = async (body) => {
 };
 
 exports.updateAboutUs = async (req) => {
+    const principal = await resolvePrincipal(req.body.principal);
+    req.body.principal = principal
+    
     return await aboutUs.findByIdAndUpdate(req.params.id, req.body, {returnDocument: 'after'});
 }

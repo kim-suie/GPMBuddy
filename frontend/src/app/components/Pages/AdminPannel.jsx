@@ -117,8 +117,9 @@ const CONFIG = {
     endpoint: "/about", create: "/about/create", update: (id) => `/about/update/${id}`,
     fields: [
       ["history", "College history", "textarea", true], ["vision", "Vision", "textarea", true],
-      ["mission", "Mission", "textarea", true], ["principalMessage", "Principal message", "textarea", true],
-      ["principal", "Principal name", "text", true], ["achievements", "Achievements (JSON array)", "json"],
+      ["mission", "Mission", "list", true], ["po", "Program Outcomes", "list", true],
+      ["principalMessage", "Principal message", "textarea", true],
+      ["principal", "Principal Name", "text", true], ["affiliation", "Affiliation", "textarea", true],
     ],
   },
   faqs: {
@@ -168,8 +169,7 @@ const initialForm = (section, record) => {
   if (section === "aboutUs" && record) {
     source = {
       ...record,
-      principal: record.principal?._id || record.principal || "",
-      achievements: JSON.stringify(record.achievements || [], null, 2),
+      principal: record.principal?.name || record.principal || ""
     };
   }
   if (section === "facilities" && !record) {
@@ -829,7 +829,7 @@ function RecordRow({ section, record, currentAdminId, onView, onEdit, onDelete, 
     admins: ["name", "designation", "role"], departments: ["code", "established", "intake"],
     events: ["date", "time", "venue"], faculties: ["designations", "department", "phone"],
     facilities: ["category", "department", "location", "availability"], subjects: ["departments", "type", "description"],
-    aboutUs: ["vision", "mission", "principalMessage"],
+    aboutUs: ["vision", "mission", "principal"],
     faqs: ["answer"], uploads: ["fileType", "uploadedBy", "fileUrl"],
   }[section];
   const stamp = record.updatedAt || record.createdAt;
