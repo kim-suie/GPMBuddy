@@ -11,9 +11,10 @@ const subjectModel = new mongoose.Schema(
     // Plain department name strings — no reference to the Department
     // collection, no verification. Admins pick from whatever names
     // they use consistently (e.g. "CSE", "Mechanical Engineering").
-    // Empty array = common to every department.
+    // Empty array = common to every department. 
     departments: {
-      type: [String],
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "department",
       default: [],
     },
 
