@@ -1,117 +1,54 @@
 
-const Event = require("../models/event");
+const eventServices = require("../services/eventServices");
+const success = require("../utils/successResponseUtil");
+const ApiError = require("../utils/ApiError");
 
 // Get all events
-exports.getEvents = async (req, res, next) => {
-  try {
-    const events = await Event.find().sort({ date: 1 });
-
-    res.status(200).json({
-      success: true,
-      message: "Events fetched successfully",
-      data: events,
-    });
-  } catch (error) {
-    next(error);
-  }
+exports.getEvents = async (req, res) => {
+    const data = await eventServices.getEvents();
+    success(res, 200, "Events fetched successfully", data);
 };
 
 // Get event by ID
-exports.getEventById = async (req, res, next) => {
-  try {
-    const event = await Event.findById(req.params.id);
+exports.getEventById = async (req, res) => {
+    const data = await eventServices.getEventById(req.params.id);
 
-    if (!event) {
-      return res.status(404).json({
-        success: false,
-        message: "Event not found",
-      });
+    if (!data) {
+        throw new ApiError(404, "Event not found!");
     }
 
-    res.status(200).json({
-      success: true,
-      message: "Event fetched successfully",
-      data: event,
-    });
-  } catch (error) {
-    next(error);
-  }
+    success(res, 200, "Event fetched successfully", data);
 };
 
 // Create event
-exports.createEvent = async (req, res, next) => {
-  try {
-    const event = await Event.create({
-      title: req.body.title,
-      description: req.body.description,
-      date: req.body.date,
-      time: req.body.time,
-      venue: req.body.venue,
-    });
+exports.createEvent = async (req, res) => {
+    const createdEvent = await eventServices.createEvent(req.body);
 
-    res.status(201).json({
-      success: true,
-      message: "Event created successfully",
-      data: event,
-    });
-  } catch (error) {
-    next(error);
-  }
+    if (!createdEvent) {
+        throw new ApiError(400, "Event not created!");
+    }
+
+    success(res, 201, "Event created successfully", createdEvent);
 };
 
 // Update event
-exports.updateEvent = async (req, res, next) => {
-  try {
-    const event = await Event.findByIdAndUpdate(
-      req.params.id,
-      {
-        title: req.body.title,
-        description: req.body.description,
-        date: req.body.date,
-        time: req.body.time,
-        venue: req.body.venue,
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+exports.updateEvent = async (req, res) => {
+    const updatedEvent = await eventServices.updateEvent(req.params.id, req.body);
 
-    if (!event) {
-      return res.status(404).json({
-        success: false,
-        message: "Event not found",
-      });
+    if (!updatedEvent) {
+        throw new ApiError(400, "Event not updated!");
     }
 
-    res.status(200).json({
-      success: true,
-      message: "Event updated successfully",
-      data: event,
-    });
-  } catch (error) {
-    next(error);
-  }
+    success(res, 200, "Event updated successfully", updatedEvent);
 };
 
 // Delete event
-exports.deleteEvent = async (req, res, next) => {
-  try {
-    const event = await Event.findByIdAndDelete(req.params.id);
+exports.deleteEvent = async (req, res) => {
+    const deletedEvent = await eventServices.deleteEvent(req.params.id);
 
-    if (!event) {
-      return res.status(404).json({
-        success: false,
-        message: "Event not found",
-      });
+    if (!deletedEvent) {
+        throw new ApiError(400, "Event not deleted!");
     }
 
-    res.status(200).json({
-      success: true,
-      message: "Event deleted successfully",
-      data: event,
-    });
-  } catch (error) {
-    next(error);
-  }
+    success(res, 200, "Event deleted successfully", deletedEvent);
 };
