@@ -51,7 +51,7 @@ const verifyDepartments = async (rawDepartments) => {
 
     const departmentNames = normalizeStringList(rawDepartments);
 
-    const departmentIds = [];
+    const departmentIds = new Set();
 
     for (const departmentName of departmentNames) {
 
@@ -59,12 +59,11 @@ const verifyDepartments = async (rawDepartments) => {
             departmentName
         );
 
-        departmentIds.push(departmentData._id);
+        departmentIds.add(departmentData._id.toString());
     }
 
-    return departmentIds;
+    return [...departmentIds];
 };
-
 
 // CREATE SUBJECT
 exports.createSubject = async (body) => {
